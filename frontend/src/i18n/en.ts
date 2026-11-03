@@ -46,8 +46,8 @@ export const en: Messages = {
   },
   experience: {
     eyebrow: "03 / Experience",
-    title: "Where I've worked",
-    lead: "Jobs and projects, most recent first.",
+    title: "Education and work",
+    lead: "My studies and work, most recent first.",
     present: "present",
   },
   stack: {

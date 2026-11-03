@@ -45,8 +45,8 @@ export const hu = {
   },
   experience: {
     eyebrow: "03 / Tapasztalat",
-    title: "Ahol eddig dolgoztam",
-    lead: "Munkahelyek és projektek, a legfrissebbel kezdve.",
+    title: "Tanulás és munka",
+    lead: "Tanulmányaim és munkáim, a legfrissebbel kezdve.",
     present: "jelenleg",
   },
   stack: {

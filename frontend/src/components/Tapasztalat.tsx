@@ -39,20 +39,22 @@ function TimelineItem({ item, side }: { item: Experience; side: Side }) {
 
       <article className="rounded-[14px] border border-line bg-card-navy p-5 transition-colors duration-200 lg:hover:border-signal-blue/60">
         <p className="font-mono text-xs tracking-[0.08em] text-signal-blue uppercase">
-          {item.start} – {item.end ?? t.experience.present}
+          {item.start ? `${item.start} – ${item.end ?? t.experience.present}` : (item.end ?? t.experience.present)}
         </p>
         <h3 className="mt-2 text-lg leading-snug font-semibold">{item.role[lang]}</h3>
         <p className="text-[0.9375rem] text-ice-white/80">{item.company}</p>
-        <ul className="mt-4 space-y-1.5 border-t border-line pt-4 text-sm leading-relaxed">
-          {item.points[lang].map((point) => (
-            <li key={point} className="flex gap-2.5">
-              <span aria-hidden="true" className="text-slate">
-                –
-              </span>
-              {point}
-            </li>
-          ))}
-        </ul>
+        {item.points && (
+          <ul className="mt-4 space-y-1.5 border-t border-line pt-4 text-sm leading-relaxed">
+            {item.points[lang].map((point) => (
+              <li key={point} className="flex gap-2.5">
+                <span aria-hidden="true" className="text-slate">
+                  –
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
       </article>
     </li>
   );
@@ -77,19 +79,19 @@ export function Tapasztalat() {
 
           <ol className="space-y-8 pl-10 lg:hidden">
             {experience.map((item) => (
-              <TimelineItem key={`${item.start}-${item.end}`} item={item} side="mobile" />
+              <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="mobile" />
             ))}
           </ol>
 
           <div className="hidden grid-cols-2 gap-x-20 lg:grid">
             <ol className="space-y-12 py-4">
               {left.map((item) => (
-                <TimelineItem key={`${item.start}-${item.end}`} item={item} side="left" />
+                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="left" />
               ))}
             </ol>
             <ol className="space-y-12 pt-28 pb-4">
               {right.map((item) => (
-                <TimelineItem key={`${item.start}-${item.end}`} item={item} side="right" />
+                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="right" />
               ))}
             </ol>
           </div>
