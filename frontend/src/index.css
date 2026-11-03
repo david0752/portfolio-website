@@ -1,0 +1,115 @@
+/*
+ * Globális stílusok: Tailwind 4, a docs/DESIGN.md színei és betűi tokenként (@theme),
+ * valamint az alap elemstílusok. A színek forrása a DESIGN.md: ha ott változik, itt is.
+ */
+
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "tailwindcss";
+
+/* Hover a képernyőméret szerint (lg: hover), nem a böngésző érintés-jelzése szerint, így laptopon mindig működik. */
+@custom-variant hover (&:hover);
+
+@theme {
+  --color-midnight: #070b14;
+  --color-deep-navy: #0c1322;
+  --color-card-navy: #101a2e;
+  --color-card-navy-hi: #16223a;
+  --color-line: #1c2a44;
+  --color-ice-white: #e8eef8;
+  --color-mist: #a9b6cb;
+  --color-slate: #7d8ba3;
+  --color-signal-blue: #5b9bff;
+  --color-signal-blue-hover: #7fb1ff;
+  --color-signal-blue-pressed: #4485f0;
+  --color-neon-cyan: #4de3ff;
+
+  --font-sans: "Geist Variable", system-ui, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, Consolas, monospace;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-midnight);
+    color: var(--color-mist);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ice-white);
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: rgb(91 155 255 / 0.3);
+    color: var(--color-ice-white);
+  }
+
+  /* Neon szabály 3: billentyűzetes fókusz. */
+  :focus-visible {
+    outline: 2px solid var(--color-neon-cyan);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* A sticky navbar ne takarja ki a szekció címét horgonyra ugráskor. */
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* Neon szabály 1: az „elérhető” pötty lassú pulzálása. */
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.status-dot {
+  box-shadow: 0 0 10px rgb(77 227 255 / 0.6);
+  animation: soft-pulse 3s ease-in-out infinite;
+}
+
+/* Neon szabály 2: a főcím egyetlen kiemelt szava. */
+.neon-word {
+  color: var(--color-neon-cyan);
+  text-shadow: 0 0 18px rgb(77 227 255 / 0.25);
+}
+
+/* Neon szabály 4: projektkártya hover (csak nagy képernyőn). */
+@media (min-width: 1024px) {
+  .project-card:hover {
+    border-color: var(--color-signal-blue);
+    box-shadow:
+      0 0 0 1px rgb(91 155 255 / 0.4),
+      0 0 32px rgb(91 155 255 / 0.12);
+  }
+}
