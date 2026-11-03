@@ -4,12 +4,15 @@
  * angolul az általános (lefordított) hibaszöveg.
  */
 
-import { useState, type FormEvent } from "react";
+import { useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router";
 
 import { useI18n } from "../../i18n/I18nProvider.tsx";
 import { CONTACT_LIMITS, CONTACT_TOPICS, sendContact, type ContactTopic } from "../../utils/contact.ts";
 import { buttonPrimary } from "./Button.tsx";
+
+// Az üzenetmező eddig a magasságig nő a szöveggel, utána görgethető lesz.
+const MESSAGE_MAX_HEIGHT = 320;
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success"; text: string } | { kind: "error"; text: string };
 
@@ -25,6 +28,18 @@ export function ContactForm() {
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const messageRef = useRef<HTMLTextAreaElement>(null);
+
+  // Az üzenetmező magassága a tartalmához igazodik (a rows az alapmagasság), a felső határ felett görget.
+  // A nyelvváltás is számít, mert más a placeholder hossza.
+  useLayoutEffect(() => {
+    const field = messageRef.current;
+    if (!field) return;
+    field.style.height = "auto";
+    const height = Math.min(field.scrollHeight, MESSAGE_MAX_HEIGHT);
+    field.style.height = `${height}px`;
+    field.style.overflowY = field.scrollHeight > MESSAGE_MAX_HEIGHT ? "auto" : "hidden";
+  }, [message, lang]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,15 +127,16 @@ export function ContactForm() {
       <label className="mt-5 block text-sm font-medium text-ice-white">
         {f.message}
         <textarea
+          ref={messageRef}
           name="message"
           required
-          rows={6}
+          rows={5}
           minLength={CONTACT_LIMITS.messageMin}
           maxLength={CONTACT_LIMITS.message}
           placeholder={f.messagePlaceholder}
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          className={`${fieldClass} resize-y`}
+          className={`${fieldClass} resize-none`}
         />
       </label>
       <p className="mt-2 text-right font-mono text-xs text-slate" aria-live="polite">
