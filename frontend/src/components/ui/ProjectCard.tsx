@@ -13,7 +13,7 @@ export function ProjectCard({ project }: { project: Project }) {
 
   const body = (
     <>
-      <div className="aspect-[16/10] overflow-hidden border-b border-line bg-deep-navy">
+      <div className="aspect-video overflow-hidden border-b border-line bg-deep-navy">
         {project.image ? (
           <img
             src={project.image}
@@ -27,14 +27,14 @@ export function ProjectCard({ project }: { project: Project }) {
         )}
       </div>
 
-      <div className="p-6 sm:p-8">
+      <div className="p-5">
         <p className="font-mono text-xs tracking-[0.08em] text-slate uppercase">
           {project.year} · {project.type[lang]}
         </p>
-        <h3 className="mt-3 text-xl leading-snug font-semibold">{project.title}</h3>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed">{project.summary[lang]}</p>
+        <h3 className="mt-2 text-lg leading-snug font-semibold">{project.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed">{project.summary[lang]}</p>
 
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-4 flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
             <li key={tag} className="rounded-full border border-line px-2.5 py-1 font-mono text-xs text-mist">
               {tag}
@@ -42,7 +42,7 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </ul>
 
-        <p className="mt-6 text-sm font-medium text-signal-blue">
+        <p className="mt-4 text-sm font-medium text-signal-blue">
           {project.hasCaseStudy ? (
             <>
               {t.work.caseStudy} <span className="inline-block transition-transform lg:group-hover:translate-x-0.5">→</span>
