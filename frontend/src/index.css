@@ -167,6 +167,33 @@
   opacity: 1;
 }
 
+/*
+ * Kártyák egérkövető fénye (Rólam, Stack): halvány kék kör a háttérben ott, ahol az egér van (--mx, --my a
+ * utils/pointer.ts-ből). Az isolation + z-index: -1 a szöveg alá, de a kártya háttere fölé teszi.
+ */
+@media (min-width: 1024px) {
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), rgb(91 155 255 / 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity 400ms var(--ease-out-soft);
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+}
+
 /* Neon szabály 4: projektkártya hover (csak nagy képernyőn). */
 @media (min-width: 1024px) {
   .project-card:hover {

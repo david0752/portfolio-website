@@ -29,7 +29,7 @@ export async function sendContactMail({ topic, name, email, message }: ContactIn
     from: { name: "Portfólió weboldal", address: SMTP_USER },
     to: CONTACT_TO,
     replyTo: { name, address: email },
-    subject: `[Portfólió] ${topic} – ${name}`,
+    subject: `${topic} – ${name}`,
     text: `Téma: ${topic}\nNév: ${name}\nE-mail: ${email}\n\n${message}\n\n– Válaszolj erre a levélre, és a feladónak megy.`,
   });
 }

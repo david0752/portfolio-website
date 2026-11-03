@@ -4,26 +4,17 @@
  * (.hero-grid-glow, index.css). Az egér helyét CSS-változók viszik át, így nincs újrarenderelés.
  */
 
-import { useRef, type PointerEvent } from "react";
 import { Link } from "react-router";
 
 import { useI18n } from "../i18n/I18nProvider.tsx";
+import { trackPointer } from "../utils/pointer.ts";
 import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
 
 export function Hero() {
   const { t } = useI18n();
-  const sectionRef = useRef<HTMLElement>(null);
-
-  function handlePointerMove(event: PointerEvent<HTMLElement>) {
-    const section = sectionRef.current;
-    if (!section || event.pointerType !== "mouse") return;
-    const rect = section.getBoundingClientRect();
-    section.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-    section.style.setProperty("--my", `${event.clientY - rect.top}px`);
-  }
 
   return (
-    <section ref={sectionRef} onPointerMove={handlePointerMove} className="hero relative overflow-hidden">
+    <section onPointerMove={trackPointer} className="hero relative overflow-hidden">
       <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
       <div aria-hidden="true" className="hero-grid-glow pointer-events-none absolute inset-0 hidden lg:block" />
       <div
@@ -31,7 +22,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(91_155_255/0.10),transparent)]"
       />
 
-      <div className="relative mx-auto max-w-[1120px] px-5 pt-24 pb-24 md:px-8 md:pt-32 md:pb-32 xl:px-0 xl:pt-40">
+      <div className="relative mx-auto max-w-[1120px] px-5 pt-14 pb-24 md:px-8 md:pt-20 md:pb-32 xl:px-0 xl:pt-24">
         <p className="font-mono text-xs font-medium tracking-[0.08em] text-slate uppercase">{t.hero.role}</p>
 
         <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,4vw+1rem,4.25rem)] leading-[1.05] font-semibold tracking-[-0.03em]">

@@ -96,6 +96,7 @@ Last updated: 2026-11-02 (source project: Kunmadaras Drift website rebuild). Sec
 - **Themes and languages when the project needs them.** I asked for light and dark themes (public site and admin) and for a language switcher. Dynamic content entered in the admin must be translated too ("it's weird that this part stays Hungarian").
 - **Admin UX for a non-technical operator.** Explanatory text, safe defaults, confirmation before irreversible steps, clear indicators (e.g. a warning icon in the menu while e-mail is not configured), a menu order the client can rearrange, and highly visible limits (counters and progress bars, not just a sentence).
 - **E-mails match the website design**, use the full width, and have readable type sizes. A transactional confirmation (e.g. a newsletter opt-in) stays a plain text mail, and its landing page just says "Confirmed – you can close this page."
+- **Notification e-mails to myself stay clean** *(observed)*: in the portfolio contact form I asked to drop the `[Portfólió]` tag from the subject. The subject is just the content (`<topic> – <name>`), no bracketed site/app prefix; the sender name already tells where it came from.
 
 ## D. Backend and security expectations
 

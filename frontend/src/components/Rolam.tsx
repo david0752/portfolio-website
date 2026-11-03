@@ -2,11 +2,13 @@
  * Kezdőlap „02 / Rólam” blokkja: „Amire figyelek” cím alatt három értékkártya ikonnal
  * (tiszta kód, biztonság, minden képernyőn). Telefonon egymás alatt, tablettől 3 oszlopban.
  * A szövegek az i18n about.values tömbjében, az ikonok sorrendje ahhoz igazodik.
+ * Nagy képernyőn a kártya háttere kéken felizzik az egér körül (.spotlight, index.css).
  */
 
 import type { ReactNode } from "react";
 
 import { useI18n } from "../i18n/I18nProvider.tsx";
+import { trackPointer } from "../utils/pointer.ts";
 import { SectionHeading } from "./ui/SectionHeading.tsx";
 
 const ICONS: ReactNode[] = [
@@ -28,7 +30,11 @@ export function Rolam() {
         <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
         <ul className="mt-10 grid gap-4 md:grid-cols-3 md:gap-6">
           {t.about.values.map((value, index) => (
-            <li key={value.title} className="rounded-[14px] border border-line bg-card-navy p-6">
+            <li
+              key={value.title}
+              onPointerMove={trackPointer}
+              className="spotlight rounded-[14px] border border-line bg-card-navy p-6"
+            >
               <svg
                 className="h-6 w-6 text-signal-blue"
                 viewBox="0 0 24 24"
