@@ -75,8 +75,15 @@ export function Navbar() {
             ))}
           </ul>
           {languageSwitch}
-          <Link to={{ pathname: "/", hash: "kapcsolat" }} className={`${buttonPrimary} px-4 py-2`}>
+          {/* Visszafogott CTA: kis keretes link, hogy ne nyomja el a navbart. */}
+          <Link
+            to={{ pathname: "/", hash: "kapcsolat" }}
+            className="group inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm font-medium text-ice-white transition-colors hover:border-signal-blue hover:text-signal-blue"
+          >
             {t.nav.cta}
+            <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+              →
+            </span>
           </Link>
         </div>
 

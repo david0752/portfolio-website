@@ -39,9 +39,8 @@ export const en: Messages = {
     eyebrow: "02 / About",
     title: "Clean code, considered details",
     paragraphs: [
-      "I like building websites with order behind them: clear, maintainable code without needless complexity.",
-      "It matters to me that my sites are secure and take care of visitors' data. The site checks everything that is submitted before doing anything with it, and collects only what is truly needed, without unnecessary cookies or tracking.",
-      "For me a site is done when it works well on phones, tablets and laptops, and the client can run it on their own.",
+      "I write clean, clear code without needless complexity.",
+      "My sites are secure, take care of visitors' data, and work just as well on a phone as on a laptop.",
     ],
   },
   experience: {

@@ -38,9 +38,8 @@ export const hu = {
     eyebrow: "02 / Rólam",
     title: "Tiszta kód, átgondolt részletek",
     paragraphs: [
-      "Olyan weboldalakat szeretek építeni, amelyek mögött rend van: érthető, karbantartható kód, felesleges bonyolítás nélkül.",
-      "Fontos nekem, hogy az oldalaim biztonságosak legyenek, és vigyázzanak a látogatók adataira. Az oldal minden beküldött adatot ellenőriz, mielőtt bármit kezdene vele, és csak annyit gyűjt, amennyi tényleg szükséges, felesleges sütik és követés nélkül.",
-      "Az oldal nálam akkor kész, ha telefonon, tableten és laptopon is jól működik, és az ügyfél önállóan tudja kezelni.",
+      "Rendezett, érthető kódot írok, felesleges bonyolítás nélkül.",
+      "Az oldalaim biztonságosak, vigyáznak a látogatók adataira, és telefonon is ugyanolyan jól működnek, mint laptopon.",
     ],
   },
   experience: {
