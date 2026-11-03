@@ -36,10 +36,12 @@ export const hu = {
   },
   about: {
     eyebrow: "02 / Rólam",
-    title: "Tiszta kód, átgondolt részletek",
-    paragraphs: [
-      "Rendezett, érthető kódot írok, felesleges bonyolítás nélkül.",
-      "Az oldalaim biztonságosak, vigyáznak a látogatók adataira, és telefonon is ugyanolyan jól működnek, mint laptopon.",
+    title: "Amire figyelek",
+    // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).
+    values: [
+      { title: "Tiszta kód", text: "Rendezett, érthető, felesleges bonyolítás nélkül." },
+      { title: "Biztonság", text: "Vigyáz a látogatók adataira, felesleges követés nélkül." },
+      { title: "Minden képernyőn", text: "Telefonon ugyanolyan jól működik, mint laptopon." },
     ],
   },
   experience: {

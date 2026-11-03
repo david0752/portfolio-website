@@ -37,10 +37,11 @@ export const en: Messages = {
   },
   about: {
     eyebrow: "02 / About",
-    title: "Clean code, considered details",
-    paragraphs: [
-      "I write clean, clear code without needless complexity.",
-      "My sites are secure, take care of visitors' data, and work just as well on a phone as on a laptop.",
+    title: "What I focus on",
+    values: [
+      { title: "Clean code", text: "Tidy and clear, without needless complexity." },
+      { title: "Security", text: "Takes care of visitors' data, without unnecessary tracking." },
+      { title: "Every screen", text: "Works just as well on a phone as on a laptop." },
     ],
   },
   experience: {
