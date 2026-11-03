@@ -7,6 +7,7 @@ export const hu = {
   nav: {
     work: "Munkáim",
     about: "Rólam",
+    experience: "Tapasztalat",
     stack: "Stack",
     contact: "Kapcsolat",
     cta: "Írj nekem",
@@ -42,8 +43,14 @@ export const hu = {
       "Az oldal nálam akkor kész, ha telefonon, tableten és laptopon is jól működik, és az ügyfél önállóan tudja kezelni.",
     ],
   },
+  experience: {
+    eyebrow: "03 / Tapasztalat",
+    title: "Ahol eddig dolgoztam",
+    lead: "Munkahelyek és projektek, a legfrissebbel kezdve.",
+    present: "jelenleg",
+  },
   stack: {
-    eyebrow: "03 / Stack",
+    eyebrow: "04 / Stack",
     title: "Amivel dolgozom",
     groups: {
       frontend: "Frontend",
@@ -52,7 +59,7 @@ export const hu = {
     },
   },
   contact: {
-    eyebrow: "04 / Kapcsolat",
+    eyebrow: "05 / Kapcsolat",
     title: "Van egy projekted?",
     lead: "Írd meg röviden, miben segíthetek. Általában egy-két munkanapon belül válaszolok.",
     emailLabel: "E-mail",

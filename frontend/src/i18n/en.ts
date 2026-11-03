@@ -8,6 +8,7 @@ export const en: Messages = {
   nav: {
     work: "My work",
     about: "About",
+    experience: "Experience",
     stack: "Stack",
     contact: "Contact",
     cta: "Get in touch",
@@ -43,8 +44,14 @@ export const en: Messages = {
       "For me a site is done when it works well on phones, tablets and laptops, and the client can run it on their own.",
     ],
   },
+  experience: {
+    eyebrow: "03 / Experience",
+    title: "Where I've worked",
+    lead: "Jobs and projects, most recent first.",
+    present: "present",
+  },
   stack: {
-    eyebrow: "03 / Stack",
+    eyebrow: "04 / Stack",
     title: "What I work with",
     groups: {
       frontend: "Frontend",
@@ -53,7 +60,7 @@ export const en: Messages = {
     },
   },
   contact: {
-    eyebrow: "04 / Contact",
+    eyebrow: "05 / Contact",
     title: "Have a project in mind?",
     lead: "Tell me briefly how I can help. I usually reply within one or two working days.",
     emailLabel: "E-mail",

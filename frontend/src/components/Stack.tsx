@@ -13,7 +13,7 @@ export function Stack() {
   const { t } = useI18n();
 
   return (
-    <section id="stack" className="border-t border-line">
+    <section id="stack" className="border-t border-line bg-deep-navy">
       <div className="mx-auto max-w-[1120px] px-5 py-[72px] md:px-8 md:py-24 xl:px-0 xl:py-32">
         <SectionHeading eyebrow={t.stack.eyebrow} title={t.stack.title} />
         <div className="mt-12 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line md:grid-cols-3">

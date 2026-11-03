@@ -29,6 +29,7 @@ export function Navbar() {
   const links = [
     { hash: "munkak", label: t.nav.work },
     { hash: "rolam", label: t.nav.about },
+    { hash: "tapasztalat", label: t.nav.experience },
     { hash: "stack", label: t.nav.stack },
     { hash: "kapcsolat", label: t.nav.contact },
   ];
