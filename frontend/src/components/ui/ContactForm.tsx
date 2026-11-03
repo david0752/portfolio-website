@@ -12,7 +12,7 @@ import { CONTACT_LIMITS, CONTACT_TOPICS, sendContact, type ContactTopic } from "
 import { buttonPrimary } from "./Button.tsx";
 
 // Az üzenetmező eddig a magasságig nő a szöveggel, utána görgethető lesz.
-const MESSAGE_MAX_HEIGHT = 320;
+const MESSAGE_MAX_HEIGHT = 200;
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success"; text: string } | { kind: "error"; text: string };
 
