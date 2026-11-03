@@ -1,5 +1,5 @@
 /**
- * Kapcsolati űrlap (név, e-mail, üzenet + rejtett spamcsapda mező). A backend POST /api/contact
+ * Kapcsolati űrlap (téma, név, e-mail, üzenet + rejtett spamcsapda mező). A backend POST /api/contact
  * végpontjára küld; betöltés, siker és hiba állapotot mutat. Magyarul a backend hibaüzenete látszik,
  * angolul az általános (lefordított) hibaszöveg.
  */
@@ -8,7 +8,7 @@ import { useState, type FormEvent } from "react";
 import { Link } from "react-router";
 
 import { useI18n } from "../../i18n/I18nProvider.tsx";
-import { CONTACT_LIMITS, sendContact } from "../../utils/contact.ts";
+import { CONTACT_LIMITS, CONTACT_TOPICS, sendContact, type ContactTopic } from "../../utils/contact.ts";
 import { buttonPrimary } from "./Button.tsx";
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success"; text: string } | { kind: "error"; text: string };
@@ -19,6 +19,7 @@ const fieldClass =
 export function ContactForm() {
   const { t, lang } = useI18n();
   const f = t.contact.form;
+  const [topic, setTopic] = useState<ContactTopic | "">("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -30,8 +31,9 @@ export function ContactForm() {
     setStatus({ kind: "sending" });
 
     try {
-      await sendContact({ name, email, message, website });
+      await sendContact({ topic, name, email, message, website });
       setStatus({ kind: "success", text: f.success });
+      setTopic("");
       setName("");
       setEmail("");
       setMessage("");
@@ -45,6 +47,39 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="rounded-[14px] border border-line bg-deep-navy p-6 sm:p-8" noValidate={false}>
+      <label className="mb-5 block text-sm font-medium text-ice-white">
+        {f.topic}
+        <span className="relative block">
+          <select
+            name="topic"
+            required
+            value={topic}
+            onChange={(event) => setTopic(event.target.value as ContactTopic | "")}
+            className={`${fieldClass} cursor-pointer appearance-none pr-11 ${topic ? "" : "text-slate"}`}
+          >
+            <option value="" disabled>
+              {f.topicPlaceholder}
+            </option>
+            {CONTACT_TOPICS.map((id) => (
+              <option key={id} value={id} className="text-ice-white">
+                {f.topics[id]}
+              </option>
+            ))}
+          </select>
+          <svg
+            className="pointer-events-none absolute top-1/2 right-4 mt-1 h-4 w-4 -translate-y-1/2 text-slate"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+      </label>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-ice-white">
           {f.name}

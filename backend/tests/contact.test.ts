@@ -17,7 +17,7 @@ let ipCounter = 0;
 const post = (body: object, ip = `10.0.0.${++ipCounter}`) =>
   request(app).post("/api/contact").set("X-Forwarded-For", ip).send(body);
 
-const valid = { name: "Teszt Elek", email: "teszt@example.com", message: "Szeretnék egy weboldalt." };
+const valid = { topic: "new-site", name: "Teszt Elek", email: "teszt@example.com", message: "Szeretnék egy weboldalt." };
 
 describe("POST /api/contact", () => {
   beforeEach(() => {
@@ -30,6 +30,15 @@ describe("POST /api/contact", () => {
     expect(res.status).toBe(200);
     expect(sendMock).toHaveBeenCalledOnce();
     expect(sendMock.mock.calls[0][0].replyTo.address).toBe(valid.email);
+    expect(sendMock.mock.calls[0][0].subject).toContain("Új weboldal");
+  });
+
+  it("ismeretlen vagy hiányzó témát 400-zal elutasít", async () => {
+    for (const topic of [undefined, "", "hacker", "__proto__", "toString"]) {
+      const res = await post({ ...valid, topic });
+      expect(res.status).toBe(400);
+    }
+    expect(sendMock).not.toHaveBeenCalled();
   });
 
   it("hiányzó vagy rossz mezőt 400-zal elutasít", async () => {

@@ -6,7 +6,7 @@ import type { Messages } from "./hu.ts";
 
 export const en: Messages = {
   nav: {
-    work: "Work",
+    work: "My work",
     about: "About",
     stack: "Stack",
     contact: "Contact",
@@ -39,7 +39,7 @@ export const en: Messages = {
     title: "Clean code, considered details",
     paragraphs: [
       "I like building websites with order behind them: clear, maintainable code without needless complexity.",
-      "Security and privacy are defaults for me, not extras: server-side validation, limits on every field, cookies and tracking only where they are truly needed.",
+      "It matters to me that my sites are secure and take care of visitors' data. The site checks everything that is submitted before doing anything with it, and collects only what is truly needed, without unnecessary cookies or tracking.",
       "For me a site is done when it works well on phones, tablets and laptops, and the client can run it on their own.",
     ],
   },
@@ -50,7 +50,6 @@ export const en: Messages = {
       frontend: "Frontend",
       backend: "Backend",
       ops: "Database and operations",
-      quality: "Quality and testing",
     },
   },
   contact: {
@@ -59,6 +58,14 @@ export const en: Messages = {
     lead: "Tell me briefly how I can help. I usually reply within one or two working days.",
     emailLabel: "E-mail",
     form: {
+      topic: "How can I help?",
+      topicPlaceholder: "Choose a topic",
+      topics: {
+        "new-site": "New website",
+        "existing-site": "Improving or fixing an existing site",
+        "web-app": "Web application or admin system",
+        other: "Other",
+      },
       name: "Name",
       email: "E-mail address",
       message: "Message",

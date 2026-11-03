@@ -37,6 +37,8 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
+    /* Sötét natív vezérlők (pl. a témaválasztó legördülő listája). */
+    color-scheme: dark;
   }
 
   body {
@@ -102,6 +104,51 @@
 .neon-word {
   color: var(--color-neon-cyan);
   text-shadow: 0 0 18px rgb(77 227 255 / 0.25);
+}
+
+/*
+ * Hero rácsos háttér. Az alap rács halvány és a széleken elfogy (maszk). A .hero-grid-glow ugyanaz a rács kékben,
+ * csak az egér körüli körben látszik (--mx, --my a Hero.tsx-ből), és csak akkor, ha az egér a Hero fölött van.
+ */
+.hero {
+  --grid-size: 56px;
+  --mx: 50%;
+  --my: 40%;
+}
+
+.hero-grid,
+.hero-grid-glow {
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: center top;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgb(28 42 68 / 0.55) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(28 42 68 / 0.55) 1px, transparent 1px);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, black 30%, transparent 100%);
+}
+
+.hero-grid-glow {
+  background-image:
+    radial-gradient(circle 220px at var(--mx) var(--my), rgb(91 155 255 / 0.07), transparent 70%),
+    linear-gradient(to right, rgb(91 155 255 / 0.7) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(91 155 255 / 0.7) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  background-position:
+    0 0,
+    center top,
+    center top;
+  mask-image: radial-gradient(circle 200px at var(--mx) var(--my), black 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out-soft);
+}
+
+.hero:hover .hero-grid-glow {
+  opacity: 1;
 }
 
 /* Neon szabály 4: projektkártya hover (csak nagy képernyőn). */

@@ -5,7 +5,7 @@
 
 export const hu = {
   nav: {
-    work: "Munkák",
+    work: "Munkáim",
     about: "Rólam",
     stack: "Stack",
     contact: "Kapcsolat",
@@ -38,7 +38,7 @@ export const hu = {
     title: "Tiszta kód, átgondolt részletek",
     paragraphs: [
       "Olyan weboldalakat szeretek építeni, amelyek mögött rend van: érthető, karbantartható kód, felesleges bonyolítás nélkül.",
-      "A biztonság és az adatvédelem nálam alapértelmezés, nem extra: szerveroldali ellenőrzés, korlátok minden mezőn, sütik és követés csak ott, ahol tényleg kell.",
+      "Fontos nekem, hogy az oldalaim biztonságosak legyenek, és vigyázzanak a látogatók adataira. Az oldal minden beküldött adatot ellenőriz, mielőtt bármit kezdene vele, és csak annyit gyűjt, amennyi tényleg szükséges, felesleges sütik és követés nélkül.",
       "Az oldal nálam akkor kész, ha telefonon, tableten és laptopon is jól működik, és az ügyfél önállóan tudja kezelni.",
     ],
   },
@@ -49,7 +49,6 @@ export const hu = {
       frontend: "Frontend",
       backend: "Backend",
       ops: "Adatbázis és üzemeltetés",
-      quality: "Minőség és tesztelés",
     },
   },
   contact: {
@@ -58,6 +57,15 @@ export const hu = {
     lead: "Írd meg röviden, miben segíthetek. Általában egy-két munkanapon belül válaszolok.",
     emailLabel: "E-mail",
     form: {
+      topic: "Miben segíthetek?",
+      topicPlaceholder: "Válassz témát",
+      // A kulcsok a backend utils/validation.ts CONTACT_TOPICS azonosítói.
+      topics: {
+        "new-site": "Új weboldal",
+        "existing-site": "Meglévő oldal fejlesztése, javítása",
+        "web-app": "Webes alkalmazás, adminrendszer",
+        other: "Egyéb",
+      },
       name: "Név",
       email: "E-mail-cím",
       message: "Üzenet",

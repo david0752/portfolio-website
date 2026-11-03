@@ -8,7 +8,7 @@ import nodemailer from "nodemailer";
 import { HttpError } from "../middleware/ErrorHandler.middleware.js";
 import type { ContactInput } from "../utils/validation.js";
 
-export async function sendContactMail({ name, email, message }: ContactInput): Promise<void> {
+export async function sendContactMail({ topic, name, email, message }: ContactInput): Promise<void> {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO } = process.env;
 
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !CONTACT_TO) {
@@ -29,7 +29,7 @@ export async function sendContactMail({ name, email, message }: ContactInput): P
     from: { name: "Portfólió weboldal", address: SMTP_USER },
     to: CONTACT_TO,
     replyTo: { name, address: email },
-    subject: `[Portfólió] Új megkeresés – ${name}`,
-    text: `Név: ${name}\nE-mail: ${email}\n\n${message}\n\n– Válaszolj erre a levélre, és a feladónak megy.`,
+    subject: `[Portfólió] ${topic} – ${name}`,
+    text: `Téma: ${topic}\nNév: ${name}\nE-mail: ${email}\n\n${message}\n\n– Válaszolj erre a levélre, és a feladónak megy.`,
   });
 }

@@ -8,6 +8,7 @@ import { Link, useLocation } from "react-router";
 
 import { LANGUAGES, useI18n } from "../../i18n/I18nProvider.tsx";
 import { buttonPrimary } from "../ui/Button.tsx";
+import { Logo } from "../ui/Logo.tsx";
 
 export function Navbar() {
   const { t, lang, setLang } = useI18n();
@@ -58,8 +59,8 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-[1120px] items-center justify-between px-5 md:px-8 xl:px-0">
-        <Link to="/" className="text-[0.9375rem] font-semibold tracking-tight text-ice-white">
-          Szántó Dávid<span className="text-signal-blue">.</span>
+        <Link to="/" aria-label={`Szántó Dávid – ${t.nav.home}`}>
+          <Logo />
         </Link>
 
         <div className="hidden items-center gap-8 lg:flex">

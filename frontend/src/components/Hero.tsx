@@ -1,8 +1,10 @@
 /**
  * Kezdőlap nyitóblokkja: szerep, főcím egy neon szóval, bemutatkozó mondat, „elérhető” pötty, két gomb.
- * A háttérben egyetlen halvány kék radiális fény (DESIGN.md 2. pont).
+ * Háttér: halvány rács és egy kék radiális fény; nagy képernyőn a rács kéken felizzik az egér körül
+ * (.hero-grid-glow, index.css). Az egér helyét CSS-változók viszik át, így nincs újrarenderelés.
  */
 
+import { useRef, type PointerEvent } from "react";
 import { Link } from "react-router";
 
 import { useI18n } from "../i18n/I18nProvider.tsx";
@@ -10,9 +12,20 @@ import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
 
 export function Hero() {
   const { t } = useI18n();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  function handlePointerMove(event: PointerEvent<HTMLElement>) {
+    const section = sectionRef.current;
+    if (!section || event.pointerType !== "mouse") return;
+    const rect = section.getBoundingClientRect();
+    section.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+    section.style.setProperty("--my", `${event.clientY - rect.top}px`);
+  }
 
   return (
-    <section className="relative overflow-hidden">
+    <section ref={sectionRef} onPointerMove={handlePointerMove} className="hero relative overflow-hidden">
+      <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
+      <div aria-hidden="true" className="hero-grid-glow pointer-events-none absolute inset-0 hidden lg:block" />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(91_155_255/0.10),transparent)]"
