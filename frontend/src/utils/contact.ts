@@ -8,7 +8,7 @@ export const CONTACT_LIMITS = { name: 100, email: 254, messageMin: 10, message: 
 export const CONTACT_EMAIL = "szanto.david12@gmail.com";
 
 // A megkeresés témái (azonosítók); a backend CONTACT_TOPICS-szal egyezzen. A feliratok az i18n-ben vannak.
-export const CONTACT_TOPICS = ["new-site", "existing-site", "web-app", "other"] as const;
+export const CONTACT_TOPICS = ["new-site", "existing-site", "web-app", "site-bug", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 export interface ContactPayload {

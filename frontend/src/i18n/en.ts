@@ -71,6 +71,7 @@ export const en: Messages = {
         "new-site": "New website",
         "existing-site": "Improving or fixing an existing site",
         "web-app": "Web application or admin system",
+        "site-bug": "I found a bug on this site",
         other: "Other",
       },
       name: "Name",

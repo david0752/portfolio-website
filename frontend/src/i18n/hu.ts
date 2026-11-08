@@ -72,6 +72,7 @@ export const hu = {
         "new-site": "Új weboldal",
         "existing-site": "Meglévő oldal fejlesztése, javítása",
         "web-app": "Webes alkalmazás, adminrendszer",
+        "site-bug": "Hibát találtam ezen az oldalon",
         other: "Egyéb",
       },
       name: "Név",

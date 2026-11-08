@@ -16,6 +16,7 @@ export const CONTACT_TOPICS = {
   "new-site": "Új weboldal",
   "existing-site": "Meglévő oldal fejlesztése, javítása",
   "web-app": "Webes alkalmazás, adminrendszer",
+  "site-bug": "Hiba ezen a weboldalon",
   other: "Egyéb",
 } as const;
 

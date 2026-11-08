@@ -28,6 +28,7 @@ export async function sendContactMail({ topic, name, email, message }: ContactIn
   await transporter.sendMail({
     from: { name: "Portfólió weboldal", address: SMTP_USER },
     to: CONTACT_TO,
+    priority: "high", // fontosként jelölve (X-Priority / Importance fejléc)
     replyTo: { name, address: email },
     subject: `${topic} – ${name}`,
     text: `Téma: ${topic}\nNév: ${name}\nE-mail: ${email}\n\n${message}\n\n– Válaszolj erre a levélre, és a feladónak megy.`,
