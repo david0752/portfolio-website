@@ -1,15 +1,16 @@
 // Astro beállítás: statikus oldalak (build: dist/), React a komponensekhez és szigetekhez, Tailwind 4 a Vite-on át.
 // Fejlesztéskor a :5173 porton fut, az /api kéréseket a backend (Cloudflare Worker, wrangler dev) kapja a :3300-as porton.
-// A SITE_URL (.env) az oldal éles címe: ebből készül a canonical, a megosztási adatok, a sitemap és a robots.txt.
+// A SITE_URL (.env.production) az oldal éles címe: ebből készül a canonical, a megosztási adatok, a sitemap és a robots.txt.
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-const { SITE_URL } = loadEnv(process.env.NODE_ENV ?? "production", process.cwd(), "");
+// Mindig az éles beállítást olvassa (fejlesztéskor is), így a canonical és a sitemap mindenhol az éles címre mutat.
+const { SITE_URL } = loadEnv("production", process.cwd(), "");
 if (!SITE_URL) {
-  console.warn("\n[SEO] Nincs SITE_URL a frontend/.env-ben: a canonical és a sitemap localhostra mutat. Élesítés előtt állítsd be!\n");
+  console.warn("\n[SEO] Nincs SITE_URL a frontend/.env.production-ben: a canonical és a sitemap localhostra mutat.\n");
 }
 
 // A Worker csak a saját címéről fogadja az űrlapot (Origin-ellenőrzés), ezért a proxy az Origin fejlécet is átírja.
