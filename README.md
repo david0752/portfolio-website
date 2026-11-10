@@ -7,4 +7,4 @@ Personal portfolio of Szántó Dávid. Status: planning – see `docs/`.
 - `docs/DESIGN.md` – colors, typography, spacing, components
 - `docs/ARCHITECTURE.md` – stack and folder structure
 - `docs/MEMORY.md` – decision log
-- `docs/projects/` – case study content drafts
+- `docs/projects/` – case study content drafts (local only, git-ignored: the repo is public and drafts wait for client approval)
