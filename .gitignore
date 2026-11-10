@@ -5,6 +5,5 @@ graphify-out/
 .playwright-mcp/
 *.tsbuildinfo
 .astro/
-
-# Esettanulmány-vázlatok: csak helyben, amíg az ügyfél jóvá nem hagyja (a repó nyilvános).
-docs/projects/
+.wrangler/
+worker-configuration.d.ts

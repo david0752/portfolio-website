@@ -1,9 +1,7 @@
 /**
- * Központi hibakezelő. Minden hibaválasz { message } alakú, magyar szöveggel.
- * Az 5xx hibák részletei csak a szerver naplójába kerülnek, a kliens általános üzenetet kap.
+ * Központi hibakezelés a Workerhez. Minden válasz { message } alakú JSON, magyar szöveggel.
+ * Az 5xx hibák részletei csak a Cloudflare naplójába kerülnek (személyes adat nélkül), a kliens általános üzenetet kap.
  */
-
-import type { ErrorRequestHandler } from "express";
 
 // A controllerek ezt dobják, ha a kérés hibás vagy egy szolgáltatás nem érhető el.
 export class HttpError extends Error {
@@ -16,24 +14,18 @@ export class HttpError extends Error {
   }
 }
 
-export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
-  if (res.headersSent) return;
+export function jsonResponse(status: number, message: string): Response {
+  return Response.json(
+    { message },
+    { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } },
+  );
+}
 
-  if (error instanceof HttpError) {
-    res.status(error.status).json({ message: error.message });
-    return;
-  }
+export function errorResponse(error: unknown): Response {
+  if (error instanceof HttpError) return jsonResponse(error.status, error.message);
 
-  // Az Express/body-parser hibái (hibás JSON: 400, túl nagy kérés: 413) status mezőt hordoznak.
-  const status = typeof error?.status === "number" ? error.status : 500;
-
-  if (status >= 400 && status < 500) {
-    const message =
-      error?.type === "entity.parse.failed" ? "A kérés törzse nem érvényes JSON." : status === 413 ? "A kérés túl nagy." : "Hibás kérés.";
-    res.status(status).json({ message });
-    return;
-  }
-
-  console.error("Backend hiba:", error);
-  res.status(500).json({ message: "Váratlan szerverhiba történt." });
-};
+  // Csak a hiba neve és kódja kerül a naplóba, az üzenet tartalma (személyes adat) nem.
+  const code = (error as { code?: unknown } | null)?.code;
+  console.error("Backend hiba:", error instanceof Error ? error.name : typeof error, code ?? "");
+  return jsonResponse(500, "Váratlan szerverhiba történt.");
+}

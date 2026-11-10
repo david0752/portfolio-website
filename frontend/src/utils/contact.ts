@@ -25,7 +25,8 @@ export interface ContactPayload {
 
 // Siker esetén a backend üzenetét adja vissza, hibánál Error-t dob a backend (magyar) üzenetével.
 export async function sendContact(payload: ContactPayload): Promise<string> {
-  const response = await fetch("/api/contact", {
+  // Perjellel, mint az oldal minden címe (trailingSlash: "always"); nélküle a fejlesztői szerver 404-et adna.
+  const response = await fetch("/api/contact/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

@@ -1,42 +1,56 @@
 /**
- * A kapcsolati végpont tesztjei (npm test): mezőellenőrzés, limitek, spamcsapda, hiányzó SMTP, rate limit.
- * A levélküldés mockolva van, valódi e-mail nem megy ki.
+ * A kapcsolati végpont tesztjei (npm test): mezőellenőrzés, limitek, spamcsapda, eredet- és méretellenőrzés,
+ * hiányzó levélküldő, rate limit. A Worker fetch függvényét hívják hamis env-vel: valódi e-mail nem megy ki.
  */
 
-import request from "supertest";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import worker from "../src/worker.js";
+
+const SITE = "https://szdavid.dev";
 const sendMock = vi.fn();
-vi.mock("nodemailer", () => ({ default: { createTransport: () => ({ sendMail: sendMock }) } }));
+let limiterOk = true;
 
-// Proxy mód: minden kérés saját X-Forwarded-For IP-ről jön, így a tesztek nem osztoznak a rate limit keretén.
-process.env.TRUST_PROXY = "1";
-const { app } = await import("../src/app.js");
-
-let ipCounter = 0;
-const post = (body: object, ip = `10.0.0.${++ipCounter}`) =>
-  request(app).post("/api/contact").set("X-Forwarded-For", ip).send(body);
+function makeEnv(overrides: Partial<Env> = {}): Env {
+  return {
+    CONTACT_MAIL: { send: sendMock },
+    CONTACT_LIMITER: { limit: async () => ({ success: limiterOk }) },
+    MAIL_FROM: "urlap@szdavid.dev",
+    MAIL_TO: "szanto.david12@gmail.com",
+    ...overrides,
+  } as unknown as Env;
+}
 
 const valid = { topic: "new-site", name: "Teszt Elek", email: "teszt@example.com", message: "Szeretnék egy weboldalt." };
+
+async function post(body: unknown, { env = makeEnv(), origin = SITE, raw }: { env?: Env; origin?: string | null; raw?: string } = {}) {
+  const headers: Record<string, string> = { "Content-Type": "application/json", "CF-Connecting-IP": "10.0.0.1" };
+  if (origin) headers.Origin = origin;
+  const request = new Request(`${SITE}/api/contact`, { method: "POST", headers, body: raw ?? JSON.stringify(body) });
+  const response = await worker.fetch(request as Parameters<typeof worker.fetch>[0], env, {} as ExecutionContext);
+  return { status: response.status, body: (await response.json()) as { message: string } };
+}
 
 describe("POST /api/contact", () => {
   beforeEach(() => {
     sendMock.mockReset();
-    Object.assign(process.env, { SMTP_HOST: "smtp.test", SMTP_USER: "u@test.hu", SMTP_PASS: "x", CONTACT_TO: "to@test.hu" });
+    limiterOk = true;
   });
 
-  it("érvényes üzenetet továbbít, a válasz a feladónak megy", async () => {
+  it("érvényes üzenetet továbbít, a válasz a feladónak megy, fontosként jelölve", async () => {
     const res = await post(valid);
     expect(res.status).toBe(200);
     expect(sendMock).toHaveBeenCalledOnce();
-    expect(sendMock.mock.calls[0][0].replyTo.address).toBe(valid.email);
-    expect(sendMock.mock.calls[0][0].subject).toContain("Új weboldal");
+    const mail = sendMock.mock.calls[0][0];
+    expect(mail.replyTo.email).toBe(valid.email);
+    expect(mail.to).toBe("szanto.david12@gmail.com");
+    expect(mail.subject).toBe("Új weboldal – Teszt Elek");
+    expect(mail.headers.Importance).toBe("high");
   });
 
   it("ismeretlen vagy hiányzó témát 400-zal elutasít", async () => {
     for (const topic of [undefined, "", "hacker", "__proto__", "toString"]) {
-      const res = await post({ ...valid, topic });
-      expect(res.status).toBe(400);
+      expect((await post({ ...valid, topic })).status).toBe(400);
     }
     expect(sendMock).not.toHaveBeenCalled();
   });
@@ -51,8 +65,17 @@ describe("POST /api/contact", () => {
   });
 
   it("a limit feletti hosszt elutasítja", async () => {
-    const res = await post({ ...valid, message: "a".repeat(3001) });
-    expect(res.status).toBe(400);
+    expect((await post({ ...valid, message: "a".repeat(3001) })).status).toBe(400);
+    expect((await post({ ...valid, name: "a".repeat(101) })).status).toBe(400);
+  });
+
+  it("a 20 KB-nál nagyobb kérést 413-mal elutasítja", async () => {
+    expect((await post({ ...valid, message: "a".repeat(25_000) })).status).toBe(413);
+  });
+
+  it("hibás JSON-ra 400", async () => {
+    expect((await post(null, { raw: "{nem json" })).status).toBe(400);
+    expect((await post([1, 2])).status).toBe(400);
   });
 
   it("a névből kiveszi a sortörést (fejléc-injekció ellen)", async () => {
@@ -66,15 +89,36 @@ describe("POST /api/contact", () => {
     expect(sendMock).not.toHaveBeenCalled();
   });
 
-  it("hiányzó SMTP beállításnál 503", async () => {
-    delete process.env.SMTP_HOST;
-    const res = await post(valid);
-    expect(res.status).toBe(503);
+  it("más oldalról érkező kérést 403-mal elutasít, Origin nélkülit elfogad", async () => {
+    expect((await post(valid, { origin: "https://gonosz.example" })).status).toBe(403);
+    expect((await post(valid, { origin: "null" })).status).toBe(403);
+    expect((await post(valid, { origin: null })).status).toBe(200);
   });
 
-  it("egy IP-ről óránként 5 üzenet után 429", async () => {
-    const statuses: number[] = [];
-    for (let i = 0; i < 6; i++) statuses.push((await post(valid, "10.9.9.9")).status);
-    expect(statuses).toEqual([200, 200, 200, 200, 200, 429]);
+  it("hiányzó levélküldőnél 503", async () => {
+    expect((await post(valid, { env: makeEnv({ CONTACT_MAIL: undefined }) })).status).toBe(503);
+  });
+
+  it("ha a levélküldés hibát dob, 502 általános üzenettel", async () => {
+    sendMock.mockRejectedValueOnce(Object.assign(new Error("boom"), { code: "E_DELIVERY_FAILED" }));
+    const res = await post(valid);
+    expect(res.status).toBe(502);
+    expect(res.body.message).not.toContain("boom");
+  });
+
+  it("a rate limit felett 429", async () => {
+    limiterOk = false;
+    expect((await post(valid)).status).toBe(429);
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it("más végpontra 404, GET-re 405", async () => {
+    const env = makeEnv();
+    const ctx = {} as ExecutionContext;
+    type Req = Parameters<typeof worker.fetch>[0];
+    expect((await worker.fetch(new Request(`${SITE}/api/semmi`) as Req, env, ctx)).status).toBe(404);
+    expect((await worker.fetch(new Request(`${SITE}/api/contact`) as Req, env, ctx)).status).toBe(405);
+    // Perjellel is ugyanaz a végpont.
+    expect((await worker.fetch(new Request(`${SITE}/api/contact/`) as Req, env, ctx)).status).toBe(405);
   });
 });

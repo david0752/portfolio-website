@@ -16,7 +16,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Adatkezelő", text: `Szántó Dávid, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "Milyen adatokat kezelek?",
-        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem használ sütiket, nem követi a látogatókat, és nem tölt be külső szolgáltatást (a betűtípusok is a saját szerverről jönnek). A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
+        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem használ sütiket, nem követi a látogatókat, és nem tölt be külső szolgáltatást (a betűtípusok is az oldalról töltődnek be). A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
       },
       {
         heading: "Mire használom?",
@@ -24,7 +24,11 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       },
       {
         heading: "Hol tárolódik és meddig?",
-        text: "Az üzenetet a weboldal szervere nem menti el, csak e-mailben továbbítja hozzám (Gmail). A leveleket a megkeresés lezárása után legfeljebb egy évig őrzöm meg.",
+        text: "Az üzenetet a weboldal nem menti el, csak e-mailben továbbítja hozzám (Gmail). A leveleket a megkeresés lezárása után legfeljebb egy évig őrzöm meg.",
+      },
+      {
+        heading: "Adatfeldolgozók",
+        text: "Az oldalt a Cloudflare, Inc. (USA) szolgálja ki, és ő továbbítja az űrlap üzenetét e-mailben. A kiszolgáláshoz a Cloudflare technikailag látja a látogató IP-címét; ezt az oldal csak a túl sok üzenet kiszűrésére használja, nem tárolja. A leveleket a Google (Gmail) tárolja. Mindkét cég részt vesz az EU–USA adatvédelmi keretrendszerben.",
       },
       {
         heading: "Jogaid",
@@ -39,7 +43,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Data controller", text: `Dávid Szántó, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "What data do I process?",
-        text: "The name, e-mail address and message you enter in the contact form. The site uses no cookies, does not track visitors and loads no third-party services (fonts are served from my own server). The language is set by the page address (URL); nothing is stored in your browser.",
+        text: "The name, e-mail address and message you enter in the contact form. The site uses no cookies, does not track visitors and loads no third-party services (fonts are loaded from the site itself). The language is set by the page address (URL); nothing is stored in your browser.",
       },
       {
         heading: "What for?",
@@ -47,7 +51,11 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       },
       {
         heading: "Where is it stored, and for how long?",
-        text: "The website server does not store the message; it only forwards it to me by e-mail (Gmail). I keep the e-mails for at most one year after the inquiry is closed.",
+        text: "The website does not store the message; it only forwards it to me by e-mail (Gmail). I keep the e-mails for at most one year after the inquiry is closed.",
+      },
+      {
+        heading: "Processors",
+        text: "The site is served by Cloudflare, Inc. (USA), which also forwards the contact form message by e-mail. To serve the site, Cloudflare technically sees the visitor's IP address; the site uses it only to block too many messages and does not store it. The e-mails are stored by Google (Gmail). Both companies participate in the EU–U.S. Data Privacy Framework.",
       },
       {
         heading: "Your rights",
