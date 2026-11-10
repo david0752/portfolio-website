@@ -1,4 +1,5 @@
-// Szekciócím: kis mono címke (pl. „01 / Munkák”), H2 és opcionális bevezető.
+// Szekciócím: kódkomment stílusú mono címke (pl. „// munkáim”), H2 és opcionális bevezető.
+// Görgetéskor úszik be (data-reveal, utils/reveal.ts).
 
 interface Props {
   eyebrow: string;
@@ -8,8 +9,13 @@ interface Props {
 
 export function SectionHeading({ eyebrow, title, lead }: Props) {
   return (
-    <div className="max-w-2xl">
-      <p className="font-mono text-xs font-medium tracking-[0.08em] text-slate uppercase">{eyebrow}</p>
+    <div data-reveal className="max-w-2xl">
+      <p className="font-mono text-sm text-slate">
+        <span aria-hidden="true" className="text-signal-blue">
+          {"// "}
+        </span>
+        {eyebrow}
+      </p>
       <h2 className="mt-4 text-[clamp(1.75rem,2vw+1rem,2.5rem)] leading-[1.15] font-semibold tracking-[-0.02em]">
         {title}
       </h2>

@@ -1,20 +1,24 @@
 /**
- * Kezdőlap nyitóblokkja: szerep, főcím egy neon szóval, bemutatkozó mondat, „elérhető” pötty, két gomb.
+ * Kezdőlap nyitóblokkja: szerep, főcím, bemutatkozó mondat, „elérhető” pötty, két gomb; mellette (telefonon
+ * alatta) a kódablak a fejlesztő adataival (ui/CodeWindow.tsx).
+ * A főcím első sora kék (signal-blue, ragyogás nélkül) szó, amely nagy képernyőn három szó között váltakozik gépelős (konzol)
+ * animációval, villogó kurzorral (data-typewriter, utils/typewriter.ts). A HTML-ben az első szó áll,
+ * a felolvasók az aria-label teljes mondatát kapják.
+ * A blokk legalább a teljes képernyőt kitölti (a navbar alatt), a tartalma függőlegesen középen áll.
  * Háttér: halvány rács és egy kék radiális fény; nagy képernyőn a rács kéken felizzik az egér körül
- * (.hero-grid-glow, index.css). Az egér helyét CSS-változók viszik át, így nincs újrarenderelés.
+ * (.hero-grid-glow, index.css). Statikus HTML-ként renderelődik (Astro), a böngészőben nem fut React.
  */
 
-import { Link } from "react-router";
-
-import { useI18n } from "../i18n/I18nProvider.tsx";
-import { trackPointer } from "../utils/pointer.ts";
+import { messages, type Lang } from "../i18n/index.ts";
 import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
+import { CodeWindow } from "./ui/CodeWindow.tsx";
 
-export function Hero() {
-  const { t } = useI18n();
+export function Hero({ lang }: { lang: Lang }) {
+  const t = messages(lang);
+  const words = t.hero.titleWords;
 
   return (
-    <section onPointerMove={trackPointer} className="hero relative overflow-hidden">
+    <section data-pointer className="hero relative flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden lg:min-h-[calc(100dvh-5rem)]">
       <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0" />
       <div aria-hidden="true" className="hero-grid-glow pointer-events-none absolute inset-0 hidden lg:block" />
       <div
@@ -22,29 +26,45 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(91_155_255/0.10),transparent)]"
       />
 
-      <div className="relative mx-auto max-w-[1120px] px-5 pt-14 pb-24 md:px-8 md:pt-20 md:pb-32 xl:px-0 xl:pt-24">
-        <p className="font-mono text-xs font-medium tracking-[0.08em] text-slate uppercase">{t.hero.role}</p>
+      <div className="relative mx-auto grid w-full max-w-[1120px] items-center gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 xl:px-0">
+        <div className="lg:col-span-7">
+          <p className="font-mono text-sm text-slate">
+            <span aria-hidden="true" className="text-signal-blue">
+              {"// "}
+            </span>
+            {t.hero.role}
+          </p>
 
-        <h1 className="mt-6 max-w-4xl text-[clamp(2.5rem,4vw+1rem,4.25rem)] leading-[1.05] font-semibold tracking-[-0.03em]">
-          {t.hero.titleBefore}
-          <span className="neon-word">{t.hero.titleAccent}</span>
-          {t.hero.titleAfter}
-        </h1>
+          <h1
+            aria-label={`${words.join(", ")} – ${t.hero.titleRest}`}
+            className="mt-6 text-[clamp(2.5rem,3vw+1rem,3.75rem)] leading-[1.08] font-semibold tracking-[-0.03em]"
+          >
+            <span className="block text-signal-blue lg:whitespace-nowrap">
+              <span data-typewriter={JSON.stringify(words)}>{words[0]}</span>
+              <span aria-hidden="true" className="logo-cursor ml-[0.06em] inline-block h-[0.09em] w-[0.5em] bg-signal-blue" />
+            </span>
+            {t.hero.titleRest}
+          </h1>
 
-        <p className="mt-8 max-w-[60ch] text-lg leading-relaxed">{t.hero.lead}</p>
+          <p className="mt-8 max-w-[60ch] text-lg leading-relaxed">{t.hero.lead}</p>
 
-        <p className="mt-8 inline-flex items-center gap-3 text-sm text-mist">
-          <span className="status-dot h-2 w-2 rounded-full bg-neon-cyan" aria-hidden="true" />
-          {t.hero.available}
-        </p>
+          <p className="mt-8 inline-flex items-center gap-3 text-sm text-mist">
+            <span className="status-dot h-2 w-2 rounded-full bg-neon-cyan" aria-hidden="true" />
+            {t.hero.available}
+          </p>
 
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Link to={{ hash: "munkak" }} className={buttonPrimary}>
-            {t.hero.primary}
-          </Link>
-          <Link to={{ hash: "kapcsolat" }} className={buttonSecondary}>
-            {t.hero.secondary}
-          </Link>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a href="#munkak" className={buttonPrimary}>
+              {t.hero.primary}
+            </a>
+            <a href="#kapcsolat" className={buttonSecondary}>
+              {t.hero.secondary}
+            </a>
+          </div>
+        </div>
+
+        <div className="lg:col-span-5">
+          <CodeWindow lang={lang} />
         </div>
       </div>
     </section>

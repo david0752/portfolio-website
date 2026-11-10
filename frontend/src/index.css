@@ -39,6 +39,10 @@
     scroll-behavior: smooth;
     /* Sötét natív vezérlők (pl. a témaválasztó legördülő listája). */
     color-scheme: dark;
+    /* Görgetősáv az oldal színeiben: vékony, a sáv a háttérbe olvad, a fogantyú visszafogott kékesszürke (elég világos, hogy látsszon). */
+    --scrollbar-thumb: color-mix(in srgb, var(--color-slate) 45%, var(--color-midnight));
+    scrollbar-color: var(--scrollbar-thumb) var(--color-midnight);
+    scrollbar-width: thin;
   }
 
   body {
@@ -51,6 +55,28 @@
   h3 {
     color: var(--color-ice-white);
     text-wrap: balance;
+  }
+
+  /* Görgetősáv Chrome / Edge / Safari alatt (ahol a scrollbar-color még nem elég): ugyanaz a kinézet, hoverre kék. */
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-midnight);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border: 2px solid var(--color-midnight);
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-signal-blue);
+    }
   }
 
   ::selection {
@@ -67,7 +93,7 @@
 
   /* A sticky navbar ne takarja ki a szekció címét horgonyra ugráskor. */
   section[id] {
-    scroll-margin-top: 72px;
+    scroll-margin-top: 80px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -116,15 +142,9 @@
   animation: cursor-blink 1.1s steps(1) infinite;
 }
 
-/* Neon szabály 2: a főcím egyetlen kiemelt szava. */
-.neon-word {
-  color: var(--color-neon-cyan);
-  text-shadow: 0 0 18px rgb(77 227 255 / 0.25);
-}
-
 /*
  * Hero rácsos háttér. Az alap rács halvány és a széleken elfogy (maszk). A .hero-grid-glow ugyanaz a rács kékben,
- * csak az egér körüli körben látszik (--mx, --my a Hero.tsx-ből), és csak akkor, ha az egér a Hero fölött van.
+ * csak az egér körüli körben látszik (--mx, --my a utils/pointer.ts-ből), és csak akkor, ha az egér a Hero fölött van.
  */
 .hero {
   --grid-size: 56px;
@@ -201,5 +221,180 @@
     box-shadow:
       0 0 0 1px rgb(91 155 255 / 0.4),
       0 0 32px rgb(91 155 255 / 0.12);
+  }
+}
+
+/*
+ * Mozgás (DESIGN.md 7. pont). Minden csak nagy képernyőn (lg-től) és csak akkor fut, ha a látogató nem kért
+ * csökkentett mozgást; telefonon és anélkül minden azonnal a helyén van.
+ */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  /*
+   * A hero kódablakának gépelése: a sor szélessége 0-ról karakterenként nő (--n karakter, --d késleltetés;
+   * a CodeWindow.tsx számolja). Mono betűnél 1ch = egy karakter, ezért pontos. JavaScript nélkül is fut.
+   */
+  .type-line {
+    display: block;
+    overflow: hidden;
+    /* backwards: a késleltetés alatt 0 széles, a végén visszaáll a természetes szélességre (semmi nem marad levágva). */
+    animation: type-line calc(var(--n) * 14ms) steps(var(--n)) var(--d) backwards;
+  }
+
+  @keyframes type-line {
+    from {
+      width: 0;
+    }
+    to {
+      width: calc(var(--n) * 1ch);
+    }
+  }
+
+  /*
+   * Görgetési beúszás mindkét irányban: a data-reveal elemek halványan, kicsit odébbról érkeznek, amikor a
+   * képernyőre érnek, és eltűnnek, amikor elhagyják (utils/reveal.ts kapcsolja az .is-visible osztályt).
+   * Lefelé görgetve alulról, felfelé görgetve felülről jönnek (data-from="top"). A .js osztály miatt
+   * JavaScript nélkül semmi nem marad rejtve. Az --i a rácsban lévő elemek lépcsőzése.
+   */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 600ms var(--ease-out-soft),
+      transform 600ms var(--ease-out-soft);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  .js [data-reveal][data-from="top"] {
+    transform: translateY(-18px);
+  }
+
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Eltűnéskor (képernyőn kívül) nincs lépcsőzés, hogy gyors visszagörgetésnél is készen álljon. */
+  .js [data-reveal]:not(.is-visible) {
+    transition-delay: 0ms;
+  }
+
+  /* A Tapasztalat idővonala görgetés közben rajzolódik ki felülről lefelé (ahol a böngésző támogatja). */
+  @supports (animation-timeline: view()) {
+    .timeline-line {
+      transform-origin: top;
+      animation: timeline-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 55%;
+    }
+
+    @keyframes timeline-draw {
+      from {
+        scale: 1 0;
+      }
+      to {
+        scale: 1 1;
+      }
+    }
+  }
+}
+
+/* A kódablak sorai telefonon is egy sorban maradnak (a pre görget, ha kell). */
+.type-line {
+  white-space: pre;
+}
+
+/*
+ * Munkák blokk vízszintes sávja (Munkak.tsx, utils/hscroll.ts). Telefonon és tableten a kártyák egymás alatt állnak.
+ * Nagy képernyőn egy sorba kerülnek, a sáv a tartalom bal szélénél kezdődik és jobbra kifut a képernyőről.
+ * Alapból (csökkentett mozgásnál vagy JavaScript nélkül) a sor oldalra görgethető; ha a script fut, az .is-pinned
+ * osztállyal a blokk megáll a képernyőn, és a függőleges görgetés csúsztatja a sávot.
+ */
+@media (min-width: 1024px) {
+  .hscroll-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .hscroll-track {
+    display: flex;
+    width: max-content;
+    max-width: none;
+    margin: 0;
+    /* A sáv a tartalom (1120px-es konténer) bal szélénél kezdődik; a százalék a teljes szélességű szülőhöz mér. */
+    padding-inline: max(2rem, calc((100% - 1120px) / 2));
+  }
+
+  .hscroll-item {
+    flex: none;
+    /* A kártya magassága legfeljebb a képernyő 50%-a (16:11-es arány), szélessége 460–720px,
+     * így a megálló blokkban a kártyák a képernyő közepén maradnak, nem kell a monitor aljára nézni. */
+    width: min(clamp(460px, 40vw, 720px), calc(50dvh * 16 / 11));
+    scroll-snap-align: start;
+    scroll-margin-left: max(2rem, calc((100vw - 1120px) / 2));
+  }
+
+  .hscroll.is-pinned {
+    /* A menüből ide ugorva a blokk teteje a képernyő tetejére kerül, a navbar helyét a színpad belső térköze adja. */
+    scroll-margin-top: 0;
+  }
+
+  /* A script utólag állítja a blokk magasságát; a böngésző görgetés-horgonyzása ilyenkor elcsúsztatná az oldalt
+   * (pl. Vissza gombbal visszatérve a Rólam blokknál kötött ki), ezért itt ki van kapcsolva. */
+  .hscroll {
+    overflow-anchor: none;
+  }
+
+  /* Ahol a böngésző tudja, a sáv csúszását maga köti a görgetéshez (nem késik egy képkockát sem, mint a script).
+   * A „contain” tartomány pontosan az, amíg a blokk a képernyőhöz tapad; a távolságot a script méri (--hscroll-distance). */
+  @supports (animation-timeline: view()) {
+    .hscroll.is-pinned {
+      view-timeline: --hscroll block;
+    }
+
+    .hscroll.is-pinned .hscroll-track {
+      animation: hscroll-slide linear both;
+      animation-timeline: --hscroll;
+      animation-range: contain 0% contain 100%;
+    }
+  }
+
+  @keyframes hscroll-slide {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(calc(-1 * var(--hscroll-distance, 0px)), 0, 0);
+    }
+  }
+
+  .hscroll.is-pinned .hscroll-stage {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100dvh;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    /* Felül a navbar helye; alul nagyobb térköz, hogy a cím + kártyasor egésze kicsit feljebb, a kártyák pedig
+     * a látható terület közepére kerüljenek (a cím a kártyák fölött áll, ezért kell az aszimmetria). */
+    padding-top: 5rem;
+    padding-bottom: 10rem;
+  }
+
+  /* A flex oszlopban a mx-auto összehúzná a címblokkot; teljes szélességgel a többi szekcióval egy vonalban marad. */
+  .hscroll.is-pinned .hscroll-stage > :first-child {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .hscroll.is-pinned .hscroll-viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .hscroll.is-pinned .hscroll-track {
+    padding-bottom: 0;
+    will-change: transform;
   }
 }

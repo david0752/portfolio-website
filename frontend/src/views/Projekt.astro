@@ -1,0 +1,26 @@
+---
+/**
+ * Projektoldal mindkét nyelvre (pages/munkak/[slug].astro és pages/en/work/[slug].astro adja a nyelvet és a slugot).
+ * Megkeresi a projektet és a sorban következőt, és a Layout-ba tett CaseStudy komponenssel rajzolja ki.
+ */
+import Layout from "../layouts/Layout.astro";
+import { CaseStudy } from "../components/CaseStudy.tsx";
+import { caseStudies } from "../content/projects.ts";
+import { messages, paths, type Lang } from "../i18n/index.ts";
+
+const { lang, slug } = Astro.props as { lang: Lang; slug: string };
+const t = messages(lang);
+const list = await caseStudies();
+const index = list.findIndex((item) => item.slug === slug);
+const project = list[index];
+const next = list.length > 1 ? list[(index + 1) % list.length] : undefined;
+---
+
+<Layout
+  lang={lang}
+  title={`${project.title} – ${t.work.caseStudy} | ${t.pageTitles.home.split(" – ")[0]}`}
+  description={project.summary[lang]}
+  alternates={{ hu: paths("hu").project(slug), en: paths("en").project(slug) }}
+>
+  <CaseStudy project={project} lang={lang} next={next} />
+</Layout>

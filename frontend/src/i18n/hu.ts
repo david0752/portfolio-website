@@ -1,6 +1,6 @@
 /**
  * Magyar szövegek (alapnyelv). A típusa (Messages) kötelező az angolra is, így onnan sem maradhat ki szöveg.
- * A projektek szövegei a content/projects.ts-ben, az adatvédelmi tájékoztató a pages/Adatvedelem.tsx-ben van.
+ * A projektek szövegei a content/projects.ts-ben, az adatvédelmi tájékoztató a components/Adatvedelem.tsx-ben van.
  */
 
 export const hu = {
@@ -15,28 +15,44 @@ export const hu = {
     closeMenu: "Menü bezárása",
     language: "Nyelv",
     home: "Kezdőlap",
+    skip: "Ugrás a tartalomhoz",
   },
   hero: {
-    role: "Full-stack webfejlesztő",
-    titleBefore: "Weboldalak és webes rendszerek, a tervtől az ",
-    titleAccent: "élesítésig",
-    titleAfter: ".",
-    lead: "Szántó Dávid vagyok. React frontendet és Node.js backendet építek, biztonságosan és gyorsan, olyan adminfelülettel, amelyet programozói tudás nélkül is lehet kezelni.",
+    role: "Szoftverfejlesztő",
+    // A főcím első sora: ez a három szó váltakozik gépelős animációval (utils/typewriter.ts).
+    titleWords: ["Weboldalak", "Webes rendszerek", "Adminfelületek"],
+    titleRest: "a tervtől az élesítésig.",
+    lead: "Szántó Dávid vagyok, szoftverfejlesztő. React frontendet és Node.js backendet építek, biztonságosan és gyorsan, olyan adminfelülettel, amelyet programozói tudás nélkül is lehet kezelni.",
     available: "Elérhető új projektekre",
     primary: "Munkáim",
     secondary: "Kapcsolat",
   },
   work: {
-    eyebrow: "01 / Munkák",
-    title: "Válogatott munkák",
+    eyebrow: "munkáim",
+    title: "Projektjeim",
     lead: "Valódi projektek, valódi ügyfeleknek. Mindegyikhez részletes esettanulmány tartozik.",
     caseStudySoon: "Esettanulmány hamarosan",
     caseStudy: "Esettanulmány",
     screenshotSoon: "Képernyőkép hamarosan",
+    features: "Funkciók",
+    // Projektoldal (components/CaseStudy.tsx)
+    allWork: "Összes munka",
+    highlights: "kiemelt funkciók",
+    decisions: "technikai döntések",
+    stack: "stack",
+    live: "Élő oldal",
+    next: "Következő projekt",
+    discuss: "Beszéljük meg a projekted",
   },
   about: {
-    eyebrow: "02 / Rólam",
-    title: "Amire figyelek",
+    eyebrow: "rólam",
+    title: "Pár szó rólam",
+    // A bemutatkozás bekezdései (a fejlesztő saját szavaiból).
+    intro: [
+      "Szántó Dávid vagyok, Tiszasasról, végzős diák a szentesi Pollák Antal Technikumban. A fejlesztésben az automatizálás vonz a legjobban: olyan megoldásokat szeretek építeni, amelyek leegyszerűsítik mások munkáját, és egy bonyolult adminisztrációt pár kattintássá tesznek.",
+      "Szeretek problémákat megoldani és új dolgokat kipróbálni, és ambiciózus vagyok: minden projekttel többet akarok tudni, mint előtte.",
+    ],
+    valuesTitle: "Amire figyelek",
     // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).
     values: [
       { title: "Tiszta kód", text: "Rendezett, érthető, felesleges bonyolítás nélkül." },
@@ -45,25 +61,29 @@ export const hu = {
     ],
   },
   experience: {
-    eyebrow: "03 / Tapasztalat",
+    eyebrow: "tapasztalat",
     title: "Tanulás és munka",
     lead: "Tanulmányaim és munkáim, a legfrissebbel kezdve.",
     present: "jelenleg",
   },
   stack: {
-    eyebrow: "04 / Stack",
+    eyebrow: "stack",
     title: "Amivel dolgozom",
     groups: {
+      languages: "Nyelvek",
       frontend: "Frontend",
       backend: "Backend",
       ops: "Adatbázis és üzemeltetés",
+      tools: "Eszközök és tesztelés",
+      ai: "AI",
     },
   },
   contact: {
-    eyebrow: "05 / Kapcsolat",
+    eyebrow: "kapcsolat",
     title: "Van egy projekted?",
     lead: "Írd meg röviden, miben segíthetek. Általában egy-két munkanapon belül válaszolok.",
     emailLabel: "E-mail",
+    profilesLabel: "Profilok",
     form: {
       topic: "Miben segíthetek?",
       topicPlaceholder: "Válassz témát",
@@ -98,8 +118,13 @@ export const hu = {
     lead: "Lehet, hogy elírás van a címben, vagy az oldal már nem létezik.",
     back: "Vissza a kezdőlapra",
   },
+  // Keresőknek és megosztott linkeknek (meta description), oldalanként.
+  descriptions: {
+    home: "Szántó Dávid szoftverfejlesztő: weboldalak és webes rendszerek a tervtől az élesítésig, React és Node.js alapon, könnyen kezelhető adminfelülettel.",
+    privacy: "Hogyan kezelem a kapcsolati űrlapon megadott adatokat.",
+  },
   pageTitles: {
-    home: "Szántó Dávid – Full-stack webfejlesztő",
+    home: "Szántó Dávid – Szoftverfejlesztő | Weboldalak és webes rendszerek",
     privacy: "Adatvédelmi tájékoztató – Szántó Dávid",
     notFound: "Az oldal nem található – Szántó Dávid",
   },

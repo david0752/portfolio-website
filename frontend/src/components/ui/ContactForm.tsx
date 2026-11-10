@@ -5,9 +5,8 @@
  */
 
 import { useLayoutEffect, useRef, useState, type FormEvent } from "react";
-import { Link } from "react-router";
 
-import { useI18n } from "../../i18n/I18nProvider.tsx";
+import { messages, paths, type Lang } from "../../i18n/index.ts";
 import { CONTACT_LIMITS, CONTACT_TOPICS, sendContact, type ContactTopic } from "../../utils/contact.ts";
 import { buttonPrimary } from "./Button.tsx";
 
@@ -19,8 +18,8 @@ type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success"; text: 
 const fieldClass =
   "mt-2 w-full rounded-lg border border-line bg-card-navy px-4 py-3 text-ice-white placeholder:text-slate transition-colors focus:border-signal-blue focus:outline-none focus-visible:outline-2 focus-visible:outline-neon-cyan";
 
-export function ContactForm() {
-  const { t, lang } = useI18n();
+export function ContactForm({ lang }: { lang: Lang }) {
+  const t = messages(lang);
   const f = t.contact.form;
   const [topic, setTopic] = useState<ContactTopic | "">("");
   const [name, setName] = useState("");
@@ -154,9 +153,9 @@ export function ContactForm() {
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-slate">
           {f.privacyBefore}
-          <Link to="/adatvedelem" className="text-signal-blue underline-offset-4 hover:underline">
+          <a href={paths(lang).privacy} className="text-signal-blue underline-offset-4 hover:underline">
             {f.privacyLink}
-          </Link>
+          </a>
           {f.privacyAfter}
         </p>
         <button type="submit" disabled={sending} className={`${buttonPrimary} shrink-0`}>

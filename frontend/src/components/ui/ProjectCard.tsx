@@ -1,67 +1,59 @@
 /**
- * Projektkártya a Munkák blokkban: képernyőkép (vagy helyőrző), év · típus, cím, leírás, technológiák.
- * Ha az esettanulmány elkészült, az egész kártya link; addig „hamarosan” címkét mutat.
+ * Projektkártya a Munkák blokk vízszintes sávjában: nagy látvány (képernyőkép vagy terminálpanel), nagy képernyőn
+ * alul sötét átmenettel, rajta sorszám, cím és egysoros alcím; kisebb képernyőn a szöveg a kép alatt áll.
+ * Ha van projektoldal, az egész kártya link oda.
+ * Nagy képernyőn hoverre a kép kicsit nagyobb lesz és a keret kék (Neon szabály 4, .project-card).
  */
 
-import { Link } from "react-router";
-
-import { useI18n } from "../../i18n/I18nProvider.tsx";
+import { messages, paths, type Lang } from "../../i18n/index.ts";
 import type { Project } from "../../types/project.ts";
+import { ProjectVisual } from "./ProjectVisual.tsx";
 
-export function ProjectCard({ project }: { project: Project }) {
-  const { t, lang } = useI18n();
+interface Props {
+  project: Project;
+  lang: Lang;
+  // Sorszám a kártyán (01, 02 …): a projektek a sávban sorrendben követik egymást.
+  index: number;
+}
+
+export function ProjectCard({ project, lang, index }: Props) {
+  const t = messages(lang);
 
   const body = (
     <>
-      <div className="aspect-video overflow-hidden border-b border-line bg-deep-navy">
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={project.title}
-            className="h-full w-full object-cover object-top transition-transform duration-500 ease-out-soft lg:group-hover:scale-[1.02]"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center font-mono text-xs tracking-[0.08em] text-slate uppercase">
-            {t.work.screenshotSoon}
-          </div>
-        )}
+      <div className="aspect-[16/10] overflow-hidden border-b border-line lg:absolute lg:inset-0 lg:aspect-auto lg:border-b-0">
+        <ProjectVisual compact project={project} lang={lang} className="transition-transform duration-700 ease-out-soft lg:group-hover:scale-[1.03]" />
       </div>
-
-      <div className="p-5">
-        <p className="font-mono text-xs tracking-[0.08em] text-slate uppercase">
-          {project.year} · {project.type[lang]}
-        </p>
-        <h3 className="mt-2 text-lg leading-snug font-semibold">{project.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed">{project.summary[lang]}</p>
-
-        <ul className="mt-4 flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
-            <li key={tag} className="rounded-full border border-line px-2.5 py-1 font-mono text-xs text-mist">
-              {tag}
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-4 text-sm font-medium text-signal-blue">
-          {project.hasCaseStudy ? (
-            <>
-              {t.work.caseStudy} <span className="inline-block transition-transform lg:group-hover:translate-x-0.5">→</span>
-            </>
-          ) : (
-            <span className="text-slate">{t.work.caseStudySoon}</span>
-          )}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-midnight via-midnight/85 via-40% to-transparent to-75% lg:block"
+      />
+      <div className="p-6 lg:absolute lg:inset-x-0 lg:bottom-0 lg:p-6">
+        <p className="font-mono text-xs text-signal-blue">{String(index + 1).padStart(2, "0")}</p>
+        <h3 className="mt-1.5 text-2xl leading-tight font-semibold tracking-[-0.02em] lg:text-[1.625rem]">{project.title}</h3>
+        <p className="mt-1 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 text-[0.9375rem] text-mist">
+          {project.tagline[lang]}
+          <span className="font-mono text-xs text-slate">
+            {project.hasCaseStudy ? (
+              <span className="text-signal-blue">
+                {t.work.caseStudy} <span className="inline-block transition-transform lg:group-hover:translate-x-1">→</span>
+              </span>
+            ) : (
+              t.work.caseStudySoon
+            )}
+          </span>
         </p>
       </div>
     </>
   );
 
   const cardClass =
-    "project-card group block overflow-hidden rounded-[14px] border border-line bg-card-navy transition-[border-color,box-shadow] duration-200";
+    "project-card group relative block overflow-hidden rounded-[14px] border border-line bg-card-navy transition-[border-color,box-shadow] duration-200 lg:aspect-[16/11]";
 
   return project.hasCaseStudy ? (
-    <Link to={`/munkak/${project.slug}`} className={cardClass}>
+    <a href={paths(lang).project(project.slug)} className={cardClass}>
       {body}
-    </Link>
+    </a>
   ) : (
     <article className={cardClass}>{body}</article>
   );

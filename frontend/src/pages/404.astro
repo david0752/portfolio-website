@@ -1,0 +1,12 @@
+---
+// Magyar 404-es oldal (dist/404.html). Az /en/ alatti hiányzó oldalakra az en/404.astro felel (nginx error_page).
+import Layout from "../layouts/Layout.astro";
+import { NotFound } from "../components/NotFound.tsx";
+import { messages, paths } from "../i18n/index.ts";
+
+const t = messages("hu");
+---
+
+<Layout noindex lang="hu" title={t.pageTitles.notFound} alternates={{ hu: paths("hu").home, en: paths("en").home }}>
+  <NotFound lang="hu" />
+</Layout>

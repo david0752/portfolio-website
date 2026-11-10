@@ -1,0 +1,99 @@
+---
+/**
+ * Közös keret minden oldalhoz: <head> (cím, leírás, canonical, nyelvi változatok, megosztási adatok,
+ * strukturált adat), ugró link, navbar, tartalom, lábléc.
+ * A navbar az egyetlen mindig betöltődő React-sziget; a többi komponens statikus HTML.
+ * Az egérkövető fény (utils/pointer.ts), a görgetési beúszás (utils/reveal.ts) és a főcím szóváltása
+ * (utils/typewriter.ts) sima script, React nélkül.
+ */
+import "../index.css";
+import { Footer } from "../components/layout/Footer.tsx";
+import { Navbar } from "../components/layout/Navbar.tsx";
+import { OWNER } from "../content/site.ts";
+import { messages, type Lang } from "../i18n/index.ts";
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  // Ugyanennek az oldalnak a két nyelvi változata (nyelvváltó és hreflang).
+  alternates: Record<Lang, string>;
+  // 404-es oldalaknál: a keresők ne indexeljék.
+  noindex?: boolean;
+  // Strukturált adat (JSON-LD) a keresőknek, ha az oldalnak van.
+  jsonLd?: object;
+}
+
+const { lang, title, description, alternates, noindex = false, jsonLd } = Astro.props;
+const t = messages(lang);
+
+// Abszolút címek: a domain az astro.config `site` értéke (frontend/.env SITE_URL).
+const abs = (path: string) => new URL(path, Astro.site).href;
+const canonical = abs(Astro.url.pathname);
+const ogImage = abs(`/og-${lang}.png`);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070b14" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {
+      noindex ? (
+        <meta name="robots" content="noindex" />
+      ) : (
+        <>
+          <link rel="canonical" href={canonical} />
+          <link rel="alternate" hreflang="hu" href={abs(alternates.hu)} />
+          <link rel="alternate" hreflang="en" href={abs(alternates.en)} />
+          <link rel="alternate" hreflang="x-default" href={abs(alternates.hu)} />
+        </>
+      )
+    }
+
+    <!-- Megosztási előnézet (Facebook, Messenger, LinkedIn, X stb.). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={OWNER.name[lang]} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang === "hu" ? "hu_HU" : "en_US"} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <!-- A görgetési animáció csak akkor rejt el bármit, ha fut a JavaScript (index.css: .js [data-reveal]). -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <div class="flex min-h-dvh flex-col">
+      <a
+        href="#tartalom"
+        class="sr-only z-50 rounded-lg bg-signal-blue px-4 py-2 text-midnight focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >
+        {t.nav.skip}
+      </a>
+      <Navbar client:load lang={lang} alternates={alternates} />
+      <main id="tartalom" class="flex-1">
+        <slot />
+      </main>
+      <Footer lang={lang} />
+    </div>
+    <script>
+      import "../utils/pointer.ts";
+      import "../utils/reveal.ts";
+      import "../utils/typewriter.ts";
+      import "../utils/hscroll.ts";
+    </script>
+  </body>
+</html>

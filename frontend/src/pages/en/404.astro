@@ -1,0 +1,12 @@
+---
+// Angol 404-es oldal (dist/en/404.html), az /en/ alatti hiányzó oldalakra (nginx error_page).
+import Layout from "../../layouts/Layout.astro";
+import { NotFound } from "../../components/NotFound.tsx";
+import { messages, paths } from "../../i18n/index.ts";
+
+const t = messages("en");
+---
+
+<Layout noindex lang="en" title={t.pageTitles.notFound} alternates={{ hu: paths("hu").home, en: paths("en").home }}>
+  <NotFound lang="en" />
+</Layout>

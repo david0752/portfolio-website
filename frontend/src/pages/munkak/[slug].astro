@@ -1,0 +1,13 @@
+---
+// Útvonal: /munkak/<slug>/ – magyar projektoldal (angolul: /en/work/<slug>/). Minden saját oldallal rendelkező projekthez.
+import Projekt from "../../views/Projekt.astro";
+import { caseStudies } from "../../content/projects.ts";
+
+export async function getStaticPaths() {
+  return (await caseStudies()).map((project) => ({ params: { slug: project.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<Projekt lang="hu" slug={slug} />

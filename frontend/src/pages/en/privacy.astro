@@ -1,0 +1,12 @@
+---
+// Útvonal: /en/privacy – angol adatvédelmi tájékoztató (magyarul: /adatvedelem).
+import Layout from "../../layouts/Layout.astro";
+import { Adatvedelem } from "../../components/Adatvedelem.tsx";
+import { messages, paths } from "../../i18n/index.ts";
+
+const t = messages("en");
+---
+
+<Layout lang="en" title={t.pageTitles.privacy} description={t.descriptions.privacy} alternates={{ hu: paths("hu").privacy, en: paths("en").privacy }}>
+  <Adatvedelem lang="en" />
+</Layout>

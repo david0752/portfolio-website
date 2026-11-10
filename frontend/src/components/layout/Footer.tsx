@@ -1,12 +1,12 @@
-// Lábléc: név, e-mail, adatvédelmi link, évszám.
+// Lábléc: név, közösségi profilok, e-mail, adatvédelmi link, évszám.
 
-import { Link } from "react-router";
 
-import { useI18n } from "../../i18n/I18nProvider.tsx";
+import { messages, paths, type Lang } from "../../i18n/index.ts";
 import { CONTACT_EMAIL } from "../../utils/contact.ts";
+import { SocialLinks } from "../ui/SocialLinks.tsx";
 
-export function Footer() {
-  const { t } = useI18n();
+export function Footer({ lang }: { lang: Lang }) {
+  const t = messages(lang);
 
   return (
     <footer className="border-t border-line bg-deep-navy">
@@ -14,13 +14,14 @@ export function Footer() {
         <p>
           © {new Date().getFullYear()} Szántó Dávid. {t.footer.rights}
         </p>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+          <SocialLinks />
           <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-ice-white">
             {CONTACT_EMAIL}
           </a>
-          <Link to="/adatvedelem" className="transition-colors hover:text-ice-white">
+          <a href={paths(lang).privacy} className="transition-colors hover:text-ice-white">
             {t.footer.privacy}
-          </Link>
+          </a>
         </div>
       </div>
     </footer>

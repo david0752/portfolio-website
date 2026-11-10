@@ -3,11 +3,10 @@
  * jogilag át kell nézni. Ha az adatkezelés változik (új mező, szolgáltató, analitika), ezt is frissíteni kell.
  */
 
-import { usePageTitle } from "../hooks/usePageTitle.ts";
-import { useI18n, type Lang } from "../i18n/I18nProvider.tsx";
+import type { Lang } from "../i18n/index.ts";
 import { CONTACT_EMAIL } from "../utils/contact.ts";
 
-const UPDATED = "2026-11-03";
+const UPDATED = "2026-11-10";
 
 const CONTENT: Record<Lang, { title: string; updated: string; sections: { heading: string; text: string }[] }> = {
   hu: {
@@ -17,7 +16,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Adatkezelő", text: `Szántó Dávid, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "Milyen adatokat kezelek?",
-        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem használ sütiket, nem követi a látogatókat, és nem tölt be külső szolgáltatást (a betűtípusok is a saját szerverről jönnek). A nyelvválasztást a böngésző helyi tárhelye őrzi meg, ez nem kerül hozzám.",
+        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem használ sütiket, nem követi a látogatókat, és nem tölt be külső szolgáltatást (a betűtípusok is a saját szerverről jönnek). A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
       },
       {
         heading: "Mire használom?",
@@ -40,7 +39,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Data controller", text: `Dávid Szántó, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "What data do I process?",
-        text: "The name, e-mail address and message you enter in the contact form. The site uses no cookies, does not track visitors and loads no third-party services (fonts are served from my own server). Your language choice is kept in your browser's local storage and never reaches me.",
+        text: "The name, e-mail address and message you enter in the contact form. The site uses no cookies, does not track visitors and loads no third-party services (fonts are served from my own server). The language is set by the page address (URL); nothing is stored in your browser.",
       },
       {
         heading: "What for?",
@@ -58,10 +57,8 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
   },
 };
 
-export function Adatvedelem() {
-  const { lang, t } = useI18n();
+export function Adatvedelem({ lang }: { lang: Lang }) {
   const content = CONTENT[lang];
-  usePageTitle(t.pageTitles.privacy);
 
   return (
     <article className="mx-auto max-w-3xl px-5 py-24 md:px-8 md:py-32">

@@ -1,21 +1,34 @@
-// Kezdőlap „01 / Munkák” blokkja: a content/projects.ts projektjei kártyákon (tablet 2, laptop/asztal 3 oszlop).
+/**
+ * Kezdőlap „Munkák” blokkja: a projektek nagy kártyákon, egy vízszintes sávban.
+ * Nagy képernyőn (és ha nem kértek csökkentett mozgást) a blokk görgetés közben megáll a képernyőn, és a függőleges
+ * görgetés a sávot csúsztatja oldalra (data-hscroll, utils/hscroll.ts + .hscroll szabályok az index.css-ben).
+ * Csökkentett mozgásnál a sáv sima, oldalra görgethető sor; telefonon és tableten a kártyák egymás alatt állnak.
+ * A projektlistát a views/Kezdolap.astro adja át (content/projects.ts allProjects).
+ */
 
-import { projects } from "../content/projects.ts";
-import { useI18n } from "../i18n/I18nProvider.tsx";
+import { messages, type Lang } from "../i18n/index.ts";
+import type { Project } from "../types/project.ts";
 import { ProjectCard } from "./ui/ProjectCard.tsx";
 import { SectionHeading } from "./ui/SectionHeading.tsx";
 
-export function Munkak() {
-  const { t } = useI18n();
+export function Munkak({ lang, projects }: { lang: Lang; projects: Project[] }) {
+  const t = messages(lang);
 
   return (
-    <section id="munkak" className="border-t border-line">
-      <div className="mx-auto max-w-[1120px] px-5 py-[72px] md:px-8 md:py-24 xl:px-0">
-        <SectionHeading eyebrow={t.work.eyebrow} title={t.work.title} lead={t.work.lead} />
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
+    <section id="munkak" data-hscroll className="hscroll border-t border-line">
+      <div className="hscroll-stage">
+        <div className="mx-auto max-w-[1120px] px-5 pt-[72px] md:px-8 md:pt-24 xl:px-0">
+          <SectionHeading eyebrow={t.work.eyebrow} title={t.work.title} lead={t.work.lead} />
+        </div>
+
+        <div className="hscroll-viewport mt-10 lg:mt-8">
+          <ul data-hscroll-track className="hscroll-track mx-auto grid max-w-[1120px] gap-6 px-5 pb-[72px] md:px-8 md:pb-24 xl:px-0">
+            {projects.map((project, index) => (
+              <li key={project.slug} className="hscroll-item">
+                <ProjectCard project={project} lang={lang} index={index} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

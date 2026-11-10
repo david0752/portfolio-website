@@ -6,7 +6,7 @@
  */
 
 import { experience, type Experience } from "../content/experience.ts";
-import { useI18n } from "../i18n/I18nProvider.tsx";
+import { messages, type Lang } from "../i18n/index.ts";
 import { SectionHeading } from "./ui/SectionHeading.tsx";
 
 type Side = "left" | "right" | "mobile";
@@ -23,12 +23,12 @@ const CONNECTOR_POSITION: Record<Side, string> = {
   mobile: "-left-8",
 };
 
-function TimelineItem({ item, side }: { item: Experience; side: Side }) {
-  const { t, lang } = useI18n();
+function TimelineItem({ item, side, lang }: { item: Experience; side: Side; lang: Lang }) {
+  const t = messages(lang);
   const ongoing = !item.end;
 
   return (
-    <li className="relative">
+    <li data-reveal className="relative">
       <span aria-hidden="true" className={`absolute top-[31px] h-px w-10 bg-line ${CONNECTOR_POSITION[side]}`} />
       <span
         aria-hidden="true"
@@ -60,8 +60,8 @@ function TimelineItem({ item, side }: { item: Experience; side: Side }) {
   );
 }
 
-export function Tapasztalat() {
-  const { t } = useI18n();
+export function Tapasztalat({ lang }: { lang: Lang }) {
+  const t = messages(lang);
   const left = experience.filter((_, index) => index % 2 === 0);
   const right = experience.filter((_, index) => index % 2 === 1);
 
@@ -74,24 +74,24 @@ export function Tapasztalat() {
           {/* A függőleges vonal: telefonon bal oldalt, nagy képernyőn középen; a végein elhalványul. */}
           <div
             aria-hidden="true"
-            className="absolute top-0 bottom-0 left-[7px] w-px bg-gradient-to-b from-transparent via-signal-blue/35 to-transparent lg:left-1/2 lg:-translate-x-1/2"
+            className="timeline-line absolute top-0 bottom-0 left-[7px] w-px bg-gradient-to-b from-transparent via-signal-blue/35 to-transparent lg:left-1/2 lg:-translate-x-1/2"
           />
 
           <ol className="space-y-8 pl-10 lg:hidden">
             {experience.map((item) => (
-              <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="mobile" />
+              <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="mobile" lang={lang} />
             ))}
           </ol>
 
           <div className="hidden grid-cols-2 gap-x-20 lg:grid">
             <ol className="space-y-12 py-4">
               {left.map((item) => (
-                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="left" />
+                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="left" lang={lang} />
               ))}
             </ol>
             <ol className="space-y-12 pt-28 pb-4">
               {right.map((item) => (
-                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="right" />
+                <TimelineItem key={`${item.company}-${item.role.hu}`} item={item} side="right" lang={lang} />
               ))}
             </ol>
           </div>

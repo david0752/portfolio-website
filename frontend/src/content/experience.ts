@@ -4,7 +4,7 @@
  * start üresen = nincs kiírt kezdőév; end üresen = jelenleg is tart; points elhagyható.
  */
 
-import type { Lang } from "../i18n/I18nProvider.tsx";
+import type { Lang } from "../i18n/index.ts";
 
 export interface Experience {
   start?: string;
