@@ -14,7 +14,9 @@ export const hu = {
     openMenu: "Menü megnyitása",
     closeMenu: "Menü bezárása",
     language: "Nyelv",
-    home: "Kezdőlap",
+    home: "Főoldal",
+    // Jobb alsó „vissza a tetejére” gomb (Navbar.tsx).
+    backToTop: "Vissza az oldal tetejére",
     skip: "Ugrás a tartalomhoz",
     // Töltőképernyő (Layout.astro), képernyőolvasónak.
     loading: "Az oldal betöltése…",

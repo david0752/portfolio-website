@@ -1,12 +1,14 @@
 /**
  * Felső navigáció. Nagy képernyőn három rész: balra a logó (kezdőlap link), középen egy lebegő „pirula” a
- * kezdőlap blokkjaira mutató horgonyokkal (az éppen látható blokk kiemelve), jobbra nyelvválasztó és
- * „Írj nekem” link. Mobilon (lg alatt) hamburger menü, teljes szélességű panellel.
+ * Főoldal linkkel és a kezdőlap blokkjaira mutató horgonyokkal (az éppen látható blokk kiemelve), jobbra
+ * nyelvválasztó és „Írj nekem” link. Mobilon (lg alatt) hamburger menü, teljes szélességű panellel.
+ * Ide tartozik a jobb alsó „vissza a tetejére” gomb is (egy képernyőnyi görgetés után jelenik meg), mert ugyanazt
+ * a görgetésfigyelőt használja.
  * React-sziget (client:load a Layout.astro-ban). A nyelvváltó sima link ugyanannak az oldalnak a másik
  * nyelvű változatára (alternates: az Astro oldal adja át).
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 
 import { LANGUAGES, messages, paths, type Lang } from "../../i18n/index.ts";
 import { OWNER } from "../../content/site.ts";
@@ -25,11 +27,16 @@ export function Navbar({ lang, alternates }: Props) {
   const t = messages(lang);
   const home = paths(lang).home;
   const [scrolled, setScrolled] = useState(false);
+  // Legalább egy képernyőnyit lejjebb görgetett: ekkor jelenik meg a „vissza a tetejére” gomb.
+  const [farDown, setFarDown] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<SectionId | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      setFarDown(window.scrollY > window.innerHeight);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -63,6 +70,21 @@ export function Navbar({ lang, alternates }: Props) {
     kapcsolat: t.nav.contact,
   };
 
+  // A kezdőlapon a Főoldal link és a logó nem tölti újra az oldalt, hanem a tetejére görget; más oldalon sima link.
+  const goHome = (event: MouseEvent) => {
+    if (window.location.pathname !== home) return;
+    event.preventDefault();
+    setOpen(false);
+    window.scrollTo({ top: 0 });
+    history.replaceState(null, "", home);
+  };
+
+  // A Főoldal menüpont akkor kiemelt, ha a kezdőlap tetején (a heróban) vagyunk, és egyik blokk sem aktív.
+  const [onHomeTop, setOnHomeTop] = useState(false);
+  useEffect(() => {
+    setOnHomeTop(window.location.pathname === home && !farDown && active === null);
+  }, [home, farDown, active]);
+
   const languageSwitch = (
     <div role="group" aria-label={t.nav.language} className="flex rounded-full border border-line bg-midnight/70 p-0.5 font-mono text-xs backdrop-blur-md">
       {LANGUAGES.map((item) => (
@@ -84,6 +106,7 @@ export function Navbar({ lang, alternates }: Props) {
   );
 
   return (
+    <>
     <header
       // Nagy képernyőn az oldal tetején átlátszó a sáv (csak a középső pirula látszik), görgetés után sötét hátteret
       // kap, hogy a logó és a nyelvváltó ne lógjon a tartalom fölé.
@@ -99,13 +122,7 @@ export function Navbar({ lang, alternates }: Props) {
           href={home}
           aria-label={`${OWNER.name[lang]} – ${t.nav.home}`}
           className="justify-self-start"
-          onClick={(event) => {
-            if (window.location.pathname !== home) return;
-            event.preventDefault();
-            setOpen(false);
-            window.scrollTo({ top: 0 });
-            history.replaceState(null, "", home);
-          }}
+          onClick={goHome}
         >
           <Logo lang={lang} />
         </a>
@@ -116,12 +133,24 @@ export function Navbar({ lang, alternates }: Props) {
             scrolled ? "border-line bg-midnight/85" : "border-line/70 bg-midnight/50"
           }`}
         >
+          <li>
+            <a
+              href={home}
+              onClick={goHome}
+              aria-current={onHomeTop ? "true" : undefined}
+              className={`block rounded-full px-3.5 py-2 transition-colors duration-200 xl:px-4 ${
+                onHomeTop ? "bg-card-navy-hi text-ice-white" : "text-mist hover:text-ice-white"
+              }`}
+            >
+              {t.nav.home}
+            </a>
+          </li>
           {SECTIONS.map((id) => (
             <li key={id}>
               <a
                 href={`${home}#${id}`}
                 aria-current={active === id ? "true" : undefined}
-                className={`block rounded-full px-4 py-2 transition-colors duration-200 ${
+                className={`block rounded-full px-3.5 py-2 transition-colors duration-200 xl:px-4 ${
                   active === id ? "bg-card-navy-hi text-ice-white" : "text-mist hover:text-ice-white"
                 }`}
               >
@@ -135,7 +164,8 @@ export function Navbar({ lang, alternates }: Props) {
           {languageSwitch}
           <a
             href={`${home}#kapcsolat`}
-            className="group inline-flex items-center gap-1.5 rounded-full border border-line bg-midnight/70 px-4 py-2 text-sm font-medium text-ice-white backdrop-blur-md transition-colors hover:border-signal-blue hover:text-signal-blue"
+            // 1024–1279 px között nem fér el a Főoldal menüpont mellett; ott a menü „Kapcsolat” pontja helyettesíti.
+            className="group hidden items-center gap-1.5 whitespace-nowrap rounded-full border border-line bg-midnight/70 px-4 py-2 text-sm font-medium text-ice-white backdrop-blur-md transition-colors hover:border-signal-blue hover:text-signal-blue xl:inline-flex"
           >
             {t.nav.cta}
             <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
@@ -161,6 +191,11 @@ export function Navbar({ lang, alternates }: Props) {
       {open && (
         <div id="mobile-menu" className="border-t border-line px-5 pt-4 pb-8 md:px-8 lg:hidden">
           <ul className="flex flex-col">
+            <li>
+              <a href={home} onClick={goHome} className="block border-b border-line py-4 text-center text-lg text-ice-white">
+                {t.nav.home}
+              </a>
+            </li>
             {SECTIONS.map((id) => (
               <li key={id}>
                 <a
@@ -181,6 +216,24 @@ export function Navbar({ lang, alternates }: Props) {
           </div>
         </div>
       )}
+
     </header>
+
+    {/* Vissza a tetejére: jobb alul, csak lejjebb görgetve látszik (rejtve a billentyűzetes bejárásból is).
+        A headeren kívül van, mert annak backdrop-filtere miatt a fixed pozíció a headerhez igazodna. */}
+    <button
+      type="button"
+      aria-label={t.nav.backToTop}
+      title={t.nav.backToTop}
+      onClick={() => window.scrollTo({ top: 0 })}
+      className={`fixed right-5 bottom-5 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-line bg-card-navy/90 text-ice-white shadow-lg backdrop-blur-md transition-[opacity,transform,visibility,border-color,color] duration-300 motion-reduce:transition-none md:right-8 md:bottom-8 lg:hover:border-signal-blue lg:hover:text-signal-blue ${
+        farDown ? "visible translate-y-0 opacity-100" : "invisible translate-y-3 opacity-0"
+      }`}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
+    </>
   );
 }

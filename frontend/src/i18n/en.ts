@@ -16,6 +16,7 @@ export const en: Messages = {
     closeMenu: "Close menu",
     language: "Language",
     home: "Home",
+    backToTop: "Back to top",
     skip: "Skip to content",
     loading: "Loading the page…",
   },
