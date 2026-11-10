@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 
 import { LANGUAGES, messages, paths, type Lang } from "../../i18n/index.ts";
+import { OWNER } from "../../content/site.ts";
 import { buttonPrimary } from "../ui/Button.tsx";
 import { Logo } from "../ui/Logo.tsx";
 
@@ -96,7 +97,7 @@ export function Navbar({ lang, alternates }: Props) {
         {/* A kezdőlapon a logó nem tölti újra az oldalt, hanem simán a tetejére görget (mint a menüpontok). */}
         <a
           href={home}
-          aria-label={`Szántó Dávid – ${t.nav.home}`}
+          aria-label={`${OWNER.name[lang]} – ${t.nav.home}`}
           className="justify-self-start"
           onClick={(event) => {
             if (window.location.pathname !== home) return;
@@ -106,7 +107,7 @@ export function Navbar({ lang, alternates }: Props) {
             history.replaceState(null, "", home);
           }}
         >
-          <Logo />
+          <Logo lang={lang} />
         </a>
 
         {/* Középső pirula: görgetés után kap erősebb hátteret, hogy a tartalom fölött is olvasható legyen. */}

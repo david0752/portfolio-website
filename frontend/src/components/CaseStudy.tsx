@@ -1,6 +1,6 @@
 /**
  * Egy projekt saját oldala (munkak/<slug>, en/work/<slug>): vissza link, szerep · év, cím, alcím, leírás,
- * élő oldal gomb (vagy az állapota, ha még nincs élesben), mellette a projekt látványa; alatta a kiemelt
+ * élő oldal gomb (vagy az állapota, ha még nincs élesben) és a forráskód gomb (ha van nyilvános repó), mellette a projekt látványa; alatta a kiemelt
  * funkciók és a technikai döntések két oszlopban, a stack logós címkékkel, végül a következő projekt és a
  * kapcsolatfelvétel. Statikus HTML (Astro), a görgetési beúszás a data-reveal elemeken fut.
  */
@@ -11,6 +11,7 @@ import { messages, paths, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
 import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
 import { ProjectVisual } from "./ui/ProjectVisual.tsx";
+import { ICONS } from "./ui/SocialLinks.tsx";
 import { TechChip } from "./ui/TechChip.tsx";
 
 interface Props {
@@ -65,6 +66,15 @@ export function CaseStudy({ project, lang, next }: Props) {
                   {project.status[lang]}
                 </p>
               )
+            )}
+            {project.repo && (
+              <a href={project.repo} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
+                <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                  {ICONS.github}
+                </svg>
+                {t.work.source}
+                <span aria-hidden="true">↗</span>
+              </a>
             )}
           </div>
         </div>

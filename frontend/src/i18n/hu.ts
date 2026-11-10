@@ -8,7 +8,7 @@ export const hu = {
     work: "Munkáim",
     about: "Rólam",
     experience: "Tapasztalat",
-    stack: "Stack",
+    stack: "Technológiák",
     contact: "Kapcsolat",
     cta: "Írj nekem",
     openMenu: "Menü megnyitása",
@@ -43,6 +43,7 @@ export const hu = {
     decisions: "technikai döntések",
     stack: "stack",
     live: "Élő oldal",
+    source: "Forráskód",
     next: "Következő projekt",
     discuss: "Beszéljük meg a projekted",
   },
@@ -52,7 +53,7 @@ export const hu = {
     // A bemutatkozás bekezdései (a fejlesztő saját szavaiból).
     intro: [
       "Szántó Dávid vagyok, Tiszasasról, végzős diák a szentesi Pollák Antal Technikumban. A fejlesztésben az automatizálás vonz a legjobban: olyan megoldásokat szeretek építeni, amelyek leegyszerűsítik mások munkáját, és egy bonyolult adminisztrációt pár kattintássá tesznek.",
-      "Szeretek problémákat megoldani és új dolgokat kipróbálni, és ambiciózus vagyok: minden projekttel többet akarok tudni, mint előtte.",
+      "A problémamegoldás hajt, kíváncsian próbálok ki új dolgokat, és ambiciózus vagyok: minden projekttel egy lépéssel előrébb akarok jutni.",
     ],
     valuesTitle: "Amire figyelek",
     // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).
@@ -85,6 +86,9 @@ export const hu = {
     title: "Van egy projekted?",
     lead: "Írd meg röviden, miben segíthetek. Általában egy-két munkanapon belül válaszolok.",
     emailLabel: "E-mail",
+    // Másolás gomb a cím mellett (utils/copy.ts).
+    copy: "Másolás",
+    copied: "Másolva",
     profilesLabel: "Profilok",
     form: {
       topic: "Miben segíthetek?",

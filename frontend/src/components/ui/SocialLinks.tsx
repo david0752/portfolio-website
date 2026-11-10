@@ -8,7 +8,8 @@ import type { ReactNode } from "react";
 
 import { PROFILES } from "../../content/site.ts";
 
-const ICONS: Record<(typeof PROFILES)[number]["id"], ReactNode> = {
+// A projektoldal „Forráskód” gombja is innen veszi a GitHub-ikont.
+export const ICONS: Record<(typeof PROFILES)[number]["id"], ReactNode> = {
   github: (
     <path
       fill="currentColor"

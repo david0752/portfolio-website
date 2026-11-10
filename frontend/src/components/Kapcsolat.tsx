@@ -1,11 +1,12 @@
 // Kezdőlap „Kapcsolat” blokkja: elérhetőség és profilok balra (nagy képernyőn megáll görgetés közben), űrlap jobbra;
-// mobilon egymás alatt. Az űrlapot (ContactForm, React-sziget) az Astro oldal adja be children-ként, mert a
+// mobilon egymás alatt. Az e-mail-cím a Gmail levélíró ablakát nyitja meg, mellette Másolás gomb (utils/copy.ts).
+// Az űrlapot (ContactForm, React-sziget) az Astro oldal adja be children-ként, mert a
 // client:visible csak .astro-ban adható meg.
 
 import type { ReactNode } from "react";
 
 import { messages, type Lang } from "../i18n/index.ts";
-import { CONTACT_EMAIL } from "../utils/contact.ts";
+import { CONTACT_EMAIL, CONTACT_GMAIL_URL } from "../utils/contact.ts";
 import { SectionHeading } from "./ui/SectionHeading.tsx";
 import { SocialLinks } from "./ui/SocialLinks.tsx";
 
@@ -20,10 +21,25 @@ export function Kapcsolat({ lang, children }: { lang: Lang; children: ReactNode 
           <dl className="mt-10 border-b border-line">
             <div className="border-t border-line py-5">
               <dt className="font-mono text-xs tracking-[0.08em] text-slate uppercase">{t.contact.emailLabel}</dt>
-              <dd className="mt-2">
-                <a href={`mailto:${CONTACT_EMAIL}`} className="text-lg break-all text-signal-blue underline-offset-4 hover:underline">
+              <dd className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a
+                  href={CONTACT_GMAIL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg break-all text-signal-blue underline-offset-4 hover:underline"
+                >
                   {CONTACT_EMAIL}
                 </a>
+                {/* JavaScript nélkül rejtve marad, mert akkor nem tudna másolni. */}
+                <button
+                  type="button"
+                  hidden
+                  data-copy={CONTACT_EMAIL}
+                  data-copied={t.contact.copied}
+                  className="rounded-md border border-line px-2.5 py-1 font-mono text-xs text-mist transition-colors lg:hover:border-signal-blue lg:hover:text-ice-white"
+                >
+                  {t.contact.copy}
+                </button>
               </dd>
             </div>
             <div className="border-t border-line py-5">

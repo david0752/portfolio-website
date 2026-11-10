@@ -40,6 +40,7 @@ export const en: Messages = {
     decisions: "technical decisions",
     stack: "stack",
     live: "Live site",
+    source: "Source code",
     next: "Next project",
     discuss: "Let's talk about your project",
     screenshotSoon: "Screenshot coming soon",
@@ -49,7 +50,7 @@ export const en: Messages = {
     title: "A few words about me",
     intro: [
       "I'm Dávid Szántó from Tiszasas, a final-year student at Pollák Antal Technical School in Szentes. What draws me most in development is automation: I like building solutions that make other people's work simpler and turn complicated administration into a few clicks.",
-      "I enjoy solving problems and trying new things, and I'm ambitious: with every project I want to know more than before.",
+      "Problem solving drives me, new things make me curious, and I'm ambitious: with every project I want to get one step further.",
     ],
     valuesTitle: "What I focus on",
     values: [
@@ -81,6 +82,8 @@ export const en: Messages = {
     title: "Have a project in mind?",
     lead: "Tell me briefly how I can help. I usually reply within one or two working days.",
     emailLabel: "E-mail",
+    copy: "Copy",
+    copied: "Copied",
     profilesLabel: "Profiles",
     form: {
       topic: "How can I help?",

@@ -7,6 +7,9 @@ export const CONTACT_LIMITS = { name: 100, email: 254, messageMin: 10, message: 
 
 export const CONTACT_EMAIL = "szanto.david12@gmail.com";
 
+// A címre kattintva a Gmail levélíró ablaka nyílik meg (új lapon), nem a gép levelezőprogramja.
+export const CONTACT_GMAIL_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT_EMAIL)}`;
+
 // A megkeresés témái (azonosítók); a backend CONTACT_TOPICS-szal egyezzen. A feliratok az i18n-ben vannak.
 export const CONTACT_TOPICS = ["new-site", "existing-site", "web-app", "site-bug", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];

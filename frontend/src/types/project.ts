@@ -22,6 +22,9 @@ export interface Project {
   // Az élő oldal címe, ha már elérhető; ha nincs, a status szövege látszik helyette.
   url?: string;
   status?: Record<Lang, string>;
+  // A projekt nyilvános GitHub-repója („Forráskód” gomb a projektoldalon). Csak nyilvános repó kerülhet ide,
+  // különben a látogató 404-et kap; ha nincs, a gomb nem jelenik meg.
+  repo?: string;
   // Képernyőkép (src/assets/projects/<slug>/); amíg nincs, terminálpanel jelenik meg helyette.
   image?: string;
   // Van-e saját projektoldal (a kártya csak akkor link, és csak akkor készül oldal).

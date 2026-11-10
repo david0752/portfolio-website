@@ -185,6 +185,7 @@ const ogImage = abs(`/og-${lang}.png`);
       import "../utils/reveal.ts";
       import "../utils/typewriter.ts";
       import "../utils/hscroll.ts";
+      import "../utils/copy.ts";
 
       // Minden script lefutott: a betűtípusra még legfeljebb 1,5 mp-et várunk, aztán eltűnik a töltőképernyő.
       const fontsReady = Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]);
