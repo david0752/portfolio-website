@@ -1,5 +1,6 @@
 /**
- * Kapcsolati űrlap (téma, név, e-mail, üzenet + rejtett spamcsapda mező). A backend POST /api/contact
+ * Kapcsolati űrlap (téma, név, e-mail, üzenet + rejtett spamcsapda mező). A téma a közös Select komponens
+ * (nem a böngésző saját választója); kötelező, ezért beküldéskor itt ellenőrizzük. A backend POST /api/contact
  * végpontjára küld; betöltés, siker és hiba állapotot mutat. Magyarul a backend hibaüzenete látszik,
  * angolul az általános (lefordított) hibaszöveg.
  */
@@ -9,6 +10,7 @@ import { useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { messages, paths, type Lang } from "../../i18n/index.ts";
 import { CONTACT_LIMITS, CONTACT_TOPICS, sendContact, type ContactTopic } from "../../utils/contact.ts";
 import { buttonPrimary } from "./Button.tsx";
+import { Select } from "./Select.tsx";
 
 // Az üzenetmező eddig a magasságig nő a szöveggel, utána görgethető lesz.
 const MESSAGE_MAX_HEIGHT = 200;
@@ -27,6 +29,8 @@ export function ContactForm({ lang }: { lang: Lang }) {
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [topicError, setTopicError] = useState(false);
+  const topicRef = useRef<HTMLButtonElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
   // Az üzenetmező magassága a tartalmához igazodik (a rows az alapmagasság), a felső határ felett görget.
@@ -40,8 +44,18 @@ export function ContactForm({ lang }: { lang: Lang }) {
     field.style.overflowY = field.scrollHeight > MESSAGE_MAX_HEIGHT ? "auto" : "hidden";
   }, [message, lang]);
 
+  // A választó nem natív mező, ezért a böngésző nem ellenőrzi. A küldés gomb kattintásakor is ezt nézzük először
+  // (a böngésző saját ellenőrzése előtt), mert a téma az első mező, a hibának is ott kell előbb látszania.
+  function requireTopic(): boolean {
+    if (topic) return true;
+    setTopicError(true);
+    topicRef.current?.focus();
+    return false;
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!requireTopic()) return;
     setStatus({ kind: "sending" });
 
     try {
@@ -61,38 +75,20 @@ export function ContactForm({ lang }: { lang: Lang }) {
 
   return (
     <form onSubmit={handleSubmit} className="rounded-[14px] border border-line bg-deep-navy p-6 sm:p-8" noValidate={false}>
-      <label className="mb-5 block text-sm font-medium text-ice-white">
-        {f.topic}
-        <span className="relative block">
-          <select
-            name="topic"
-            required
-            value={topic}
-            onChange={(event) => setTopic(event.target.value as ContactTopic | "")}
-            className={`${fieldClass} cursor-pointer appearance-none pr-11 ${topic ? "" : "text-slate"}`}
-          >
-            <option value="" disabled>
-              {f.topicPlaceholder}
-            </option>
-            {CONTACT_TOPICS.map((id) => (
-              <option key={id} value={id} className="text-ice-white">
-                {f.topics[id]}
-              </option>
-            ))}
-          </select>
-          <svg
-            className="pointer-events-none absolute top-1/2 right-4 mt-1 h-4 w-4 -translate-y-1/2 text-slate"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </span>
-      </label>
+      <div className="mb-5">
+        <Select
+          label={f.topic}
+          value={topic}
+          placeholder={f.topicPlaceholder}
+          options={CONTACT_TOPICS.map((id) => ({ value: id, label: f.topics[id] }))}
+          onChange={(value) => {
+            setTopic(value);
+            setTopicError(false);
+          }}
+          error={topicError ? f.topicRequired : undefined}
+          buttonRef={topicRef}
+        />
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-ice-white">
@@ -158,7 +154,14 @@ export function ContactForm({ lang }: { lang: Lang }) {
           </a>
           {f.privacyAfter}
         </p>
-        <button type="submit" disabled={sending} className={`${buttonPrimary} shrink-0`}>
+        <button
+          type="submit"
+          disabled={sending}
+          onClick={(event) => {
+            if (!requireTopic()) event.preventDefault();
+          }}
+          className={`${buttonPrimary} shrink-0`}
+        >
           {sending ? f.sending : f.submit}
         </button>
       </div>

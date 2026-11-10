@@ -89,6 +89,7 @@ export const en: Messages = {
     form: {
       topic: "How can I help?",
       topicPlaceholder: "Choose a topic",
+      topicRequired: "Please choose what your message is about.",
       topics: {
         "new-site": "New website",
         "existing-site": "Improving or fixing an existing site",

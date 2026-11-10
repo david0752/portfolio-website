@@ -95,6 +95,7 @@ export const hu = {
     form: {
       topic: "Miben segíthetek?",
       topicPlaceholder: "Válassz témát",
+      topicRequired: "Válaszd ki, milyen ügyben írsz.",
       // A kulcsok a backend utils/validation.ts CONTACT_TOPICS azonosítói.
       topics: {
         "new-site": "Új weboldal",
