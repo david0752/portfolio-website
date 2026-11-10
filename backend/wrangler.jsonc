@@ -4,7 +4,8 @@
 // - A levél a Cloudflare saját levélküldőjével megy, fixen a tulajdonos megerősített címére (Email Routing).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "szdavid",
+  // Egyezzen a Cloudflare-en létrehozott Worker projekt nevével, különben a build hibát ad.
+  "name": "portfolio-website",
   "main": "src/worker.ts",
   "compatibility_date": "2026-11-01",
   "assets": {
