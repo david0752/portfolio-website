@@ -5,3 +5,5 @@ graphify-out/
 .playwright-mcp/
 *.tsbuildinfo
 .astro/
+.wrangler/
+worker-configuration.d.ts

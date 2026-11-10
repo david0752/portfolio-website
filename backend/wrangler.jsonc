@@ -1,0 +1,33 @@
+// Cloudflare Worker: az éles oldal (szdavid.dev) egyetlen projektként fut.
+// - A statikus oldalt a frontend buildje adja (../frontend/dist), ezt a Cloudflare közvetlenül szolgálja ki.
+// - Csak az /api/* kérések jutnak el a Workerig (src/worker.ts): a kapcsolati űrlap POST /api/contact végpontja.
+// - A levél a Cloudflare saját levélküldőjével megy, fixen a tulajdonos megerősített címére (Email Routing).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "szdavid",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "../frontend/dist",
+    // Nem létező címre a saját 404-es oldal jön (dist/404.html).
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"],
+  },
+  "routes": [{ "pattern": "szdavid.dev", "custom_domain": true }],
+  "send_email": [
+    {
+      "name": "CONTACT_MAIL",
+      // Csak erre az egy címre tud küldeni, akkor is, ha a kód hibás lenne.
+      "destination_address": "szanto.david12@gmail.com",
+    },
+  ],
+  // Spam ellen: IP-címenként legfeljebb 2 üzenet percenként (a Cloudflare csak 10 vagy 60 mp-es ablakot ismer).
+  "ratelimits": [{ "name": "CONTACT_LIMITER", "namespace_id": "1001", "simple": { "limit": 2, "period": 60 } }],
+  "vars": {
+    // A levél feladója; a domainnek a Cloudflare Email Routingban kell lennie.
+    "MAIL_FROM": "urlap@szdavid.dev",
+    // A címzett: ugyanaz, mint a send_email destination_address (a binding más címre nem is engedne).
+    "MAIL_TO": "szanto.david12@gmail.com",
+  },
+  "observability": { "enabled": true },
+}
