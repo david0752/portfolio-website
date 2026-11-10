@@ -16,6 +16,8 @@ export const hu = {
     language: "Nyelv",
     home: "Kezdőlap",
     skip: "Ugrás a tartalomhoz",
+    // Töltőképernyő (Layout.astro), képernyőolvasónak.
+    loading: "Az oldal betöltése…",
   },
   hero: {
     role: "Szoftverfejlesztő",

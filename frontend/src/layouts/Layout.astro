@@ -5,6 +5,8 @@
  * A navbar az egyetlen mindig betöltődő React-sziget; a többi komponens statikus HTML.
  * Az egérkövető fény (utils/pointer.ts), a görgetési beúszás (utils/reveal.ts) és a főcím szóváltása
  * (utils/typewriter.ts) sima script, React nélkül.
+ * Töltőképernyő: amíg ezek a scriptek és a betűtípus meg nem érkeznek, egy forgó ív takarja az oldalt, így lassú
+ * hálózaton sem látszik félkész tartalom (a beúszó elemek addig rejtve vannak). JavaScript nélkül nem jelenik meg.
  */
 import "../index.css";
 import { Footer } from "../components/layout/Footer.tsx";
@@ -73,9 +75,98 @@ const ogImage = abs(`/og-${lang}.png`);
     <!-- A görgetési animáció csak akkor rejt el bármit, ha fut a JavaScript (index.css: .js [data-reveal]). -->
     <script is:inline>
       document.documentElement.classList.add("js");
+      // Vészfék: ha egy script nem érkezik meg, a töltőképernyő 8 mp után akkor is eltűnik.
+      setTimeout(() => document.documentElement.classList.add("is-ready"), 8000);
     </script>
+    <!-- A töltőképernyő stílusa itt, a head-ben van, hogy az első képkockától látszódjon (színek: DESIGN.md). -->
+    <style is:inline>
+      .page-loader {
+        display: none;
+      }
+      .js .page-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        background: #070b14;
+        transition:
+          opacity 0.4s ease,
+          visibility 0.4s;
+      }
+      .js:not(.is-ready) body {
+        overflow: hidden;
+      }
+      .is-ready .page-loader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      /* Forgó ív halvány kör alapon: az ív hossza közben nő és fogy. Gyors betöltésnél ne villanjon fel,
+       * ezért csak egy rövid szünet után úszik be. */
+      .page-loader-spinner {
+        width: 44px;
+        height: 44px;
+        animation:
+          loader-in 0.5s ease 0.2s both,
+          loader-rotate 1.6s linear infinite;
+      }
+      .page-loader-spinner circle {
+        fill: none;
+        stroke-width: 2.5;
+      }
+      .page-loader-track {
+        stroke: #1c2a44;
+      }
+      .page-loader-arc {
+        stroke: #5b9bff;
+        stroke-linecap: round;
+        stroke-dasharray: 1 150;
+        animation: loader-dash 1.6s ease-in-out infinite;
+      }
+      @keyframes loader-in {
+        from {
+          opacity: 0;
+        }
+      }
+      @keyframes loader-rotate {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes loader-dash {
+        0% {
+          stroke-dasharray: 1 150;
+          stroke-dashoffset: 0;
+        }
+        50% {
+          stroke-dasharray: 70 150;
+          stroke-dashoffset: -20;
+        }
+        100% {
+          stroke-dasharray: 70 150;
+          stroke-dashoffset: -94;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .page-loader-spinner,
+        .page-loader-arc {
+          animation: none;
+        }
+        .page-loader-arc {
+          stroke-dasharray: 40 150;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div class="page-loader" role="status" aria-live="polite">
+      <svg class="page-loader-spinner" viewBox="0 0 50 50" aria-hidden="true">
+        <circle class="page-loader-track" cx="25" cy="25" r="20" />
+        <circle class="page-loader-arc" cx="25" cy="25" r="20" />
+      </svg>
+      <span class="sr-only">{t.nav.loading}</span>
+    </div>
     <div class="flex min-h-dvh flex-col">
       <a
         href="#tartalom"
@@ -94,6 +185,10 @@ const ogImage = abs(`/og-${lang}.png`);
       import "../utils/reveal.ts";
       import "../utils/typewriter.ts";
       import "../utils/hscroll.ts";
+
+      // Minden script lefutott: a betűtípusra még legfeljebb 1,5 mp-et várunk, aztán eltűnik a töltőképernyő.
+      const fontsReady = Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]);
+      void fontsReady.then(() => document.documentElement.classList.add("is-ready"));
     </script>
   </body>
 </html>

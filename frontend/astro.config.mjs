@@ -30,7 +30,8 @@ export default defineConfig({
   server: { port: 5173 },
   vite: {
     plugins: [tailwindcss()],
-    server: { proxy: backendProxy },
+    // A .trycloudflare.com engedély a Cloudflare gyors alagúthoz kell (helyi oldal megmutatása másnak).
+    server: { proxy: backendProxy, allowedHosts: [".trycloudflare.com"] },
     preview: { proxy: backendProxy },
   },
 });

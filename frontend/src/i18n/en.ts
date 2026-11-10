@@ -17,6 +17,7 @@ export const en: Messages = {
     language: "Language",
     home: "Home",
     skip: "Skip to content",
+    loading: "Loading the page…",
   },
   hero: {
     role: "Software developer",
