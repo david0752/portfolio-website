@@ -20,7 +20,8 @@ export function ProjectVisual({ project, lang, alt = "", className = "", compact
   const t = messages(lang);
 
   if (project.image) {
-    return <img src={project.image} alt={alt} loading="lazy" className={`h-full w-full object-cover object-top ${className}`} />;
+    // Balra-fentre igazítva vágódik: a képernyőképeken a tartalom (menü, cím, kereső) bal oldalt kezdődik.
+    return <img src={project.image} alt={alt} loading="lazy" className={`h-full w-full object-cover object-top-left ${className}`} />;
   }
 
   return (

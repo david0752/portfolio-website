@@ -17,12 +17,12 @@ export function Munkak({ lang, projects }: { lang: Lang; projects: Project[] }) 
   return (
     <section id="munkak" data-hscroll className="hscroll border-t border-line">
       <div className="hscroll-stage">
-        <div className="mx-auto max-w-[1120px] px-5 pt-[72px] md:px-8 md:pt-24 xl:px-0">
+        <div className="mx-auto max-w-280 px-5 pt-18 md:px-8 md:pt-24 xl:px-0">
           <SectionHeading eyebrow={t.work.eyebrow} title={t.work.title} lead={t.work.lead} />
         </div>
 
         <div className="hscroll-viewport mt-10 lg:mt-8">
-          <ul data-hscroll-track className="hscroll-track mx-auto grid max-w-[1120px] gap-6 px-5 pb-[72px] md:px-8 md:pb-24 xl:px-0">
+          <ul data-hscroll-track className="hscroll-track mx-auto grid max-w-280 gap-6 px-5 pb-18 md:px-8 md:pb-24 xl:px-0">
             {projects.map((project, index) => (
               <li key={project.slug} className="hscroll-item">
                 <ProjectCard project={project} lang={lang} index={index} />

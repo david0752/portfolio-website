@@ -30,6 +30,9 @@ export interface Project {
   // Felújított oldalnál: a régi és az új kezdőlap képernyőképe, asztali és mobil nézetben. Ha van, a projektoldal
   // tetején az előtte / utána csúszka áll a projektkép helyett (ui/BeforeAfter.tsx).
   comparison?: Comparison;
+  // Iskolai csapatprojekt: a kezdőlapon az „Iskolai projektek” szekcióba kerül (nem a Munkáim közé), és a projektoldalon
+  // a decisions oszlop címe „az én részem” (mit csinált a fejlesztő a csapatban).
+  school?: boolean;
   // Van-e saját projektoldal (a kártya csak akkor link, és csak akkor készül oldal).
   hasCaseStudy: boolean;
 }

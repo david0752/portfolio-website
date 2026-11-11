@@ -40,6 +40,7 @@ export const en: Messages = {
     allWork: "All work",
     highlights: "highlights",
     decisions: "technical decisions",
+    myPart: "my part",
     stack: "stack",
     live: "Live site",
     source: "Source code",
@@ -57,12 +58,17 @@ export const en: Messages = {
     beforeAlt: { desktop: "The old site's home page on desktop", mobile: "The old site's home page on a phone" },
     afterAlt: { desktop: "The new site's home page on desktop", mobile: "The new site's home page on a phone" },
   },
+  school: {
+    eyebrow: "school projects",
+    title: "School projects",
+    lead: "Team projects built at Pollák Antal Technical School in Szentes.",
+  },
   about: {
     eyebrow: "about",
     title: "A few words about me",
     intro: [
       "I'm Dávid Szántó from Tiszasas, a final-year student at Pollák Antal Technical School in Szentes. What draws me most in development is automation: I like building solutions that make other people's work simpler and turn complicated administration into a few clicks.",
-      "Problem solving drives me, new things make me curious, and I'm ambitious: with every project I want to get one step further.",
+      "Solving problems motivates me, and I approach new opportunities with an open, curious mind.",
     ],
     valuesTitle: "What I focus on",
     values: [

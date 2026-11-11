@@ -13,8 +13,8 @@ type Side = "left" | "right" | "mobile";
 
 // A pont és az összekötő helye oldalanként (a vonal a kártya szélétől 40px-re van).
 const DOT_POSITION: Record<Side, string> = {
-  left: "-right-[47.5px]",
-  right: "-left-[47.5px]",
+  left: "right-[-47.5px]",
+  right: "left-[-47.5px]",
   mobile: "-left-10",
 };
 const CONNECTOR_POSITION: Record<Side, string> = {
@@ -29,10 +29,10 @@ function TimelineItem({ item, side, lang }: { item: Experience; side: Side; lang
 
   return (
     <li data-reveal className="relative">
-      <span aria-hidden="true" className={`absolute top-[31px] h-px w-10 bg-line ${CONNECTOR_POSITION[side]}`} />
+      <span aria-hidden="true" className={`absolute top-7.75 h-px w-10 bg-line ${CONNECTOR_POSITION[side]}`} />
       <span
         aria-hidden="true"
-        className={`absolute top-6 h-[15px] w-[15px] rounded-full border-2 border-signal-blue ${DOT_POSITION[side]} ${
+        className={`absolute top-6 h-3.75 w-3.75 rounded-full border-2 border-signal-blue ${DOT_POSITION[side]} ${
           ongoing ? "bg-signal-blue shadow-[0_0_0_4px_rgb(91_155_255/0.15)]" : "bg-midnight"
         }`}
       />
@@ -67,14 +67,14 @@ export function Tapasztalat({ lang }: { lang: Lang }) {
 
   return (
     <section id="tapasztalat" className="border-t border-line">
-      <div className="mx-auto max-w-[1120px] px-5 py-[72px] md:px-8 md:py-24 xl:px-0">
+      <div className="mx-auto max-w-280 px-5 py-18 md:px-8 md:py-24 xl:px-0">
         <SectionHeading eyebrow={t.experience.eyebrow} title={t.experience.title} lead={t.experience.lead} />
 
         <div className="relative mt-12">
           {/* A függőleges vonal: telefonon bal oldalt, nagy képernyőn középen; a végein elhalványul. */}
           <div
             aria-hidden="true"
-            className="timeline-line absolute top-0 bottom-0 left-[7px] w-px bg-gradient-to-b from-transparent via-signal-blue/35 to-transparent lg:left-1/2 lg:-translate-x-1/2"
+            className="timeline-line absolute top-0 bottom-0 left-1.75 w-px bg-linear-to-b from-transparent via-signal-blue/35 to-transparent lg:left-1/2 lg:-translate-x-1/2"
           />
 
           <ol className="space-y-8 pl-10 lg:hidden">

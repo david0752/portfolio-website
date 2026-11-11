@@ -45,6 +45,8 @@ export const hu = {
     allWork: "Összes munka",
     highlights: "kiemelt funkciók",
     decisions: "technikai döntések",
+    // Iskolai csapatprojektnél a decisions oszlop címe: mit csináltam a csapatban.
+    myPart: "az én részem",
     stack: "stack",
     live: "Élő oldal",
     source: "Forráskód",
@@ -62,13 +64,19 @@ export const hu = {
     beforeAlt: { desktop: "A régi oldal kezdőlapja asztali nézetben", mobile: "A régi oldal kezdőlapja telefonon" },
     afterAlt: { desktop: "Az új oldal kezdőlapja asztali nézetben", mobile: "Az új oldal kezdőlapja telefonon" },
   },
+  // Kezdőlap „Iskolai projektek” szekciója (components/IskolaiProjektek.tsx).
+  school: {
+    eyebrow: "iskolai projektek",
+    title: "Iskolai projektek",
+    lead: "Csapatban készült projektek a szentesi Pollák Antal Technikumban.",
+  },
   about: {
     eyebrow: "rólam",
     title: "Pár szó rólam",
     // A bemutatkozás bekezdései (a fejlesztő saját szavaiból).
     intro: [
       "Szántó Dávid vagyok, Tiszasasról, végzős diák a szentesi Pollák Antal Technikumban. A fejlesztésben az automatizálás vonz a legjobban: olyan megoldásokat szeretek építeni, amelyek leegyszerűsítik mások munkáját, és egy bonyolult adminisztrációt pár kattintássá tesznek.",
-      "A problémamegoldás hajt, kíváncsian próbálok ki új dolgokat, és ambiciózus vagyok: minden projekttel egy lépéssel előrébb akarok jutni.",
+      "Motivál a problémák megoldása, és nyitottan, kíváncsian fordulok az új lehetőségek felé.",
     ],
     valuesTitle: "Amire figyelek",
     // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).

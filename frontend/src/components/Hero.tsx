@@ -26,7 +26,7 @@ export function Hero({ lang }: { lang: Lang }) {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(91_155_255/0.10),transparent)]"
       />
 
-      <div className="relative mx-auto grid w-full max-w-[1120px] items-center gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 xl:px-0">
+      <div className="relative mx-auto grid w-full max-w-280 items-center gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 xl:px-0">
         <div className="lg:col-span-7">
           <p className="font-mono text-sm text-slate">
             <span aria-hidden="true" className="text-signal-blue">

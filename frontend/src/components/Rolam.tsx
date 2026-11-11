@@ -24,7 +24,7 @@ export function Rolam({ lang }: { lang: Lang }) {
 
   return (
     <section id="rolam" className="border-t border-line bg-deep-navy">
-      <div className="mx-auto grid max-w-[1120px] gap-12 px-5 py-[72px] md:px-8 md:py-24 lg:grid-cols-12 lg:gap-16 xl:px-0">
+      <div className="mx-auto grid max-w-280 gap-12 px-5 py-18 md:px-8 md:py-24 lg:grid-cols-12 lg:gap-16 xl:px-0">
         <div className="lg:sticky lg:top-28 lg:col-span-7 lg:self-start">
           <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
           <div data-reveal className="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed text-mist">

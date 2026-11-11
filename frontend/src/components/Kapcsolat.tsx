@@ -15,7 +15,7 @@ export function Kapcsolat({ lang, children }: { lang: Lang; children: ReactNode 
 
   return (
     <section id="kapcsolat" className="border-t border-line">
-      <div className="mx-auto grid max-w-[1120px] gap-12 px-5 py-[72px] md:px-8 md:py-24 lg:grid-cols-12 xl:px-0 xl:py-32">
+      <div className="mx-auto grid max-w-280 gap-12 px-5 py-18 md:px-8 md:py-24 lg:grid-cols-12 xl:px-0 xl:py-32">
         <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
           <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead} />
           <dl className="mt-10 border-b border-line">
