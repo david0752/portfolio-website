@@ -22,6 +22,8 @@ export default defineConfig({
   site: SITE_URL || "http://localhost:5173",
   // Minden cím perjelre végződik, így egy oldalnak egyetlen címe van (nincs duplikált tartalom a keresőben).
   trailingSlash: "always",
+  // A CSS a HTML-be kerül: nincs külön, renderelést blokkoló kérés (mobilon gyorsabb első megjelenés).
+  build: { inlineStylesheets: "always" },
   integrations: [
     react(),
     sitemap({
