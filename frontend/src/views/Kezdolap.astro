@@ -40,7 +40,7 @@ const jsonLd = profileJsonLd(lang, site, new URL(Astro.url.pathname, site).href,
   <Hero lang={lang} />
   <Munkak lang={lang} projects={workProjects} />
   <IskolaiProjektek lang={lang} projects={schoolProjects} />
-  <Rolam lang={lang} />
+  <Rolam lang={lang} clientCount={workProjects.length} schoolCount={schoolProjects.length} />
   <Tapasztalat lang={lang} />
   <Stack lang={lang} />
   <Kapcsolat lang={lang}>

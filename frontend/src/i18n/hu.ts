@@ -72,18 +72,39 @@ export const hu = {
   },
   about: {
     eyebrow: "rólam",
-    title: "Pár szó rólam",
-    // A bemutatkozás bekezdései (a fejlesztő saját szavaiból).
+    // A szekció címe a fejlesztő fő mondata (a bemutatkozásából), nagy méretben.
+    title: "Bonyolult adminisztrációból pár kattintás.",
+    // A bemutatkozás bekezdései (a fejlesztő saját szavaiból; a cím mondata itt nem ismétlődik).
     intro: [
-      "Szántó Dávid vagyok, Tiszasasról, végzős diák a szentesi Pollák Antal Technikumban. A fejlesztésben az automatizálás vonz a legjobban: olyan megoldásokat szeretek építeni, amelyek leegyszerűsítik mások munkáját, és egy bonyolult adminisztrációt pár kattintássá tesznek.",
+      "Szántó Dávid vagyok, Tiszasasról, végzős diák a szentesi Pollák Antal Technikumban. A fejlesztésben az automatizálás vonz a legjobban: olyan megoldásokat szeretek építeni, amelyek leegyszerűsítik mások munkáját.",
       "Motivál a problémák megoldása, és nyitottan, kíváncsian fordulok az új lehetőségek felé.",
     ],
+    // A bemutatkozás melletti számok felirata (a darabszám a projektlistából jön); egyes és többes szám.
+    facts: {
+      total: { one: "projekt", other: "projekt" },
+      school: { one: "iskolai csapatprojekt", other: "iskolai csapatprojekt" },
+    },
     valuesTitle: "Amire figyelek",
-    // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).
+    // Elv, rövid állítás és a bizonyíték a saját munkáiból; a linkek sorrendje a Rolam.tsx proofLinks-ével egyezik.
     values: [
-      { title: "Tiszta kód", text: "Rendezett, érthető, felesleges bonyolítás nélkül." },
-      { title: "Biztonság", text: "Vigyáz a látogatók adataira, felesleges követés nélkül." },
-      { title: "Minden képernyőn", text: "Telefonon ugyanolyan jól működik, mint laptopon." },
+      {
+        title: "Tiszta kód",
+        text: "Rendezett, érthető, felesleges bonyolítás nélkül.",
+        proof: "Ennek az oldalnak a teljes forráskódja nyilvános, bárki átnézheti.",
+        link: "Forráskód",
+      },
+      {
+        title: "Biztonság",
+        text: "Vigyáz a látogatók adataira, felesleges követés nélkül.",
+        proof: "Ez az oldal sütit és követőkódot nem használ. A Kunmadaras Driftben a jelszavakat bcrypt védi, az adminkéréseket CSRF-védelem.",
+        link: "Kunmadaras Drift",
+      },
+      {
+        title: "Minden képernyőn",
+        text: "Telefonon ugyanolyan jól működik, mint laptopon.",
+        proof: "A PollakFindben és a Pollák Ügyfélkapuban a telefonos nézet az én részem volt.",
+        link: "PollakFind",
+      },
     ],
   },
   experience: {

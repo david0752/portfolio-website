@@ -1,7 +1,7 @@
 ---
 /**
  * Projektoldal mindkét nyelvre (pages/munkak/[slug].astro és pages/en/work/[slug].astro adja a nyelvet és a slugot).
- * Megkeresi a projektet és a saját csoportjában (iskolai vagy rendes munka) a sorban következőt, és a Layout-ba tett
+ * Megkeresi a projektet és a saját csoportjában (iskolai vagy rendes munka) a sorban következőt (a lista végén nincs), és a Layout-ba tett
  * CaseStudy komponenssel rajzolja ki.
  * Felújított oldalnál az előtte / utána csúszka szigetként (client:visible) kerül a CaseStudy-ba.
  */
@@ -16,10 +16,10 @@ const { lang, slug } = Astro.props as { lang: Lang; slug: string };
 const t = messages(lang);
 const all = await caseStudies();
 const project = all.find((item) => item.slug === slug)!;
-// A „Következő projekt” csak a saját csoportban lép tovább: iskolai projektről iskolaira, rendes munkáról rendesre.
+// A „Következő projekt” csak a saját csoportban lép tovább (iskolai projektről iskolaira, rendes munkáról rendesre),
+// és a lista végén megáll: az utolsónál nincs következő, helyette a CaseStudy a lista szekciójába visz vissza.
 const list = all.filter((item) => Boolean(item.school) === Boolean(project.school));
-const index = list.indexOf(project);
-const next = list.length > 1 ? list[(index + 1) % list.length] : undefined;
+const next = list[list.indexOf(project) + 1];
 const jsonLd = caseStudyJsonLd(lang, Astro.site!, new URL(Astro.url.pathname, Astro.site).href, project, OWNER.name[lang]);
 ---
 
