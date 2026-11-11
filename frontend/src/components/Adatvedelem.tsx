@@ -6,7 +6,7 @@
 import type { Lang } from "../i18n/index.ts";
 import { CONTACT_EMAIL } from "../utils/contact.ts";
 
-const UPDATED = "2026-11-10";
+const UPDATED = "2026-11-11";
 
 const CONTENT: Record<Lang, { title: string; updated: string; sections: { heading: string; text: string }[] }> = {
   hu: {
@@ -16,7 +16,11 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Adatkezelő", text: `Szántó Dávid, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "Milyen adatokat kezelek?",
-        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem használ sütiket, nem követi a látogatókat, és nem tölt be külső szolgáltatást (a betűtípusok is az oldalról töltődnek be). A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
+        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem követi a látogatókat, nincs rajta látogatottság-mérés, és nem tölt be külső szolgáltatást (a betűtípusok is innen érkeznek). Saját sütit nem használ; az egyetlen kivétel a Cloudflare biztonsági ellenőrzése, lásd lent. A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
+      },
+      {
+        heading: "Mit csinál a Cloudflare?",
+        text: "Az oldal a Cloudflare hálózatán fut: amikor megnyitod, a hozzád legközelebbi szerveréről kapod meg. Ehhez a Cloudflare technikailag látja az IP-címedet, a böngésződ adatait és a kért oldal címét, és ezeket a kiszolgáláson túl arra használja, hogy megvédje az oldalt a túlterheléses (DDoS) támadásoktól és a rosszindulatú forgalomtól. Én ezekből csak összesített statisztikát látok (például a napi kérések számát); egyedi IP-cím csak akkor jelenik meg nálam, ha a Cloudflare egy gyanús kérést megállít, a biztonsági eseménynaplóban. Ha egy kérésed gyanúsnak tűnik, ellenőrző oldalt mutathat; ha átmész rajta, egy szükséges technikai sütit (cf_clearance) helyez el, amely 30 percig csak azt igazolja, hogy az ellenőrzés megtörtént. Az űrlap elküldésekor az IP-címed alapján számolja, hány üzenetet küldtél (percenként legfeljebb kettő mehet át), hogy kiszűrje a tömeges küldést; ezt a számot nem tárolom. Végül ő továbbítja az üzenetet e-mailben a postafiókomba.",
       },
       {
         heading: "Mire használom?",
@@ -28,7 +32,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       },
       {
         heading: "Adatfeldolgozók",
-        text: "Az oldalt a Cloudflare, Inc. (USA) szolgálja ki, és ő továbbítja az űrlap üzenetét e-mailben. A kiszolgáláshoz a Cloudflare technikailag látja a látogató IP-címét; ezt az oldal csak a túl sok üzenet kiszűrésére használja, nem tárolja. A leveleket a Google (Gmail) tárolja. Mindkét cég részt vesz az EU–USA adatvédelmi keretrendszerben.",
+        text: "Cloudflare, Inc. (USA): az oldal kiszolgálása, védelme és az üzenet továbbítása, a fent leírt módon; a hálózata világszerte működik, így az adatok az EU-n kívül is feldolgozhatók. Saját tájékoztatója: cloudflare.com/privacypolicy. Google (Gmail): a levelek tárolása. Mindkét cég részt vesz az EU–USA adatvédelmi keretrendszerben, az USA-ba továbbítás ezen alapul.",
       },
       {
         heading: "Jogaid",
@@ -43,7 +47,11 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Data controller", text: `Dávid Szántó, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "What data do I process?",
-        text: "The name, e-mail address and message you enter in the contact form. The site uses no cookies, does not track visitors and loads no third-party services (fonts are loaded from the site itself). The language is set by the page address (URL); nothing is stored in your browser.",
+        text: "The name, e-mail address and message you enter in the contact form. The site does not track visitors, has no analytics and loads no third-party services (fonts come from the site itself). It sets no cookies of its own; the only exception is Cloudflare's security check, see below. The language is set by the page address (URL); nothing is stored in your browser.",
+      },
+      {
+        heading: "What does Cloudflare do?",
+        text: "The site runs on Cloudflare's network: when you open it, you receive it from the server closest to you. To do this, Cloudflare technically sees your IP address, your browser details and the address of the page you request, and besides delivering the site it uses them to protect it from overload (DDoS) attacks and malicious traffic. I only see aggregated statistics from this (such as the number of requests per day); an individual IP address appears for me only when Cloudflare stops a suspicious request, in its security event log. If a request of yours looks suspicious, it may show a check page; once you pass it, it sets a necessary technical cookie (cf_clearance) that, for 30 minutes, only proves the check was completed. When you send the form, it counts your messages by IP address (at most two per minute get through) to stop bulk sending; I do not store this count. Finally, Cloudflare forwards the message to my mailbox by e-mail.",
       },
       {
         heading: "What for?",
@@ -55,7 +63,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       },
       {
         heading: "Processors",
-        text: "The site is served by Cloudflare, Inc. (USA), which also forwards the contact form message by e-mail. To serve the site, Cloudflare technically sees the visitor's IP address; the site uses it only to block too many messages and does not store it. The e-mails are stored by Google (Gmail). Both companies participate in the EU–U.S. Data Privacy Framework.",
+        text: "Cloudflare, Inc. (USA): delivering and protecting the site and forwarding the message, as described above; its network operates worldwide, so data may be processed outside the EU. Its own notice: cloudflare.com/privacypolicy. Google (Gmail): storing the e-mails. Both companies participate in the EU–U.S. Data Privacy Framework, which is the basis for the transfer to the USA.",
       },
       {
         heading: "Your rights",

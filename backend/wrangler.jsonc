@@ -34,5 +34,7 @@
     // A címzett: ugyanaz, mint a send_email destination_address (a binding más címre nem is engedne).
     "MAIL_TO": "szanto.david12@gmail.com",
   },
-  "observability": { "enabled": true },
+  // Csak a saját naplósoraink (hiba neve/kódja) maradnak meg. Az automatikus kérésnapló ki van kapcsolva,
+  // mert az minden űrlapküldésnél eltárolná a fejléceket, köztük a küldő IP-címét (adatvédelmi tájékoztató).
+  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
 }
