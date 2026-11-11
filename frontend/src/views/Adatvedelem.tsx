@@ -6,7 +6,7 @@
 import type { Lang } from "../i18n/index.ts";
 import { CONTACT_EMAIL } from "../utils/contact.ts";
 
-const UPDATED = "2026-11-11";
+const UPDATED = "2026-11-12";
 
 const CONTENT: Record<Lang, { title: string; updated: string; sections: { heading: string; text: string }[] }> = {
   hu: {
@@ -16,7 +16,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Adatkezelő", text: `Szántó Dávid, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "Milyen adatokat kezelek?",
-        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem követi a látogatókat, nincs rajta látogatottság-mérés, és nem tölt be külső szolgáltatást (a betűtípusok is innen érkeznek). Saját sütit nem használ; az egyetlen kivétel a Cloudflare biztonsági ellenőrzése, lásd lent. A nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
+        text: "A kapcsolati űrlapon megadott nevet, e-mail-címet és üzenetet. Az oldal nem követi a látogatókat, nincs rajta látogatottság-mérés, és nem tölt be külső szolgáltatást (a betűtípusok is innen érkeznek). Saját sütit nem használ; az egyetlen kivétel a Cloudflare biztonsági ellenőrzése, lásd lent. Ha kívülről, nem magyar nyelvű böngészővel nyitod meg az oldalt, a böngésződ nyelvi beállítása alapján az angol változatot kapod; ezt a beállítást csak a választáshoz olvasom, nem tárolom. Utána a nyelvet az oldal címe (URL) határozza meg, a böngésződben semmit nem tárolok.",
       },
       {
         heading: "Mit csinál a Cloudflare?",
@@ -47,7 +47,7 @@ const CONTENT: Record<Lang, { title: string; updated: string; sections: { headin
       { heading: "Data controller", text: `Dávid Szántó, e-mail: ${CONTACT_EMAIL}.` },
       {
         heading: "What data do I process?",
-        text: "The name, e-mail address and message you enter in the contact form. The site does not track visitors, has no analytics and loads no third-party services (fonts come from the site itself). It sets no cookies of its own; the only exception is Cloudflare's security check, see below. The language is set by the page address (URL); nothing is stored in your browser.",
+        text: "The name, e-mail address and message you enter in the contact form. The site does not track visitors, has no analytics and loads no third-party services (fonts come from the site itself). It sets no cookies of its own; the only exception is Cloudflare's security check, see below. If you open the site from elsewhere with a browser that is not set to Hungarian, your browser's language setting sends you to the English version; I only read this setting to make that choice and do not store it. After that, the language is set by the page address (URL); nothing is stored in your browser.",
       },
       {
         heading: "What does Cloudflare do?",

@@ -80,6 +80,39 @@ export function profileJsonLd(lang: Lang, site: URL, pageUrl: string, jobTitle: 
 }
 
 /**
+ * Strukturált adat a „Minden projektem” oldalra: gyűjtőoldal a projektoldalak listájával (szerző a kezdőlap
+ * Person-je), és a morzsamenü (kezdőlap → oldal).
+ */
+export function projectsJsonLd(lang: Lang, site: URL, pageUrl: string, name: string, projectUrls: string[]) {
+  const home = new URL(lang === "hu" ? "/" : "/en/", site).href;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: { "@id": new URL("/#website", site).href },
+        author: { "@id": new URL("/#person", site).href },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: projectUrls.map((url, index) => ({ "@type": "ListItem", position: index + 1, url })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: OWNER.name[lang], item: home },
+          { "@type": "ListItem", position: 2, name, item: pageUrl },
+        ],
+      },
+    ],
+  };
+}
+
+/**
  * Strukturált adat egy projektoldalra: a munka (szerző a kezdőlap Person-je, ugyanazzal az @id-val) és a
  * morzsamenü (kezdőlap → projekt), hogy a keresők a portfólió részeként értsék.
  */

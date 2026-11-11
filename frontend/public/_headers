@@ -1,4 +1,5 @@
 # Biztonsági fejlécek minden oldalra (a Cloudflare statikus kiszolgálása olvassa, wrangler.jsonc assets).
+# A Workeren átmenő magyar oldalakra ezeket nem teszi rá, ott a backend SecurityHeaders.middleware.ts adja: a két lista egyezzen.
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY

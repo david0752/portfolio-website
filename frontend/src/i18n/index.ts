@@ -30,5 +30,6 @@ const PATHS = {
 
 export function paths(lang: Lang) {
   const p = PATHS[lang];
-  return { home: p.home, privacy: p.privacy, project: (slug: string) => `${p.work}/${slug}/` };
+  // projects: a „Minden projektem” oldal (/munkak/, /en/work/).
+  return { home: p.home, privacy: p.privacy, projects: `${p.work}/`, project: (slug: string) => `${p.work}/${slug}/` };
 }

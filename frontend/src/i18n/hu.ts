@@ -63,12 +63,21 @@ export const hu = {
     after: "Utána",
     beforeAlt: { desktop: "A régi oldal kezdőlapja asztali nézetben", mobile: "A régi oldal kezdőlapja telefonon" },
     afterAlt: { desktop: "Az új oldal kezdőlapja asztali nézetben", mobile: "Az új oldal kezdőlapja telefonon" },
+    // A szekció címe melletti link a „Minden projektem” oldalra; csak akkor látszik, ha nem fér ki minden (darabszámmal).
+    allLink: "Minden munkám",
   },
   // Kezdőlap „Iskolai projektek” szekciója (sections/IskolaiProjektek.tsx).
   school: {
     eyebrow: "iskolai projektek",
     title: "Iskolai projektek",
     lead: "Csapatban készült projektek a szentesi Pollák Antal Technikumban.",
+    allLink: "Minden iskolai projekt",
+  },
+  // „Minden projektem” oldal (/munkak/, views/MindenProjekt.tsx): mindkét csoport, külön.
+  projects: {
+    title: "Minden projektem",
+    lead: "Az ügyfeleknek készült munkáim és a Pollákban, csapatban fejlesztett iskolai projektek egy helyen.",
+    workTitle: "Munkáim",
   },
   about: {
     eyebrow: "rólam",
@@ -81,7 +90,7 @@ export const hu = {
     ],
     // A bemutatkozás melletti számok felirata (a darabszám a projektlistából jön); egyes és többes szám.
     facts: {
-      total: { one: "projekt", other: "projekt" },
+      client: { one: "ügyfélprojekt", other: "ügyfélprojekt" },
       school: { one: "iskolai csapatprojekt", other: "iskolai csapatprojekt" },
     },
     valuesTitle: "Amire figyelek",
@@ -173,11 +182,13 @@ export const hu = {
   descriptions: {
     home: "Szántó Dávid szoftverfejlesztő: weboldalak és webes rendszerek a tervtől az élesítésig, React és Node.js alapon, könnyen kezelhető adminfelülettel.",
     privacy: "Hogyan kezelem a kapcsolati űrlapon megadott adatokat.",
+    projects: "Szántó Dávid összes projektje: ügyfeleknek készült weboldalak és webes rendszerek, valamint iskolai csapatprojektek.",
   },
   pageTitles: {
     // Legfeljebb kb. 60 karakter, különben a Google levágja.
     home: "Szántó Dávid – Szoftverfejlesztő | Weboldalak, webrendszerek",
     privacy: "Adatvédelmi tájékoztató – Szántó Dávid",
+    projects: "Minden projektem – Szántó Dávid",
     notFound: "Az oldal nem található – Szántó Dávid",
   },
 };

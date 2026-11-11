@@ -15,6 +15,7 @@ import { Stack } from "../sections/Stack.tsx";
 import { Tapasztalat } from "../sections/Tapasztalat.tsx";
 import { ContactForm } from "../components/ui/ContactForm.tsx";
 import { allProjects } from "../content/projects.ts";
+import { pickForHome } from "../utils/featured.ts";
 import { profileJsonLd } from "../content/site.ts";
 import { messages, paths, type Lang } from "../i18n/index.ts";
 
@@ -38,8 +39,8 @@ const jsonLd = profileJsonLd(lang, site, new URL(Astro.url.pathname, site).href,
   jsonLd={jsonLd}
 >
   <Hero lang={lang} />
-  <Munkak lang={lang} projects={workProjects} />
-  <IskolaiProjektek lang={lang} projects={schoolProjects} />
+  <Munkak lang={lang} projects={pickForHome(workProjects)} total={workProjects.length} />
+  <IskolaiProjektek lang={lang} projects={pickForHome(schoolProjects)} total={schoolProjects.length} />
   <Rolam lang={lang} clientCount={workProjects.length} schoolCount={schoolProjects.length} />
   <Tapasztalat lang={lang} />
   <Stack lang={lang} />
