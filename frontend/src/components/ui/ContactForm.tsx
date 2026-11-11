@@ -139,7 +139,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       </p>
 
       {/* Spamcsapda: látogató nem látja és nem tölti ki, a botok igen. */}
-      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+      <div aria-hidden="true" className="absolute left-[-9999px] h-px w-px overflow-hidden">
         <label>
           Website
           <input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />

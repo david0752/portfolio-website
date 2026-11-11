@@ -11,7 +11,7 @@ export function Footer({ lang }: { lang: Lang }) {
 
   return (
     <footer className="border-t border-line bg-deep-navy">
-      <div className="mx-auto flex max-w-[1120px] flex-col items-center gap-4 px-5 py-10 text-sm text-slate md:flex-row md:justify-between md:px-8 xl:px-0">
+      <div className="mx-auto flex max-w-280 flex-col items-center gap-4 px-5 py-10 text-sm text-slate md:flex-row md:justify-between md:px-8 xl:px-0">
         <p>
           © {new Date().getFullYear()} {OWNER.name[lang]}. {t.footer.rights}
         </p>

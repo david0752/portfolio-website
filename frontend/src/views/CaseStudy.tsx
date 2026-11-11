@@ -10,10 +10,10 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { messages, paths, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
-import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
-import { ProjectVisual } from "./ui/ProjectVisual.tsx";
-import { ICONS } from "./ui/SocialLinks.tsx";
-import { TechChip } from "./ui/TechChip.tsx";
+import { buttonPrimary, buttonSecondary } from "../components/ui/Button.tsx";
+import { ProjectVisual } from "../components/ui/ProjectVisual.tsx";
+import { ICONS } from "../components/ui/SocialLinks.tsx";
+import { TechChip } from "../components/ui/TechChip.tsx";
 
 interface Props {
   project: Project;
@@ -39,6 +39,10 @@ function Label({ children }: { children: string }) {
 export function CaseStudy({ project, lang, next, children }: Props) {
   const t = messages(lang);
   const home = paths(lang).home;
+  // Az iskolai és a rendes munkák külön listák: a vissza link a projekt saját szekciójába visz a kezdőlapon.
+  const list = project.school
+    ? { href: `${home}#iskolai`, label: t.school.title }
+    : { href: `${home}#munkak`, label: t.work.allWork };
 
   // Szerep · év, cím és alcím: mindkét elrendezés teteje.
   const title = (
@@ -75,7 +79,7 @@ export function CaseStudy({ project, lang, next, children }: Props) {
         )}
         {project.repo && (
           <a href={project.repo} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
-            <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <svg className="h-4.5 w-4.5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
               {ICONS.github}
             </svg>
             {t.work.source}
@@ -87,10 +91,10 @@ export function CaseStudy({ project, lang, next, children }: Props) {
   );
 
   return (
-    <article className="mx-auto max-w-[1120px] px-5 pt-10 pb-24 md:px-8 md:pt-14 xl:px-0">
-      <a href={`${home}#munkak`} className="inline-flex items-center gap-2 font-mono text-sm text-slate transition-colors hover:text-ice-white">
+    <article className="mx-auto max-w-280 px-5 pt-10 pb-24 md:px-8 md:pt-14 xl:px-0">
+      <a href={list.href} className="inline-flex items-center gap-2 font-mono text-sm text-slate transition-colors hover:text-ice-white">
         <span aria-hidden="true">←</span>
-        {t.work.allWork}
+        {list.label}
       </a>
 
       {project.comparison ? (
@@ -112,7 +116,7 @@ export function CaseStudy({ project, lang, next, children }: Props) {
             {intro}
           </div>
 
-          <div data-reveal className="aspect-[16/10] overflow-hidden rounded-[14px] border border-line lg:col-span-6">
+          <div data-reveal className="aspect-16/10 overflow-hidden rounded-[14px] border border-line lg:col-span-6">
             <ProjectVisual project={project} lang={lang} alt={project.title} />
           </div>
         </header>
@@ -130,7 +134,7 @@ export function CaseStudy({ project, lang, next, children }: Props) {
           </ul>
         </section>
         <section data-reveal style={{ "--i": 1 } as CSSProperties}>
-          <Label>{t.work.decisions}</Label>
+          <Label>{project.school ? t.work.myPart : t.work.decisions}</Label>
           <ul className="mt-5 space-y-4 md:mt-6 md:space-y-5">
             {project.decisions[lang].map((item) => (
               <li key={item} className="border-l-2 border-line pl-4 text-[0.9375rem] leading-relaxed md:text-[1.0625rem]">
@@ -165,8 +169,8 @@ export function CaseStudy({ project, lang, next, children }: Props) {
             </span>
           </a>
         ) : (
-          <a href={`${home}#munkak`} className={`${buttonPrimary} sm:ml-auto`}>
-            {t.work.allWork}
+          <a href={list.href} className={`${buttonPrimary} sm:ml-auto`}>
+            {list.label}
           </a>
         )}
       </footer>

@@ -7,8 +7,8 @@ import type { CSSProperties } from "react";
 
 import { STACK } from "../content/site.ts";
 import { messages, type Lang } from "../i18n/index.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
-import { TechChip } from "./ui/TechChip.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
+import { TechChip } from "../components/ui/TechChip.tsx";
 
 export function Stack({ lang }: { lang: Lang }) {
   const t = messages(lang);
@@ -16,7 +16,7 @@ export function Stack({ lang }: { lang: Lang }) {
 
   return (
     <section id="stack" className="border-t border-line bg-deep-navy">
-      <div className="mx-auto max-w-[1120px] px-5 py-[72px] md:px-8 md:py-24 xl:px-0">
+      <div className="mx-auto max-w-280 px-5 py-18 md:px-8 md:py-24 xl:px-0">
         <SectionHeading eyebrow={t.stack.eyebrow} title={t.stack.title} />
 
         <dl className="mt-12 border-b border-line">

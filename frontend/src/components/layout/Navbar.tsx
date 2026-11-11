@@ -116,7 +116,7 @@ export function Navbar({ lang, alternates }: Props) {
           : "border-transparent bg-midnight/60 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
       }`}
     >
-      <nav className="mx-auto grid h-16 max-w-[1120px] grid-cols-[1fr_auto] items-center px-5 md:px-8 lg:h-20 lg:grid-cols-[1fr_auto_1fr] xl:px-0">
+      <nav className="mx-auto grid h-16 max-w-280 grid-cols-[1fr_auto] items-center px-5 md:px-8 lg:h-20 lg:grid-cols-[1fr_auto_1fr] xl:px-0">
         {/* A kezdőlapon a logó nem tölti újra az oldalt, hanem simán a tetejére görget (mint a menüpontok). */}
         <a
           href={home}

@@ -144,7 +144,7 @@
 
 /*
  * Hero rácsos háttér. Az alap rács halvány és a széleken elfogy (maszk). A .hero-grid-glow ugyanaz a rács kékben,
- * csak az egér körüli körben látszik (--mx, --my a utils/pointer.ts-ből), és csak akkor, ha az egér a Hero fölött van.
+ * csak az egér körüli körben látszik (--mx, --my a scripts/pointer.ts-ből), és csak akkor, ha az egér a Hero fölött van.
  */
 .hero {
   --grid-size: 56px;
@@ -189,7 +189,7 @@
 
 /*
  * Kártyák egérkövető fénye (Rólam, Stack): halvány kék kör a háttérben ott, ahol az egér van (--mx, --my a
- * utils/pointer.ts-ből). Az isolation + z-index: -1 a szöveg alá, de a kártya háttere fölé teszi.
+ * scripts/pointer.ts-ből). Az isolation + z-index: -1 a szöveg alá, de a kártya háttere fölé teszi.
  */
 @media (min-width: 1024px) {
   .spotlight {
@@ -251,7 +251,7 @@
 
   /*
    * Görgetési beúszás mindkét irányban: a data-reveal elemek halványan, kicsit odébbról érkeznek, amikor a
-   * képernyőre érnek, és eltűnnek, amikor elhagyják (utils/reveal.ts kapcsolja az .is-visible osztályt).
+   * képernyőre érnek, és eltűnnek, amikor elhagyják (scripts/reveal.ts kapcsolja az .is-visible osztályt).
    * Lefelé görgetve alulról, felfelé görgetve felülről jönnek (data-from="top"). A .js osztály miatt
    * JavaScript nélkül semmi nem marad rejtve. Az --i a rácsban lévő elemek lépcsőzése.
    */
@@ -304,7 +304,7 @@
 }
 
 /*
- * Munkák blokk vízszintes sávja (Munkak.tsx, utils/hscroll.ts). Telefonon és tableten a kártyák egymás alatt állnak.
+ * Munkák blokk vízszintes sávja (Munkak.tsx, scripts/hscroll.ts). Telefonon és tableten a kártyák egymás alatt állnak.
  * Nagy képernyőn egy sorba kerülnek, a sáv a tartalom bal szélénél kezdődik és jobbra kifut a képernyőről.
  * Alapból (csökkentett mozgásnál vagy JavaScript nélkül) a sor oldalra görgethető; ha a script fut, az .is-pinned
  * osztállyal a blokk megáll a képernyőn, és a függőleges görgetés csúsztatja a sávot.

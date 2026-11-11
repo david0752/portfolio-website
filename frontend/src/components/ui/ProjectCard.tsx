@@ -21,12 +21,12 @@ export function ProjectCard({ project, lang, index }: Props) {
 
   const body = (
     <>
-      <div className="aspect-[16/10] overflow-hidden border-b border-line lg:absolute lg:inset-0 lg:aspect-auto lg:border-b-0">
+      <div className="aspect-16/10 overflow-hidden border-b border-line lg:absolute lg:inset-0 lg:aspect-auto lg:border-b-0">
         <ProjectVisual compact project={project} lang={lang} className="transition-transform duration-700 ease-out-soft lg:group-hover:scale-[1.03]" />
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden bg-gradient-to-t from-midnight via-midnight/85 via-40% to-transparent to-75% lg:block"
+        className="pointer-events-none absolute inset-0 hidden bg-linear-to-t from-midnight via-midnight/85 via-40% to-transparent to-75% lg:block"
       />
       <div className="p-6 lg:absolute lg:inset-x-0 lg:bottom-0 lg:p-6">
         <p className="font-mono text-xs text-signal-blue">{String(index + 1).padStart(2, "0")}</p>
@@ -48,7 +48,7 @@ export function ProjectCard({ project, lang, index }: Props) {
   );
 
   const cardClass =
-    "project-card group relative block overflow-hidden rounded-[14px] border border-line bg-card-navy transition-[border-color,box-shadow] duration-200 lg:aspect-[16/11]";
+    "project-card group relative block overflow-hidden rounded-[14px] border border-line bg-card-navy transition-[border-color,box-shadow] duration-200 lg:aspect-16/11";
 
   return project.hasCaseStudy ? (
     <a href={paths(lang).project(project.slug)} className={cardClass}>

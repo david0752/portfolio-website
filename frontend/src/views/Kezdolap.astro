@@ -1,17 +1,18 @@
 ---
 /**
  * Kezdőlap mindkét nyelvre (pages/index.astro és pages/en/index.astro adja a nyelvet):
- * Hero, Munkák, Rólam, Tapasztalat, Stack, Kapcsolat. Csak a kapcsolati űrlap React-sziget,
+ * Hero, Munkák, Iskolai projektek, Rólam, Tapasztalat, Stack, Kapcsolat. Csak a kapcsolati űrlap React-sziget,
  * és az is csak akkor töltődik be, amikor a látogató odagörget (client:visible).
  * Itt készül a kezdőlap strukturált adata is (JSON-LD: személy, weboldal, profilok).
  */
 import Layout from "../layouts/Layout.astro";
-import { Hero } from "../components/Hero.tsx";
-import { Kapcsolat } from "../components/Kapcsolat.tsx";
-import { Munkak } from "../components/Munkak.tsx";
-import { Rolam } from "../components/Rolam.tsx";
-import { Stack } from "../components/Stack.tsx";
-import { Tapasztalat } from "../components/Tapasztalat.tsx";
+import { Hero } from "../sections/Hero.tsx";
+import { IskolaiProjektek } from "../sections/IskolaiProjektek.tsx";
+import { Kapcsolat } from "../sections/Kapcsolat.tsx";
+import { Munkak } from "../sections/Munkak.tsx";
+import { Rolam } from "../sections/Rolam.tsx";
+import { Stack } from "../sections/Stack.tsx";
+import { Tapasztalat } from "../sections/Tapasztalat.tsx";
 import { ContactForm } from "../components/ui/ContactForm.tsx";
 import { allProjects } from "../content/projects.ts";
 import { profileJsonLd } from "../content/site.ts";
@@ -21,8 +22,11 @@ const { lang } = Astro.props as { lang: Lang };
 const t = messages(lang);
 const site = Astro.site!;
 
-// Élesben csak a valódi projektek, fejlesztői módban a példakártyák is (allProjects).
+// Élesben csak a valódi projektek, fejlesztői módban a példakártyák is (allProjects). Az iskolai csapatprojektek
+// (school: true) külön szekcióba kerülnek.
 const projects = await allProjects();
+const workProjects = projects.filter((project) => !project.school);
+const schoolProjects = projects.filter((project) => project.school);
 const jsonLd = profileJsonLd(lang, site, new URL(Astro.url.pathname, site).href, t.hero.role, t.descriptions.home);
 ---
 
@@ -34,8 +38,9 @@ const jsonLd = profileJsonLd(lang, site, new URL(Astro.url.pathname, site).href,
   jsonLd={jsonLd}
 >
   <Hero lang={lang} />
-  <Munkak lang={lang} projects={projects} />
-  <Rolam lang={lang} />
+  <Munkak lang={lang} projects={workProjects} />
+  <IskolaiProjektek lang={lang} projects={schoolProjects} />
+  <Rolam lang={lang} clientCount={workProjects.length} schoolCount={schoolProjects.length} />
   <Tapasztalat lang={lang} />
   <Stack lang={lang} />
   <Kapcsolat lang={lang}>

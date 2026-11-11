@@ -40,6 +40,7 @@ export const en: Messages = {
     allWork: "All work",
     highlights: "highlights",
     decisions: "technical decisions",
+    myPart: "my part",
     stack: "stack",
     live: "Live site",
     source: "Source code",
@@ -57,18 +58,42 @@ export const en: Messages = {
     beforeAlt: { desktop: "The old site's home page on desktop", mobile: "The old site's home page on a phone" },
     afterAlt: { desktop: "The new site's home page on desktop", mobile: "The new site's home page on a phone" },
   },
+  school: {
+    eyebrow: "school projects",
+    title: "School projects",
+    lead: "Team projects built at Pollák Antal Technical School in Szentes.",
+  },
   about: {
     eyebrow: "about",
-    title: "A few words about me",
+    title: "From complex admin to a few clicks.",
     intro: [
-      "I'm Dávid Szántó from Tiszasas, a final-year student at Pollák Antal Technical School in Szentes. What draws me most in development is automation: I like building solutions that make other people's work simpler and turn complicated administration into a few clicks.",
-      "Problem solving drives me, new things make me curious, and I'm ambitious: with every project I want to get one step further.",
+      "I'm Dávid Szántó from Tiszasas, a final-year student at Pollák Antal Technical School in Szentes. What draws me most in development is automation: I like building solutions that make other people's work simpler.",
+      "Solving problems motivates me, and I approach new opportunities with an open, curious mind.",
     ],
+    facts: {
+      total: { one: "project", other: "projects" },
+      school: { one: "school team project", other: "school team projects" },
+    },
     valuesTitle: "What I focus on",
     values: [
-      { title: "Clean code", text: "Tidy and clear, without needless complexity." },
-      { title: "Security", text: "Takes care of visitors' data, without unnecessary tracking." },
-      { title: "Every screen", text: "Works just as well on a phone as on a laptop." },
+      {
+        title: "Clean code",
+        text: "Tidy and clear, without needless complexity.",
+        proof: "The full source code of this site is public, so anyone can review it.",
+        link: "Source code",
+      },
+      {
+        title: "Security",
+        text: "Takes care of visitors' data, without unnecessary tracking.",
+        proof: "This site uses no cookies and no trackers. In Kunmadaras Drift, passwords are protected with bcrypt and admin requests with CSRF protection.",
+        link: "Kunmadaras Drift",
+      },
+      {
+        title: "Every screen",
+        text: "Works just as well on a phone as on a laptop.",
+        proof: "In PollakFind and Pollák Ügyfélkapu, the phone layout was my part.",
+        link: "PollakFind",
+      },
     ],
   },
   experience: {

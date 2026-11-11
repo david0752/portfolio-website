@@ -1,5 +1,5 @@
 // Kezdőlap „Kapcsolat” blokkja: elérhetőség és profilok balra (nagy képernyőn megáll görgetés közben), űrlap jobbra;
-// mobilon egymás alatt. Az e-mail-cím a Gmail levélíró ablakát nyitja meg, mellette Másolás gomb (utils/copy.ts).
+// mobilon egymás alatt. Az e-mail-cím a Gmail levélíró ablakát nyitja meg, mellette Másolás gomb (scripts/copy.ts).
 // Az űrlapot (ContactForm, React-sziget) az Astro oldal adja be children-ként, mert a
 // client:visible csak .astro-ban adható meg.
 
@@ -7,15 +7,15 @@ import type { ReactNode } from "react";
 
 import { messages, type Lang } from "../i18n/index.ts";
 import { CONTACT_EMAIL, CONTACT_GMAIL_URL } from "../utils/contact.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
-import { SocialLinks } from "./ui/SocialLinks.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
+import { SocialLinks } from "../components/ui/SocialLinks.tsx";
 
 export function Kapcsolat({ lang, children }: { lang: Lang; children: ReactNode }) {
   const t = messages(lang);
 
   return (
     <section id="kapcsolat" className="border-t border-line">
-      <div className="mx-auto grid max-w-[1120px] gap-12 px-5 py-[72px] md:px-8 md:py-24 lg:grid-cols-12 xl:px-0 xl:py-32">
+      <div className="mx-auto grid max-w-280 gap-12 px-5 py-18 md:px-8 md:py-24 lg:grid-cols-12 xl:px-0 xl:py-32">
         <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
           <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} lead={t.contact.lead} />
           <dl className="mt-10 border-b border-line">

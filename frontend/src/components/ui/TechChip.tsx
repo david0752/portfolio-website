@@ -12,6 +12,7 @@ import {
   siClaude,
   siCloudflare,
   siCss,
+  siDocker,
   siExpress,
   siGit,
   siGithub,
@@ -22,9 +23,11 @@ import {
   siNginx,
   siNodedotjs,
   siPostgresql,
+  siPrisma,
   siPython,
   siReact,
   siTailwindcss,
+  siThreedotjs,
   siTypescript,
   siVite,
   siVitest,
@@ -45,6 +48,9 @@ const BRAND: Record<string, SimpleIcon> = {
   "Node.js": siNodedotjs,
   Express: siExpress,
   PostgreSQL: siPostgresql,
+  Prisma: siPrisma,
+  Docker: siDocker,
+  "Three.js": siThreedotjs,
   MySQL: siMysql,
   "Linux VPS": siLinux,
   nginx: siNginx,
@@ -68,7 +74,7 @@ function brandColor(hex: string): string {
   return brightness < 70 ? "var(--color-ice-white)" : `#${hex}`;
 }
 
-const iconClass = "h-[1.125rem] w-[1.125rem] shrink-0";
+const iconClass = "h-4.5 w-4.5 shrink-0";
 
 export function TechChip({ name }: { name: string }) {
   const brand = BRAND[name];

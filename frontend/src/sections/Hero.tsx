@@ -2,7 +2,7 @@
  * Kezdőlap nyitóblokkja: szerep, főcím, bemutatkozó mondat, „elérhető” pötty, két gomb; mellette (tableten
  * alatta, telefonon sehol) a kódablak a fejlesztő adataival (ui/CodeWindow.tsx).
  * A főcím első sora kék (signal-blue, ragyogás nélkül) szó, amely nagy képernyőn három szó között váltakozik gépelős (konzol)
- * animációval, villogó kurzorral (data-typewriter, utils/typewriter.ts). A HTML-ben az első szó áll,
+ * animációval, villogó kurzorral (data-typewriter, scripts/typewriter.ts). A HTML-ben az első szó áll,
  * a felolvasók az aria-label teljes mondatát kapják.
  * A blokk legalább a teljes képernyőt kitölti (a navbar alatt), a tartalma függőlegesen középen áll.
  * Háttér: halvány rács és egy kék radiális fény; nagy képernyőn a rács kéken felizzik az egér körül
@@ -10,8 +10,8 @@
  */
 
 import { messages, type Lang } from "../i18n/index.ts";
-import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
-import { CodeWindow } from "./ui/CodeWindow.tsx";
+import { buttonPrimary, buttonSecondary } from "../components/ui/Button.tsx";
+import { CodeWindow } from "../components/ui/CodeWindow.tsx";
 
 export function Hero({ lang }: { lang: Lang }) {
   const t = messages(lang);
@@ -26,7 +26,7 @@ export function Hero({ lang }: { lang: Lang }) {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_50%_at_70%_0%,rgb(91_155_255/0.10),transparent)]"
       />
 
-      <div className="relative mx-auto grid w-full max-w-[1120px] items-center gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 xl:px-0">
+      <div className="relative mx-auto grid w-full max-w-280 items-center gap-12 px-5 py-14 md:px-8 md:py-20 lg:grid-cols-12 lg:gap-10 lg:pb-28 xl:px-0">
         <div className="lg:col-span-7">
           <p className="font-mono text-sm text-slate">
             <span aria-hidden="true" className="text-signal-blue">
