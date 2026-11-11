@@ -31,6 +31,23 @@ export default defineConfig({
       i18n: { defaultLocale: "hu", locales: { hu: "hu", en: "en" } },
     }),
   ],
+  // Content-Security-Policy: az Astro minden oldal head-jébe meta tagként teszi, a saját scriptjei és stílusai
+  // hash-ével. Csak a saját domainről tölthet be bármit (nincs külső szkript, betűtípus vagy beágyazás).
+  // A style attribútumok (React style={...}) engedélyezve, mert azokat hash nem fedi le; szkriptet nem futtatnak.
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "connect-src 'self'",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+      ],
+      styleDirective: { resources: ["'self'", { resource: "'unsafe-inline'", kind: "attribute" }] },
+    },
+  },
   server: { port: 5173 },
   vite: {
     plugins: [tailwindcss()],
