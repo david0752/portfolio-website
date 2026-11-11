@@ -1,0 +1,5 @@
+# Biztonsági kapcsolat (RFC 9116): hova jelezhető egy biztonsági hiba. Az Expires dátum előtt frissíteni kell.
+Contact: mailto:szanto.david12@gmail.com
+Expires: 2027-11-11T00:00:00.000Z
+Preferred-Languages: hu, en
+Canonical: https://szdavid.dev/.well-known/security.txt
