@@ -5,6 +5,7 @@
  */
 
 import type { Lang } from "../i18n/index.ts";
+import type { Project } from "../types/project.ts";
 
 export const OWNER = {
   name: { hu: "Szántó Dávid", en: "Dávid Szántó" } satisfies Record<Lang, string>,
@@ -70,6 +71,39 @@ export function profileJsonLd(lang: Lang, site: URL, pageUrl: string, jobTitle: 
         knowsAbout: ALL_TECH,
         knowsLanguage: ["hu", "en"],
         sameAs: PROFILES.map((profile) => profile.url),
+      },
+    ],
+  };
+}
+
+/**
+ * Strukturált adat egy projektoldalra: a munka (szerző a kezdőlap Person-je, ugyanazzal az @id-val) és a
+ * morzsamenü (kezdőlap → projekt), hogy a keresők a portfólió részeként értsék.
+ */
+export function caseStudyJsonLd(lang: Lang, site: URL, pageUrl: string, project: Project, homeName: string) {
+  const home = new URL(lang === "hu" ? "/" : "/en/", site).href;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        name: project.title,
+        headline: project.tagline[lang],
+        description: project.summary[lang],
+        url: pageUrl,
+        inLanguage: lang,
+        dateCreated: project.year,
+        keywords: project.tags.join(", "),
+        author: { "@id": new URL("/#person", site).href },
+        isPartOf: { "@id": new URL("/#website", site).href },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: homeName, item: home },
+          { "@type": "ListItem", position: 2, name: project.title, item: pageUrl },
+        ],
       },
     ],
   };

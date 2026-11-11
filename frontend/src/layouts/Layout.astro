@@ -6,7 +6,8 @@
  * Az egérkövető fény (utils/pointer.ts), a görgetési beúszás (utils/reveal.ts) és a főcím szóváltása
  * (utils/typewriter.ts) sima script, React nélkül.
  * Töltőképernyő: amíg ezek a scriptek és a betűtípus meg nem érkeznek, egy forgó ív takarja az oldalt, így lassú
- * hálózaton sem látszik félkész tartalom (a beúszó elemek addig rejtve vannak). JavaScript nélkül nem jelenik meg.
+ * hálózaton sem látszik félkész tartalom (a beúszó elemek addig rejtve vannak). JavaScript nélkül nem jelenik meg,
+ * és csak nagy képernyőn mozgással, mert csak ott rejt el bármit a beúszás.
  */
 import "../index.css";
 import { Footer } from "../components/layout/Footer.tsx";
@@ -83,19 +84,23 @@ const ogImage = abs(`/og-${lang}.png`);
       .page-loader {
         display: none;
       }
-      .js .page-loader {
-        position: fixed;
-        inset: 0;
-        z-index: 100;
-        display: grid;
-        place-items: center;
-        background: #070b14;
-        transition:
-          opacity 0.4s ease,
-          visibility 0.4s;
-      }
-      .js:not(.is-ready) body {
-        overflow: hidden;
+      /* Csak ott kell, ahol a beúszó elemek a scriptig rejtve vannak (index.css: lg-től, mozgással). Telefonon
+       * minden rögtön látszik, ott a takarás csak késleltetné a tartalmat (mobil LCP). */
+      @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+        .js .page-loader {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          display: grid;
+          place-items: center;
+          background: #070b14;
+          transition:
+            opacity 0.4s ease,
+            visibility 0.4s;
+        }
+        .js:not(.is-ready) body {
+          overflow: hidden;
+        }
       }
       .is-ready .page-loader {
         opacity: 0;

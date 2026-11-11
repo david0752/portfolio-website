@@ -149,7 +149,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-slate">
           {f.privacyBefore}
-          <a href={paths(lang).privacy} className="text-signal-blue underline-offset-4 hover:underline">
+          <a href={paths(lang).privacy} className="text-signal-blue underline underline-offset-4">
             {f.privacyLink}
           </a>
           {f.privacyAfter}

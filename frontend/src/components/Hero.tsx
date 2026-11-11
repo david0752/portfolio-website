@@ -1,6 +1,6 @@
 /**
- * Kezdőlap nyitóblokkja: szerep, főcím, bemutatkozó mondat, „elérhető” pötty, két gomb; mellette (telefonon
- * alatta) a kódablak a fejlesztő adataival (ui/CodeWindow.tsx).
+ * Kezdőlap nyitóblokkja: szerep, főcím, bemutatkozó mondat, „elérhető” pötty, két gomb; mellette (tableten
+ * alatta, telefonon sehol) a kódablak a fejlesztő adataival (ui/CodeWindow.tsx).
  * A főcím első sora kék (signal-blue, ragyogás nélkül) szó, amely nagy képernyőn három szó között váltakozik gépelős (konzol)
  * animációval, villogó kurzorral (data-typewriter, utils/typewriter.ts). A HTML-ben az első szó áll,
  * a felolvasók az aria-label teljes mondatát kapják.
@@ -63,7 +63,8 @@ export function Hero({ lang }: { lang: Lang }) {
           </div>
         </div>
 
-        <div className="lg:col-span-5">
+        {/* Telefonon nincs kódablak: ott csak hosszabbá tenné a nyitóblokkot. */}
+        <div className="hidden md:block lg:col-span-5">
           <CodeWindow lang={lang} />
         </div>
       </div>

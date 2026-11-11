@@ -6,6 +6,7 @@
 import Layout from "../layouts/Layout.astro";
 import { CaseStudy } from "../components/CaseStudy.tsx";
 import { caseStudies } from "../content/projects.ts";
+import { caseStudyJsonLd, OWNER } from "../content/site.ts";
 import { messages, paths, type Lang } from "../i18n/index.ts";
 
 const { lang, slug } = Astro.props as { lang: Lang; slug: string };
@@ -14,13 +15,15 @@ const list = await caseStudies();
 const index = list.findIndex((item) => item.slug === slug);
 const project = list[index];
 const next = list.length > 1 ? list[(index + 1) % list.length] : undefined;
+const jsonLd = caseStudyJsonLd(lang, Astro.site!, new URL(Astro.url.pathname, Astro.site).href, project, OWNER.name[lang]);
 ---
 
 <Layout
   lang={lang}
-  title={`${project.title} – ${t.work.caseStudy} | ${t.pageTitles.home.split(" – ")[0]}`}
+  title={`${project.title} – ${t.work.caseStudy} | ${OWNER.name[lang]}`}
   description={project.summary[lang]}
   alternates={{ hu: paths("hu").project(slug), en: paths("en").project(slug) }}
+  jsonLd={jsonLd}
 >
   <CaseStudy project={project} lang={lang} next={next} />
 </Layout>

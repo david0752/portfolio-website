@@ -49,9 +49,12 @@ export function CaseStudy({ project, lang, next }: Props) {
           <p className="font-mono text-xs tracking-[0.08em] text-slate uppercase">
             {project.role[lang]} · {project.year}
           </p>
-          <h1 className="mt-5 text-[clamp(2.5rem,3vw+1rem,3.75rem)] leading-[1.05] font-semibold tracking-[-0.03em]">{project.title}</h1>
-          <p className="mt-4 text-xl text-mist">{project.tagline[lang]}</p>
-          <p className="mt-6 max-w-[60ch] leading-relaxed">{project.summary[lang]}</p>
+          {/* Telefonon kisebb betűk: a cím a kezdőlap szekciócímeihez, a szöveg a kártyákhoz igazodik. */}
+          <h1 className="mt-5 text-[1.875rem] leading-[1.1] font-semibold tracking-[-0.03em] md:text-[clamp(2.5rem,3vw+1rem,3.75rem)] md:leading-[1.05]">
+            {project.title}
+          </h1>
+          <p className="mt-3 text-lg text-mist md:mt-4 md:text-xl">{project.tagline[lang]}</p>
+          <p className="mt-5 max-w-[60ch] text-[0.9375rem] leading-relaxed md:mt-6 md:text-[1.0625rem]">{project.summary[lang]}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             {project.url ? (
@@ -84,12 +87,12 @@ export function CaseStudy({ project, lang, next }: Props) {
         </div>
       </header>
 
-      <div className="mt-20 grid gap-12 md:grid-cols-2 md:gap-16 lg:mt-28">
+      <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-2 md:gap-16 lg:mt-28">
         <section data-reveal>
           <Label>{t.work.highlights}</Label>
-          <ul className="mt-6 space-y-5">
+          <ul className="mt-5 space-y-4 md:mt-6 md:space-y-5">
             {project.highlights[lang].map((item) => (
-              <li key={item} className="border-l-2 border-signal-blue/50 pl-4 leading-relaxed text-ice-white/90">
+              <li key={item} className="border-l-2 border-signal-blue/50 pl-4 text-[0.9375rem] leading-relaxed text-ice-white/90 md:text-[1.0625rem]">
                 {item}
               </li>
             ))}
@@ -97,9 +100,9 @@ export function CaseStudy({ project, lang, next }: Props) {
         </section>
         <section data-reveal style={{ "--i": 1 } as CSSProperties}>
           <Label>{t.work.decisions}</Label>
-          <ul className="mt-6 space-y-5">
+          <ul className="mt-5 space-y-4 md:mt-6 md:space-y-5">
             {project.decisions[lang].map((item) => (
-              <li key={item} className="border-l-2 border-line pl-4 leading-relaxed">
+              <li key={item} className="border-l-2 border-line pl-4 text-[0.9375rem] leading-relaxed md:text-[1.0625rem]">
                 {item}
               </li>
             ))}

@@ -133,7 +133,8 @@ export const hu = {
     privacy: "Hogyan kezelem a kapcsolati űrlapon megadott adatokat.",
   },
   pageTitles: {
-    home: "Szántó Dávid – Szoftverfejlesztő | Weboldalak és webes rendszerek",
+    // Legfeljebb kb. 60 karakter, különben a Google levágja.
+    home: "Szántó Dávid – Szoftverfejlesztő | Weboldalak, webrendszerek",
     privacy: "Adatvédelmi tájékoztató – Szántó Dávid",
     notFound: "Az oldal nem található – Szántó Dávid",
   },
