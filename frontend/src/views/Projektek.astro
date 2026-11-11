@@ -1,0 +1,27 @@
+---
+/**
+ * „Minden projektem” oldal mindkét nyelvre (pages/munkak/index.astro és pages/en/work/index.astro adja a nyelvet).
+ * Az összes projektet adja a MindenProjekt-nek, csoportokra bontva (rendes munka, iskolai), a Layout-ba téve.
+ */
+import Layout from "../layouts/Layout.astro";
+import { MindenProjekt } from "./MindenProjekt.tsx";
+import { allProjects } from "../content/projects.ts";
+import { projectsJsonLd } from "../content/site.ts";
+import { messages, paths, type Lang } from "../i18n/index.ts";
+
+const { lang } = Astro.props as { lang: Lang };
+const t = messages(lang);
+const projects = await allProjects();
+const projectUrls = projects.filter((project) => project.hasCaseStudy).map((project) => new URL(paths(lang).project(project.slug), Astro.site).href);
+const jsonLd = projectsJsonLd(lang, Astro.site!, new URL(Astro.url.pathname, Astro.site).href, t.projects.title, projectUrls);
+---
+
+<Layout
+  lang={lang}
+  title={t.pageTitles.projects}
+  description={t.descriptions.projects}
+  alternates={{ hu: paths("hu").projects, en: paths("en").projects }}
+  jsonLd={jsonLd}
+>
+  <MindenProjekt lang={lang} work={projects.filter((project) => !project.school)} school={projects.filter((project) => project.school)} />
+</Layout>

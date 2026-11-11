@@ -1,6 +1,6 @@
 /**
  * Kezdőlap „Rólam” blokkja: a cím a fejlesztő fő mondata nagy méretben; alatta balra a bemutatkozás, jobbra két
- * szám (az összes projekt és ebből az iskolai csapatprojektek, a projektlistából számolva), mindkettő link a szekciójába. Lent az
+ * szám (ügyfélprojektek és iskolai csapatprojektek, külön, a projektlistából számolva), mindkettő link a szekciójába. Lent az
  * „Amire figyelek” három elve, mindegyik állítás + bizonyíték a saját munkáiból, linkkel. Ikonok és kártyák nélkül.
  * A szövegek az i18n about kulcsai alatt; a bizonyítékok linkjei a values sorrendjében (proofLinks).
  */
@@ -29,7 +29,7 @@ export function Rolam({ lang, clientCount, schoolCount }: Props) {
   const t = messages(lang);
   const links = proofLinks(lang);
   const facts = [
-    { count: clientCount + schoolCount, label: t.about.facts.total, href: "#munkak" },
+    { count: clientCount, label: t.about.facts.client, href: "#munkak" },
     { count: schoolCount, label: t.about.facts.school, href: "#iskolai" },
   ];
 

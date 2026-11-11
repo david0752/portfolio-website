@@ -33,6 +33,8 @@ export interface Project {
   // Iskolai csapatprojekt: a kezdőlapon az „Iskolai projektek” szekcióba kerül (nem a Munkáim közé), és a projektoldalon
   // a decisions oszlop címe „az én részem” (mit csinált a fejlesztő a csapatban).
   school?: boolean;
+  // Kiemelt: a kezdőlapon ez látszik, ha a csoportjában 4-nél több projekt van (utils/featured.ts, legfeljebb 4).
+  featured?: boolean;
   // Van-e saját projektoldal (a kártya csak akkor link, és csak akkor készül oldal).
   hasCaseStudy: boolean;
 }

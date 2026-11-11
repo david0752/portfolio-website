@@ -1,6 +1,7 @@
 // Cloudflare Worker: az éles oldal (szdavid.dev) egyetlen projektként fut.
 // - A statikus oldalt a frontend buildje adja (../frontend/dist), ezt a Cloudflare közvetlenül szolgálja ki.
-// - Csak az /api/* kérések jutnak el a Workerig (src/worker.ts): a kapcsolati űrlap POST /api/contact végpontja.
+// - A Workerig (src/worker.ts) csak az /api/* kérések (kapcsolati űrlap) és a magyar oldalak jutnak el: utóbbiaknál
+//   a nem magyar böngészőt az angol párra irányítja, különben továbbadja a statikus oldalt (ASSETS) biztonsági fejlécekkel.
 // - A levél a Cloudflare saját levélküldőjével megy, fixen a tulajdonos megerősített címére (Email Routing).
 {
   "$schema": "node_modules/wrangler/config-schema.json",
@@ -12,7 +13,9 @@
     "directory": "../frontend/dist",
     // Nem létező címre a saját 404-es oldal jön (dist/404.html).
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"],
+    "binding": "ASSETS",
+    // A magyar oldalak (kezdőlap, adatvédelem, munkák) a nyelvi átirányítás miatt; az angol oldalak és a fájlok nem.
+    "run_worker_first": ["/api/*", "/", "/adatvedelem", "/adatvedelem/", "/munkak", "/munkak/*"],
   },
   "routes": [{ "pattern": "szdavid.dev", "custom_domain": true }],
   // Csak a saját domainen legyen elérhető: se *.workers.dev cím, se verziónkénti előnézeti cím

@@ -57,11 +57,18 @@ export const en: Messages = {
     after: "After",
     beforeAlt: { desktop: "The old site's home page on desktop", mobile: "The old site's home page on a phone" },
     afterAlt: { desktop: "The new site's home page on desktop", mobile: "The new site's home page on a phone" },
+    allLink: "All my work",
   },
   school: {
     eyebrow: "school projects",
     title: "School projects",
     lead: "Team projects built at Pollák Antal Technical School in Szentes.",
+    allLink: "All school projects",
+  },
+  projects: {
+    title: "All my projects",
+    lead: "The work I built for clients and the team projects I developed at Pollák, in one place.",
+    workTitle: "My work",
   },
   about: {
     eyebrow: "about",
@@ -71,7 +78,7 @@ export const en: Messages = {
       "Solving problems motivates me, and I approach new opportunities with an open, curious mind.",
     ],
     facts: {
-      total: { one: "project", other: "projects" },
+      client: { one: "client project", other: "client projects" },
       school: { one: "school team project", other: "school team projects" },
     },
     valuesTitle: "What I focus on",
@@ -159,10 +166,12 @@ export const en: Messages = {
   descriptions: {
     home: "Dávid Szántó, software developer: websites and web systems from plan to launch, built with React and Node.js, with an admin anyone can use.",
     privacy: "How I handle the data you enter in the contact form.",
+    projects: "All projects by Dávid Szántó: websites and web systems built for clients, plus team projects from school.",
   },
   pageTitles: {
     home: "Dávid Szántó – Software developer | Websites and web systems",
     privacy: "Privacy notice – Dávid Szántó",
+    projects: "All my projects – Dávid Szántó",
     notFound: "Page not found – Dávid Szántó",
   },
 };
