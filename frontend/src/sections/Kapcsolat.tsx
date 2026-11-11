@@ -1,5 +1,5 @@
 // Kezdőlap „Kapcsolat” blokkja: elérhetőség és profilok balra (nagy képernyőn megáll görgetés közben), űrlap jobbra;
-// mobilon egymás alatt. Az e-mail-cím a Gmail levélíró ablakát nyitja meg, mellette Másolás gomb (utils/copy.ts).
+// mobilon egymás alatt. Az e-mail-cím a Gmail levélíró ablakát nyitja meg, mellette Másolás gomb (scripts/copy.ts).
 // Az űrlapot (ContactForm, React-sziget) az Astro oldal adja be children-ként, mert a
 // client:visible csak .astro-ban adható meg.
 
@@ -7,8 +7,8 @@ import type { ReactNode } from "react";
 
 import { messages, type Lang } from "../i18n/index.ts";
 import { CONTACT_EMAIL, CONTACT_GMAIL_URL } from "../utils/contact.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
-import { SocialLinks } from "./ui/SocialLinks.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
+import { SocialLinks } from "../components/ui/SocialLinks.tsx";
 
 export function Kapcsolat({ lang, children }: { lang: Lang; children: ReactNode }) {
   const t = messages(lang);

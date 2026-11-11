@@ -7,8 +7,8 @@ import type { CSSProperties } from "react";
 
 import { STACK } from "../content/site.ts";
 import { messages, type Lang } from "../i18n/index.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
-import { TechChip } from "./ui/TechChip.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
+import { TechChip } from "../components/ui/TechChip.tsx";
 
 export function Stack({ lang }: { lang: Lang }) {
   const t = messages(lang);

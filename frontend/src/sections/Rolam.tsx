@@ -7,7 +7,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
 import { messages, type Lang } from "../i18n/index.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
 
 const ICONS: ReactNode[] = [
   <path key="code" d="M8 7l-5 5 5 5M16 7l5 5-5 5" />,

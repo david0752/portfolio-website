@@ -8,8 +8,8 @@ import type { CSSProperties } from "react";
 
 import { messages, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
-import { ProjectCard } from "./ui/ProjectCard.tsx";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
+import { ProjectCard } from "../components/ui/ProjectCard.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
 
 export function IskolaiProjektek({ lang, projects }: { lang: Lang; projects: Project[] }) {
   const t = messages(lang);

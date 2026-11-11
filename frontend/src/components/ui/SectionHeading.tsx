@@ -1,5 +1,5 @@
 // Szekciócím: kódkomment stílusú mono címke (pl. „// munkáim”), H2 és opcionális bevezető.
-// Görgetéskor úszik be (data-reveal, utils/reveal.ts).
+// Görgetéskor úszik be (data-reveal, scripts/reveal.ts).
 
 interface Props {
   eyebrow: string;

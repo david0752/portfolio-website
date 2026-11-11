@@ -3,8 +3,8 @@
  * Közös keret minden oldalhoz: <head> (cím, leírás, canonical, nyelvi változatok, megosztási adatok,
  * strukturált adat), ugró link, navbar, tartalom, lábléc.
  * A navbar az egyetlen mindig betöltődő React-sziget; a többi komponens statikus HTML.
- * Az egérkövető fény (utils/pointer.ts), a görgetési beúszás (utils/reveal.ts) és a főcím szóváltása
- * (utils/typewriter.ts) sima script, React nélkül.
+ * Az egérkövető fény (scripts/pointer.ts), a görgetési beúszás (scripts/reveal.ts) és a főcím szóváltása
+ * (scripts/typewriter.ts) sima script, React nélkül.
  * Töltőképernyő: amíg ezek a scriptek és a betűtípus meg nem érkeznek, egy forgó ív takarja az oldalt, így lassú
  * hálózaton sem látszik félkész tartalom (a beúszó elemek addig rejtve vannak). JavaScript nélkül nem jelenik meg,
  * és csak nagy képernyőn mozgással, mert csak ott rejt el bármit a beúszás.
@@ -186,11 +186,11 @@ const ogImage = abs(`/og-${lang}.png`);
       <Footer lang={lang} />
     </div>
     <script>
-      import "../utils/pointer.ts";
-      import "../utils/reveal.ts";
-      import "../utils/typewriter.ts";
-      import "../utils/hscroll.ts";
-      import "../utils/copy.ts";
+      import "../scripts/pointer.ts";
+      import "../scripts/reveal.ts";
+      import "../scripts/typewriter.ts";
+      import "../scripts/hscroll.ts";
+      import "../scripts/copy.ts";
 
       // Minden script lefutott: a betűtípusra még legfeljebb 1,5 mp-et várunk, aztán eltűnik a töltőképernyő.
       const fontsReady = Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]);

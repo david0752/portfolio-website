@@ -1,15 +1,15 @@
 /**
  * Kezdőlap „Munkák” blokkja: a projektek nagy kártyákon, egy vízszintes sávban.
  * Nagy képernyőn (és ha nem kértek csökkentett mozgást) a blokk görgetés közben megáll a képernyőn, és a függőleges
- * görgetés a sávot csúsztatja oldalra (data-hscroll, utils/hscroll.ts + .hscroll szabályok az index.css-ben).
+ * görgetés a sávot csúsztatja oldalra (data-hscroll, scripts/hscroll.ts + .hscroll szabályok az index.css-ben).
  * Csökkentett mozgásnál a sáv sima, oldalra görgethető sor; telefonon és tableten a kártyák egymás alatt állnak.
  * A projektlistát a views/Kezdolap.astro adja át (content/projects.ts allProjects).
  */
 
 import { messages, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
-import { ProjectCard } from "./ui/ProjectCard.tsx";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
+import { ProjectCard } from "../components/ui/ProjectCard.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
 
 export function Munkak({ lang, projects }: { lang: Lang; projects: Project[] }) {
   const t = messages(lang);

@@ -1,6 +1,6 @@
 /**
  * Magyar szövegek (alapnyelv). A típusa (Messages) kötelező az angolra is, így onnan sem maradhat ki szöveg.
- * A projektek szövegei a content/projects.ts-ben, az adatvédelmi tájékoztató a components/Adatvedelem.tsx-ben van.
+ * A projektek szövegei a content/projects.ts-ben, az adatvédelmi tájékoztató a views/Adatvedelem.tsx-ben van.
  */
 
 export const hu = {
@@ -23,7 +23,7 @@ export const hu = {
   },
   hero: {
     role: "Szoftverfejlesztő",
-    // A főcím első sora: ez a három szó váltakozik gépelős animációval (utils/typewriter.ts).
+    // A főcím első sora: ez a három szó váltakozik gépelős animációval (scripts/typewriter.ts).
     titleWords: ["Weboldalak", "Webes rendszerek", "Adminfelületek"],
     titleRest: "a tervtől az élesítésig.",
     lead: "Szántó Dávid vagyok, szoftverfejlesztő. React frontendet és Node.js backendet építek, biztonságosan és gyorsan, olyan adminfelülettel, amelyet programozói tudás nélkül is lehet kezelni.",
@@ -41,7 +41,7 @@ export const hu = {
     details: "Részletek",
     screenshotSoon: "Képernyőkép hamarosan",
     features: "Funkciók",
-    // Projektoldal (components/CaseStudy.tsx)
+    // Projektoldal (views/CaseStudy.tsx)
     allWork: "Összes munka",
     highlights: "kiemelt funkciók",
     decisions: "technikai döntések",
@@ -64,7 +64,7 @@ export const hu = {
     beforeAlt: { desktop: "A régi oldal kezdőlapja asztali nézetben", mobile: "A régi oldal kezdőlapja telefonon" },
     afterAlt: { desktop: "Az új oldal kezdőlapja asztali nézetben", mobile: "Az új oldal kezdőlapja telefonon" },
   },
-  // Kezdőlap „Iskolai projektek” szekciója (components/IskolaiProjektek.tsx).
+  // Kezdőlap „Iskolai projektek” szekciója (sections/IskolaiProjektek.tsx).
   school: {
     eyebrow: "iskolai projektek",
     title: "Iskolai projektek",
@@ -109,7 +109,7 @@ export const hu = {
     title: "Van egy projekted?",
     lead: "Írd meg röviden, miben segíthetek. Általában egy-két munkanapon belül válaszolok.",
     emailLabel: "E-mail",
-    // Másolás gomb a cím mellett (utils/copy.ts).
+    // Másolás gomb a cím mellett (scripts/copy.ts).
     copy: "Másolás",
     copied: "Másolva",
     profilesLabel: "Profilok",

@@ -7,7 +7,7 @@
 
 import { experience, type Experience } from "../content/experience.ts";
 import { messages, type Lang } from "../i18n/index.ts";
-import { SectionHeading } from "./ui/SectionHeading.tsx";
+import { SectionHeading } from "../components/ui/SectionHeading.tsx";
 
 type Side = "left" | "right" | "mobile";
 

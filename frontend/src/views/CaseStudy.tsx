@@ -10,10 +10,10 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { messages, paths, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
-import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
-import { ProjectVisual } from "./ui/ProjectVisual.tsx";
-import { ICONS } from "./ui/SocialLinks.tsx";
-import { TechChip } from "./ui/TechChip.tsx";
+import { buttonPrimary, buttonSecondary } from "../components/ui/Button.tsx";
+import { ProjectVisual } from "../components/ui/ProjectVisual.tsx";
+import { ICONS } from "../components/ui/SocialLinks.tsx";
+import { TechChip } from "../components/ui/TechChip.tsx";
 
 interface Props {
   project: Project;

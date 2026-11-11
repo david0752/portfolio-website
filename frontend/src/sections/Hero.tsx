@@ -2,7 +2,7 @@
  * Kezdőlap nyitóblokkja: szerep, főcím, bemutatkozó mondat, „elérhető” pötty, két gomb; mellette (tableten
  * alatta, telefonon sehol) a kódablak a fejlesztő adataival (ui/CodeWindow.tsx).
  * A főcím első sora kék (signal-blue, ragyogás nélkül) szó, amely nagy képernyőn három szó között váltakozik gépelős (konzol)
- * animációval, villogó kurzorral (data-typewriter, utils/typewriter.ts). A HTML-ben az első szó áll,
+ * animációval, villogó kurzorral (data-typewriter, scripts/typewriter.ts). A HTML-ben az első szó áll,
  * a felolvasók az aria-label teljes mondatát kapják.
  * A blokk legalább a teljes képernyőt kitölti (a navbar alatt), a tartalma függőlegesen középen áll.
  * Háttér: halvány rács és egy kék radiális fény; nagy képernyőn a rács kéken felizzik az egér körül
@@ -10,8 +10,8 @@
  */
 
 import { messages, type Lang } from "../i18n/index.ts";
-import { buttonPrimary, buttonSecondary } from "./ui/Button.tsx";
-import { CodeWindow } from "./ui/CodeWindow.tsx";
+import { buttonPrimary, buttonSecondary } from "../components/ui/Button.tsx";
+import { CodeWindow } from "../components/ui/CodeWindow.tsx";
 
 export function Hero({ lang }: { lang: Lang }) {
   const t = messages(lang);
