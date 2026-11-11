@@ -27,6 +27,19 @@ export interface Project {
   repo?: string;
   // Képernyőkép (src/assets/projects/<slug>/); amíg nincs, terminálpanel jelenik meg helyette.
   image?: string;
+  // Felújított oldalnál: a régi és az új kezdőlap képernyőképe, asztali és mobil nézetben. Ha van, a projektoldal
+  // tetején az előtte / utána csúszka áll a projektkép helyett (ui/BeforeAfter.tsx).
+  comparison?: Comparison;
   // Van-e saját projektoldal (a kártya csak akkor link, és csak akkor készül oldal).
   hasCaseStudy: boolean;
 }
+
+export type ComparisonView = "desktop" | "mobile";
+
+// Egy képernyőkép: a src a tartalék, a srcSet a méretváltozatok (szélességgel, pl. „… 1200w, … 2400w”).
+export interface ComparisonShot {
+  src: string;
+  srcSet?: string;
+}
+
+export type Comparison = Record<ComparisonView, { before: ComparisonShot; after: ComparisonShot }>;

@@ -3,6 +3,14 @@
  * Új projekt = új elem a tömbben. Csak valós, jóváhagyott tartalom kerülhet ide (docs/projects/<slug>.md a vázlat).
  */
 
+// Kunmadaras előtte / utána: a régi WordPress-oldal (kunmadarasdrift.hu, 2026. november) és az új oldal kezdőlapja,
+// 1536×864 és 390×844 px-es ablakban, kétszeres felbontásban készült képernyőképek (WebP, előre méretezve).
+import kdNewDesktop1200 from "../assets/projects/kunmadaras-drift/new-desktop-1200.webp?url";
+import kdNewDesktop2400 from "../assets/projects/kunmadaras-drift/new-desktop-2400.webp?url";
+import kdNewMobile from "../assets/projects/kunmadaras-drift/new-mobile-780.webp?url";
+import kdOldDesktop1200 from "../assets/projects/kunmadaras-drift/old-desktop-1200.webp?url";
+import kdOldDesktop2400 from "../assets/projects/kunmadaras-drift/old-desktop-2400.webp?url";
+import kdOldMobile from "../assets/projects/kunmadaras-drift/old-mobile-780.webp?url";
 import type { Project } from "../types/project.ts";
 
 export const projects: Project[] = [
@@ -52,6 +60,14 @@ export const projects: Project[] = [
     },
     tags: ["React", "TypeScript", "Tailwind CSS", "Express", "PostgreSQL"],
     status: { hu: "Funkcionálisan kész, élesítés előtt", en: "Functionally complete, launch pending" },
+    image: kdNewDesktop1200,
+    comparison: {
+      desktop: {
+        before: { src: kdOldDesktop1200, srcSet: `${kdOldDesktop1200} 1200w, ${kdOldDesktop2400} 2400w` },
+        after: { src: kdNewDesktop1200, srcSet: `${kdNewDesktop1200} 1200w, ${kdNewDesktop2400} 2400w` },
+      },
+      mobile: { before: { src: kdOldMobile }, after: { src: kdNewMobile } },
+    },
     hasCaseStudy: true,
   },
 ];

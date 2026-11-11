@@ -36,7 +36,7 @@ export function ProjectCard({ project, lang, index }: Props) {
           <span className="font-mono text-xs text-slate">
             {project.hasCaseStudy ? (
               <span className="text-signal-blue">
-                {t.work.caseStudy} <span className="inline-block transition-transform lg:group-hover:translate-x-1">→</span>
+                {t.work.details} <span className="inline-block transition-transform lg:group-hover:translate-x-1">→</span>
               </span>
             ) : (
               t.work.caseStudySoon
