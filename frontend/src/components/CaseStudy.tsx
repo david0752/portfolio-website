@@ -1,11 +1,12 @@
 /**
  * Egy projekt saját oldala (munkak/<slug>, en/work/<slug>): vissza link, szerep · év, cím, alcím, leírás,
- * élő oldal gomb (vagy az állapota, ha még nincs élesben) és a forráskód gomb (ha van nyilvános repó), mellette a projekt látványa; alatta a kiemelt
- * funkciók és a technikai döntések két oszlopban, a stack logós címkékkel, végül a következő projekt és a
- * kapcsolatfelvétel. Statikus HTML (Astro), a görgetési beúszás a data-reveal elemeken fut.
+ * élő oldal gomb (vagy az állapota, ha még nincs élesben) és a forráskód gomb (ha van nyilvános repó), mellette a projekt
+ * látványa. Felújított oldalnál (project.comparison) a cím alatt teljes szélességben az előtte / utána csúszka áll, és a
+ * leírás meg a gombok alá kerülnek. Ezek alatt a kiemelt funkciók és a technikai döntések két oszlopban, a stack logós
+ * címkékkel, végül a következő projekt és a kapcsolatfelvétel. Statikus HTML (Astro), a görgetési beúszás a data-reveal elemeken fut.
  */
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { messages, paths, type Lang } from "../i18n/index.ts";
 import type { Project } from "../types/project.ts";
@@ -19,6 +20,8 @@ interface Props {
   lang: Lang;
   // A sorban következő projekt; ha csak egy projekt van, nincs.
   next?: Project;
+  // Felújított oldalnál az előtte / utána csúszka (ui/BeforeAfter.tsx); szigetként az Astro oldal adja be.
+  children?: ReactNode;
 }
 
 // Kis, kódkomment stílusú blokkcím (h2), mint a kezdőlap szekcióinak címkéje.
@@ -33,9 +36,55 @@ function Label({ children }: { children: string }) {
   );
 }
 
-export function CaseStudy({ project, lang, next }: Props) {
+export function CaseStudy({ project, lang, next, children }: Props) {
   const t = messages(lang);
   const home = paths(lang).home;
+
+  // Szerep · év, cím és alcím: mindkét elrendezés teteje.
+  const title = (
+    <>
+      <p className="font-mono text-xs tracking-[0.08em] text-slate uppercase">
+        {project.role[lang]} · {project.year}
+      </p>
+      {/* Telefonon kisebb betűk: a cím a kezdőlap szekciócímeihez, a szöveg a kártyákhoz igazodik. */}
+      <h1 className="mt-5 text-[1.875rem] leading-[1.1] font-semibold tracking-[-0.03em] md:text-[clamp(2.5rem,3vw+1rem,3.75rem)] md:leading-[1.05]">
+        {project.title}
+      </h1>
+      <p className="mt-3 text-lg text-mist md:mt-4 md:text-xl">{project.tagline[lang]}</p>
+    </>
+  );
+
+  // Leírás és gombok: a projektkép mellett, vagy felújított oldalnál az összehasonlítás alatt.
+  const intro = (
+    <>
+      <p className="mt-5 max-w-[60ch] text-[0.9375rem] leading-relaxed md:mt-6 md:text-[1.0625rem]">{project.summary[lang]}</p>
+
+      <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+        {project.url ? (
+          <a href={project.url} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
+            {t.work.live}
+            <span aria-hidden="true">↗</span>
+          </a>
+        ) : (
+          project.status && (
+            <p className="inline-flex items-center gap-3 text-sm text-mist">
+              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal-blue" />
+              {project.status[lang]}
+            </p>
+          )
+        )}
+        {project.repo && (
+          <a href={project.repo} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
+            <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+              {ICONS.github}
+            </svg>
+            {t.work.source}
+            <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+    </>
+  );
 
   return (
     <article className="mx-auto max-w-[1120px] px-5 pt-10 pb-24 md:px-8 md:pt-14 xl:px-0">
@@ -44,48 +93,30 @@ export function CaseStudy({ project, lang, next }: Props) {
         {t.work.allWork}
       </a>
 
-      <header className="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-6">
-          <p className="font-mono text-xs tracking-[0.08em] text-slate uppercase">
-            {project.role[lang]} · {project.year}
-          </p>
-          {/* Telefonon kisebb betűk: a cím a kezdőlap szekciócímeihez, a szöveg a kártyákhoz igazodik. */}
-          <h1 className="mt-5 text-[1.875rem] leading-[1.1] font-semibold tracking-[-0.03em] md:text-[clamp(2.5rem,3vw+1rem,3.75rem)] md:leading-[1.05]">
-            {project.title}
-          </h1>
-          <p className="mt-3 text-lg text-mist md:mt-4 md:text-xl">{project.tagline[lang]}</p>
-          <p className="mt-5 max-w-[60ch] text-[0.9375rem] leading-relaxed md:mt-6 md:text-[1.0625rem]">{project.summary[lang]}</p>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            {project.url ? (
-              <a href={project.url} target="_blank" rel="noopener noreferrer" className={buttonPrimary}>
-                {t.work.live}
-                <span aria-hidden="true">↗</span>
-              </a>
-            ) : (
-              project.status && (
-                <p className="inline-flex items-center gap-3 text-sm text-mist">
-                  <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal-blue" />
-                  {project.status[lang]}
-                </p>
-              )
-            )}
-            {project.repo && (
-              <a href={project.repo} target="_blank" rel="noopener noreferrer" className={buttonSecondary}>
-                <svg className="h-[18px] w-[18px] shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-                  {ICONS.github}
-                </svg>
-                {t.work.source}
-                <span aria-hidden="true">↗</span>
-              </a>
-            )}
+      {project.comparison ? (
+        <>
+          {/* Felújított oldal: a cím alatt teljes szélességben az előtte / utána csúszka, utána a leírás. */}
+          <header className="mt-10">
+            {title}
+          </header>
+          <section data-reveal className="mt-10 md:mt-12">
+            <Label>{t.work.compare}</Label>
+            <div className="mt-5">{children}</div>
+          </section>
+          <div className="mt-6 md:mt-8">{intro}</div>
+        </>
+      ) : (
+        <header className="mt-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-6">
+            {title}
+            {intro}
           </div>
-        </div>
 
-        <div data-reveal className="aspect-[16/10] overflow-hidden rounded-[14px] border border-line lg:col-span-6">
-          <ProjectVisual project={project} lang={lang} alt={project.title} />
-        </div>
-      </header>
+          <div data-reveal className="aspect-[16/10] overflow-hidden rounded-[14px] border border-line lg:col-span-6">
+            <ProjectVisual project={project} lang={lang} alt={project.title} />
+          </div>
+        </header>
+      )}
 
       <div className="mt-14 grid gap-12 md:mt-20 md:grid-cols-2 md:gap-16 lg:mt-28">
         <section data-reveal>

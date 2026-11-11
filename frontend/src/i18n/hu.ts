@@ -35,8 +35,10 @@ export const hu = {
     eyebrow: "munkáim",
     title: "Projektjeim",
     lead: "Valódi projektek, valódi ügyfeleknek. Mindegyikhez részletes esettanulmány tartozik.",
-    caseStudySoon: "Esettanulmány hamarosan",
+    caseStudySoon: "Részletek hamarosan",
     caseStudy: "Esettanulmány",
+    // A projektkártya linkje a projektoldalra (ui/ProjectCard.tsx).
+    details: "Részletek",
     screenshotSoon: "Képernyőkép hamarosan",
     features: "Funkciók",
     // Projektoldal (components/CaseStudy.tsx)
@@ -48,6 +50,17 @@ export const hu = {
     source: "Forráskód",
     next: "Következő projekt",
     discuss: "Beszéljük meg a projekted",
+    // Előtte / utána csúszka egy felújított oldal projektoldalán (ui/BeforeAfter.tsx).
+    compare: "előtte és utána",
+    compareView: "Nézet",
+    compareHint: "Húzd a csúszkát",
+    compareSlider: "Előtte és utána: mennyi látszik az új oldalból",
+    desktop: "Asztali",
+    mobile: "Mobil",
+    before: "Előtte",
+    after: "Utána",
+    beforeAlt: { desktop: "A régi oldal kezdőlapja asztali nézetben", mobile: "A régi oldal kezdőlapja telefonon" },
+    afterAlt: { desktop: "Az új oldal kezdőlapja asztali nézetben", mobile: "Az új oldal kezdőlapja telefonon" },
   },
   about: {
     eyebrow: "rólam",
