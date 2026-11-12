@@ -34,7 +34,7 @@ export const hu = {
   work: {
     eyebrow: "munkáim",
     title: "Projektjeim",
-    lead: "Valódi projektek, valódi ügyfeleknek. Mindegyikhez részletes esettanulmány tartozik.",
+    lead: "Ügyfeleknek épített weboldalak és webes rendszerek.",
     caseStudySoon: "Részletek hamarosan",
     caseStudy: "Esettanulmány",
     // A projektkártya linkje a projektoldalra (ui/ProjectCard.tsx).
