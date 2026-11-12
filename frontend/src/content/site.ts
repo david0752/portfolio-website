@@ -14,9 +14,6 @@ export const OWNER = {
   countryCode: "HU",
 } as const;
 
-// Ennek a portfóliónak a nyilvános forráskódja (a Rólam „Tiszta kód” elvének bizonyítéka).
-export const SITE_REPO = "https://github.com/david0752/portfolio-website";
-
 export const PROFILES = [
   { id: "github", label: "GitHub", url: "https://github.com/david0752" },
   { id: "instagram", label: "Instagram", url: "https://www.instagram.com/sz_david3/" },
