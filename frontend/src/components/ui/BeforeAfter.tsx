@@ -103,12 +103,14 @@ export function BeforeAfter({ comparison, lang }: Props) {
           className="absolute inset-0 h-full w-full object-cover"
           style={{ clipPath: "inset(0 0 0 var(--pos))" }}
         />
-        <span aria-hidden="true" className={`${label} left-3`}>
-          {t.before}
-        </span>
-        <span aria-hidden="true" className={`${label} right-3`}>
-          {t.after}
-        </span>
+        {/* A címkék a saját képükkel együtt takaródnak: amelyik oldal nem látszik (pl. a csúszka teljesen jobbra
+            húzva), annak a címkéje sem, és a vonal áthaladáskor fokozatosan takarja őket. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ clipPath: "inset(0 calc(100% - var(--pos)) 0 0)" }}>
+          <span className={`${label} left-3`}>{t.before}</span>
+        </div>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ clipPath: "inset(0 0 0 var(--pos))" }}>
+          <span className={`${label} right-3`}>{t.after}</span>
+        </div>
 
         {/* Csak billentyűzet és képernyőolvasó: a mutatót a keret kezeli (pointer-events-none). */}
         <input

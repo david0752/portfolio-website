@@ -94,26 +94,11 @@ export const hu = {
       school: { one: "iskolai csapatprojekt", other: "iskolai csapatprojekt" },
     },
     valuesTitle: "Amire figyelek",
-    // Elv, rövid állítás és a bizonyíték a saját munkáiból; a linkek sorrendje a Rolam.tsx proofLinks-ével egyezik.
+    // A három elv: cím és egy egyszerű, ügyfélnek szóló mondat (a Rolam.tsx soronként mutatja, a VALUE_ICONS sorrendjében).
     values: [
-      {
-        title: "Tiszta kód",
-        text: "Rendezett, érthető, felesleges bonyolítás nélkül.",
-        proof: "Ennek az oldalnak a teljes forráskódja nyilvános, bárki átnézheti.",
-        link: "Forráskód",
-      },
-      {
-        title: "Biztonság",
-        text: "Vigyáz a látogatók adataira, felesleges követés nélkül.",
-        proof: "Ez az oldal sütit és követőkódot nem használ. A Kunmadaras Driftben a jelszavakat bcrypt védi, az adminkéréseket CSRF-védelem.",
-        link: "Kunmadaras Drift",
-      },
-      {
-        title: "Minden képernyőn",
-        text: "Telefonon ugyanolyan jól működik, mint laptopon.",
-        proof: "A PollakFindben és a Pollák Ügyfélkapuban a telefonos nézet az én részem volt.",
-        link: "PollakFind",
-      },
+      { title: "Tiszta kód", text: "Rendezett, érthető kód, amit később bárki továbbfejleszthet." },
+      { title: "Biztonság", text: "A látogatók adatai védve vannak, felesleges követés nélkül." },
+      { title: "Minden képernyőn", text: "Telefonon ugyanolyan jól működik, mint laptopon." },
     ],
   },
   experience: {
