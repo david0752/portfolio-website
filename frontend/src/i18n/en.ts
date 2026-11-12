@@ -32,7 +32,7 @@ export const en: Messages = {
   work: {
     eyebrow: "work",
     title: "My projects",
-    lead: "Real projects for real clients. Each one comes with a detailed case study.",
+    lead: "Websites and web systems built for clients.",
     caseStudySoon: "Details coming soon",
     caseStudy: "Case study",
     details: "Details",
