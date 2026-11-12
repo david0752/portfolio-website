@@ -83,8 +83,8 @@ export const en: Messages = {
     },
     valuesTitle: "What I focus on",
     values: [
-      { title: "Clean code", text: "Tidy, readable code that anyone can build on later." },
-      { title: "Security", text: "Visitors' data stays protected, without unnecessary tracking." },
+      { title: "Clean code", text: "Tidy and clear, without needless complexity." },
+      { title: "Security", text: "Takes care of visitors' data, without unnecessary tracking." },
       { title: "Every screen", text: "Works just as well on a phone as on a laptop." },
     ],
   },

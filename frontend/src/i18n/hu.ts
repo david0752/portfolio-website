@@ -94,10 +94,10 @@ export const hu = {
       school: { one: "iskolai csapatprojekt", other: "iskolai csapatprojekt" },
     },
     valuesTitle: "Amire figyelek",
-    // A három elv: cím és egy egyszerű, ügyfélnek szóló mondat (a Rolam.tsx soronként mutatja, a VALUE_ICONS sorrendjében).
+    // A sorrend egyezik a Rolam.tsx ikonjaival (kód, pajzs, kijelzők).
     values: [
-      { title: "Tiszta kód", text: "Rendezett, érthető kód, amit később bárki továbbfejleszthet." },
-      { title: "Biztonság", text: "A látogatók adatai védve vannak, felesleges követés nélkül." },
+      { title: "Tiszta kód", text: "Rendezett, érthető, felesleges bonyolítás nélkül." },
+      { title: "Biztonság", text: "Vigyáz a látogatók adataira, felesleges követés nélkül." },
       { title: "Minden képernyőn", text: "Telefonon ugyanolyan jól működik, mint laptopon." },
     ],
   },
