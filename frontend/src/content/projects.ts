@@ -1,6 +1,6 @@
 /**
  * A portfólió projektjei, a kezdőlap Munkák blokkja és a projektoldalak (munkak/<slug>) ebből épülnek.
- * Új projekt = új elem a tömbben. Csak valós, jóváhagyott tartalom kerülhet ide (docs/projects/<slug>.md a vázlat).
+ * Új projekt = új elem a tömbben. Csak valós, jóváhagyott tartalom kerülhet ide.
  */
 
 // Kunmadaras előtte / utána: a régi WordPress-oldal (kunmadarasdrift.hu, 2026. november) és az új oldal kezdőlapja,
