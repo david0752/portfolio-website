@@ -32,6 +32,18 @@ export function ContactForm({ lang }: { lang: Lang }) {
   const [topicError, setTopicError] = useState(false);
   const topicRef = useRef<HTMLButtonElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Az űrlap statikus HTML-ként már a script előtt megjelenik; lassú kapcsolaton a látogató addig is gépelhet. A sziget
+  // betöltésekor átvesszük a mezőkbe már beírt szöveget, különben az állapot üres maradna, és üres üzenet menne el.
+  useLayoutEffect(() => {
+    const fields = formRef.current?.elements;
+    const value = (field: string) => (fields?.namedItem(field) as HTMLInputElement | HTMLTextAreaElement | null)?.value ?? "";
+    setName(value("name"));
+    setEmail(value("email"));
+    setMessage(value("message"));
+    setWebsite(value("website"));
+  }, []);
 
   // Az üzenetmező magassága a tartalmához igazodik (a rows az alapmagasság), a felső határ felett görget.
   // A nyelvváltás is számít, mert más a placeholder hossza.
@@ -74,7 +86,7 @@ export function ContactForm({ lang }: { lang: Lang }) {
   const sending = status.kind === "sending";
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-[14px] border border-line bg-deep-navy p-6 sm:p-8" noValidate={false}>
+    <form ref={formRef} onSubmit={handleSubmit} className="rounded-[14px] border border-line bg-deep-navy p-6 sm:p-8" noValidate={false}>
       <div className="mb-5">
         <Select
           label={f.topic}

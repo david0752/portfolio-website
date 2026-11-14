@@ -21,7 +21,7 @@ interface Props {
 
 // Kerek ikongomb a nagyító ablakban (bezárás, nagyítás); a lapozó gomb ugyanez nagyobban, a kép sávjának szélén középen.
 const round =
-  "grid shrink-0 place-items-center rounded-full border text-ice-white transition-colors disabled:opacity-30 lg:enabled:hover:border-signal-blue/60";
+  "grid shrink-0 place-items-center rounded-full border text-ice-white transition-colors lg:hover:border-signal-blue/60";
 const control = `${round} h-11 w-11 border-line bg-deep-navy`;
 // A lapozó gomb a sötét háttéren is azonnal látszódjon: világosabb kitöltés és keret, nagyobb nyíl. md-től a kép
 // sávjának szélén, függőlegesen középen; telefonon a kép alatti sorban.
@@ -77,16 +77,27 @@ export function Gallery({ shots, lang }: Props) {
     if ((event.target as HTMLElement).hasAttribute("data-close")) dialog.current?.close();
   };
 
-  // Előző / következő gomb párban: telefonon egy sor a kép alatt, md-től a sor eltűnik (contents), és a gombok a kép
-  // sávjának két szélére, függőlegesen középre kerülnek.
+  // Előző nyíl, felirat, következő nyíl egy sorban: telefonon a kép alatt, a felirat a két nyíl között (a sor mindig
+  // legalább gombnyi magas, így a felirat hossza sem mozgat semmit). md-től a sor eltűnik (contents): a gombok a kép
+  // sávjának két szélére, függőlegesen középre kerülnek, a felirat a kép alá. A lista elején az előző, a végén a
+  // következő nyíl láthatatlan (invisible: a helyét megtartja, így semmi nem ugrik el, és nem fókuszálható); egyetlen
+  // képnél egyik sem látszik.
   const pager = (
-    <div data-close className="flex w-full justify-between gap-4 md:contents">
-      <button type="button" aria-label={t.shotPrev} disabled={current === 0} onClick={() => go(-1)} className={`${nav} md:left-6`}>
+    <div data-close className="grid min-h-12 w-full grid-cols-[3rem_1fr_3rem] items-center gap-3 md:contents">
+      <button type="button" aria-label={t.shotPrev} onClick={() => go(-1)} className={`${nav} md:left-6 ${current === 0 ? "invisible" : ""}`}>
         <Icon className="h-6 w-6">
           <path d="M15 6l-6 6l6 6" />
         </Icon>
       </button>
-      <button type="button" aria-label={t.shotNext} disabled={current === last} onClick={() => go(1)} className={`${nav} md:right-6`}>
+      {/* Nagyítva md-től a felirat a kép sávja alatt áll (abszolút, a sáv alsó margójában), hogy ne vegyen el a sávból:
+          így a sáv közepe, és vele a két nyíl, a kép közepén marad. */}
+      <p
+        id={captionId}
+        className={`text-center text-sm leading-snug text-mist md:text-[0.9375rem] ${zoomed ? "md:absolute md:inset-x-0 md:top-full md:mt-2" : ""}`}
+      >
+        {shot.caption[lang]}
+      </p>
+      <button type="button" aria-label={t.shotNext} onClick={() => go(1)} className={`${nav} md:right-6 ${current === last ? "invisible" : ""}`}>
         <Icon className="h-6 w-6">
           <path d="M9 6l6 6l-6 6" />
         </Icon>
@@ -134,7 +145,7 @@ export function Gallery({ shots, lang }: Props) {
         onClose={() => setZoomed(false)}
         className="lightbox m-0 h-dvh max-h-none w-screen max-w-none bg-midnight/96 p-0 text-ice-white outline-none backdrop:bg-transparent"
       >
-        <div data-close className="flex h-full flex-col">
+        <div data-close className="flex h-full flex-col pb-4">
           <div data-close className="flex items-center justify-between gap-4 px-4 pt-4 md:px-6">
             <p className="font-mono text-xs text-slate">
               {current + 1} / {ordered.length} · {shot.admin ? t.shotsAdmin : t.shotsSite}
@@ -158,13 +169,21 @@ export function Gallery({ shots, lang }: Props) {
               középen (a sor md:contents, a gombok a relative sávhoz igazodnak); telefonon, ahol a kép mellett nincs
               hely, közvetlenül a kép alatt, balra és jobbra. Nagyítva a görgetett képen kívül állnak (telefonon a sáv
               alatt), így mindig kéznél vannak. */}
-          <div data-close className="relative mt-3 flex min-h-0 flex-1 flex-col justify-center">
+          <div data-close className={`relative mt-3 flex min-h-0 flex-1 flex-col justify-center ${zoomed ? "md:mb-9" : ""}`}>
             {/* Nagyítva telefonon a görgethető sáv csak akkora, mint a kép (legfeljebb a rendelkezésre álló hely), így
                 a gombok közvetlenül alatta maradnak; md-től kitölti a sávot, de a két szélén helyet hagy a gomboknak
                 (md:mx-24, mint alapnézetben), így nagyítva sem lógnak rá a képre. Telefonon a
                 görgetősáv rejtett (ujjal görget): a helyet foglaló sáv különben levágná a kép alját, és egy második,
                 függőleges sávot is behozna. */}
-            <div data-close className={`min-h-0 ${zoomed ? "overflow-auto max-md:[scrollbar-width:none] md:mx-24 md:flex-1" :"flex flex-1 flex-col items-center justify-center gap-4 px-4 md:px-24"}`}>
+            {/* Alapnézetben a kép keretének mérete nem a betöltött képtől függ: a sáv méret-konténer
+                ([container-type:size]), a kép 16:9-es (aspect-video), szélessége a sáv szélessége vagy a sáv magasságából
+                (a felirat sorának levonásával) számolt 16:9-es szélesség, amelyik kisebb. Így lapozáskor, amíg a
+                következő kép töltődik, sem a gombok, sem a felirat nem ugrik el. A galériaképek 16:9-esek (1536×864-es
+                ablakból készülnek; a tests/screenshots.test.ts őrzi). */}
+            <div
+              data-close
+              className={`min-h-0 ${zoomed ? "overflow-auto max-md:[scrollbar-width:none] md:mx-24 md:flex-1" : "flex flex-1 flex-col items-center justify-center gap-4 px-4 [container-type:size] md:px-24"}`}
+            >
               <img
                 key={shot.src}
                 src={shot.src}
@@ -172,16 +191,16 @@ export function Gallery({ shots, lang }: Props) {
                 sizes="100vw"
                 alt={shot.caption[lang]}
                 onClick={() => setZoomed(!zoomed)}
-                className={zoomed ? "w-[200%] max-w-none cursor-zoom-out" : "max-h-full min-h-0 max-w-full cursor-zoom-in rounded-[14px] border border-line object-contain"}
+                className={
+                  zoomed
+                    ? "w-[200%] max-w-none cursor-zoom-out"
+                    : "aspect-video w-[min(100cqw,calc((100cqh-4rem)*16/9))] shrink-0 cursor-zoom-in rounded-[14px] border border-line bg-deep-navy object-contain md:w-[min(100cqw,calc((100cqh-3rem)*16/9))]"
+                }
               />
               {!zoomed && pager}
             </div>
             {zoomed && <div className="px-4 pt-4 md:contents">{pager}</div>}
           </div>
-
-          <p id={captionId} className="px-4 py-4 text-center text-sm text-mist md:px-6 md:text-[0.9375rem]">
-            {shot.caption[lang]}
-          </p>
         </div>
       </dialog>
     </>
