@@ -65,6 +65,15 @@ export const hu = {
     afterAlt: { desktop: "Az új oldal kezdőlapja asztali nézetben", mobile: "Az új oldal kezdőlapja telefonon" },
     // A szekció címe melletti link a „Minden projektem” oldalra; csak akkor látszik, ha nem fér ki minden (darabszámmal).
     allLink: "Minden munkám",
+    // Projektoldal galériája (ui/Gallery.tsx): a blokk címe, a két csoport (az admin mindig elöl) és a nagyító ablak gombjai.
+    screenshots: "képernyőképek",
+    shotsAdmin: "Admin felület",
+    shotsSite: "Nyilvános oldal",
+    shotClose: "Bezárás",
+    shotPrev: "Előző kép",
+    shotNext: "Következő kép",
+    zoomIn: "Nagyítás",
+    zoomOut: "Kicsinyítés",
   },
   // Kezdőlap „Iskolai projektek” szekciója (sections/IskolaiProjektek.tsx).
   school: {

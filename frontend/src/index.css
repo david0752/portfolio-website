@@ -45,6 +45,11 @@
     scrollbar-width: thin;
   }
 
+  /* Amíg a képgaléria nagyító ablaka nyitva van (ui/Gallery.tsx), az oldal mögötte nem görög. */
+  html:has(.lightbox[open]) {
+    overflow: hidden;
+  }
+
   body {
     font-size: 1.0625rem;
     line-height: 1.7;

@@ -11,11 +11,28 @@ import kdNewMobile from "../assets/projects/kunmadaras-drift/new-mobile-780.webp
 import kdOldDesktop1200 from "../assets/projects/kunmadaras-drift/old-desktop-1200.webp?url";
 import kdOldDesktop2400 from "../assets/projects/kunmadaras-drift/old-desktop-2400.webp?url";
 import kdOldMobile from "../assets/projects/kunmadaras-drift/old-mobile-780.webp?url";
-// Iskolai projektek képei: a PollakFind az élő oldalról (Info VI → Aula útvonal), az Ügyfélkapu a fejlesztő saját
-// bejelentkezésével (Ügyintézés oldal; csak a saját neve és tesztkérelmei látszanak, másoké nem).
+// Iskolai projekt képe: a PollakFind az élő oldalról (Info VI → Aula útvonal).
 import pollakfindImage from "../assets/projects/pollakfind/pollakfind.webp?url";
-import ugyfelkapuImage from "../assets/projects/pollak-ugyfelkapu/ugyintezes.webp?url";
-import type { Project } from "../types/project.ts";
+import type { Lang } from "../i18n/index.ts";
+import type { Project, Screenshot } from "../types/project.ts";
+
+// Legfeljebb ennyi galériakép lehet projektenként; ha több, a build hibával megáll.
+export const SCREENSHOT_LIMIT = 12;
+
+// A galériaképek (assets/projects/<slug>/admin-*.webp és site-*.webp) URL-jei, méretenként külön fájlban
+// (pl. admin-stats-800.webp, admin-stats-2400.webp). Kunmadaras: bemutató adatbázisból, kitalált nevekkel;
+// PollakFind: az élő oldalról.
+const shotFiles = import.meta.glob<string>("../assets/projects/*/{admin,site}-*.webp", { eager: true, query: "?url", import: "default" });
+
+// Galériakép a „<slug>/<név>” fájlcsaládból: a legkisebb méret a src, mind a srcSet-ben. Elírt név = buildhiba.
+function screenshot(name: string, caption: Record<Lang, string>, admin = false): Screenshot {
+  const sizes = Object.entries(shotFiles)
+    .map(([file, url]) => ({ url, width: Number(file.match(new RegExp(`/${name}-(\\d+)\\.webp$`))?.[1]) }))
+    .filter((size) => size.width)
+    .sort((a, b) => a.width - b.width);
+  if (!sizes.length) throw new Error(`Hiányzó galériakép: assets/projects/${name}-<szélesség>.webp`);
+  return { src: sizes[0].url, srcSet: sizes.map((size) => `${size.url} ${size.width}w`).join(", "), caption, admin };
+}
 
 export const projects: Project[] = [
   {
@@ -72,6 +89,21 @@ export const projects: Project[] = [
       },
       mobile: { before: { src: kdOldMobile }, after: { src: kdNewMobile } },
     },
+    screenshots: [
+      screenshot("kunmadaras-drift/admin-stats", { hu: "Statisztika: látogatók és legnézettebb oldalak", en: "Statistics: visitors and most viewed pages" }, true),
+      screenshot("kunmadaras-drift/admin-registration", { hu: "Egy nevezés elfogadása vagy elutasítása", en: "Accepting or rejecting a registration" }, true),
+      screenshot("kunmadaras-drift/admin-event-editor", { hu: "Esemény szerkesztése plakáttal", en: "Editing an event with its poster" }, true),
+      screenshot("kunmadaras-drift/admin-results", { hu: "Eredmények kategóriánként, limitekkel", en: "Results by category, with limits" }, true),
+      screenshot("kunmadaras-drift/admin-newsletter", { hu: "Hírlevél sablonból, automatikus küldéssel", en: "Newsletter from a template, with automatic sending" }, true),
+      screenshot("kunmadaras-drift/admin-gallery", { hu: "Galéria versenyzőnként, fotólimittel", en: "Gallery per driver, with a photo limit" }, true),
+      screenshot("kunmadaras-drift/site-programs", { hu: "Programok: a következő esemény", en: "Events: the next event" }),
+      screenshot("kunmadaras-drift/site-results", { hu: "Versenyeredmények dobogóval", en: "Results with podiums" }),
+      screenshot("kunmadaras-drift/site-registration", { hu: "Online nevezési űrlap", en: "Online registration form" }),
+    ],
+    screenshotNote: {
+      hu: "A képek bemutató adatokkal készültek, a nevek kitaláltak.",
+      en: "The screenshots use demo data; the names are made up.",
+    },
     hasCaseStudy: true,
   },
   // Iskolai csapatprojektek (Pollák Antal Technikum). „Az én részem” a fejlesztő commitjaiból, általa jóváhagyva.
@@ -124,53 +156,17 @@ export const projects: Project[] = [
     url: "https://find.pollak.info/",
     repo: "https://github.com/pollak-projektek/pollak-find",
     image: pollakfindImage,
-    school: true,
-    hasCaseStudy: true,
-  },
-  {
-    slug: "pollak-ugyfelkapu",
-    title: "Pollák Ügyfélkapu",
-    year: "2026",
-    type: { hu: "Iskolai projekt · webalkalmazás", en: "School project · web app" },
-    tagline: { hu: "Online ügyintézés a Pollák diákjainak", en: "Online administration for Pollák students" },
-    summary: {
-      hu: "Az iskola online ügyintéző felülete: a diákok bejelentkezve vagy vendégként adják be a kérelmeiket, az adminok pedig űrlapot állítanak össze minden ügyhöz.",
-      en: "The school's online services portal: students submit requests signed in or as guests, and admins build a form for each type of request.",
-    },
-    role: { hu: "Frontend-fejlesztés, 8 fős csapatban", en: "Frontend development in a team of eight" },
-    features: {
-      hu: ["kérelmek", "űrlapszerkesztő", "PDF", "értesítések", "jogosultságok"],
-      en: ["requests", "form builder", "PDF", "notifications", "permissions"],
-    },
-    highlights: {
-      hu: [
-        "Kérelmek (pl. iskolalátogatási, rendkívüli kikérő) állapottal: elfogadva, elutasítva.",
-        "Admin űrlapszerkesztő: bekért mezők, határidő, limit diákonként, engedélyezett osztályok.",
-        "Elfogadáskor automatikusan csatolt PDF.",
-        "Értesítések és jogosultságkezelés.",
-      ],
-      en: [
-        "Requests (e.g. school attendance, special leave) with a status: accepted or rejected.",
-        "Admin form builder: requested fields, deadline, limit per student, allowed classes.",
-        "A PDF attached automatically on acceptance.",
-        "Notifications and permission management.",
-      ],
-    },
-    decisions: {
-      hu: [
-        "Az ügyintézés és az admin felület reszponzív, telefonos nézete.",
-        "Az admin ügykezelés gombjainak átdolgozása.",
-        "Az értesítések oldal.",
-      ],
-      en: ["Responsive phone layout for the requests and admin pages.", "Reworked buttons in the admin request management.", "The notifications page."],
-    },
-    tags: ["React", "TypeScript", "Tailwind CSS", "Prisma", "PostgreSQL"],
-    url: "https://ugyfelkapu.pollak.info/",
-    image: ugyfelkapuImage,
+    // A 2D útvonal már a projekt fő képe, ezért a galériában csak a 3D nézet szerepel.
+    screenshots: [screenshot("pollakfind/site-3d", { hu: "Az útvonal 3D nézetben", en: "The route in 3D view" })],
     school: true,
     hasCaseStudy: true,
   },
 ];
+
+for (const project of projects) {
+  const count = project.screenshots?.length ?? 0;
+  if (count > SCREENSHOT_LIMIT) throw new Error(`Legfeljebb ${SCREENSHOT_LIMIT} galériakép lehet projektenként, a(z) ${project.slug} projektnél ${count} van`);
+}
 
 /**
  * Az oldalon megjelenő projektek: élesben csak a fenti valódiak, fejlesztői módban a példakártyák is
