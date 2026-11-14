@@ -30,6 +30,11 @@ export interface Project {
   // Felújított oldalnál: a régi és az új kezdőlap képernyőképe, asztali és mobil nézetben. Ha van, a projektoldal
   // tetején az előtte / utána csúszka áll a projektkép helyett (ui/BeforeAfter.tsx).
   comparison?: Comparison;
+  // Képernyőképek a projektoldal galériájához (ui/Gallery.tsx), legfeljebb SCREENSHOT_LIMIT. A nem nyilvános (admin)
+  // felület képei mindig elöl állnak, mert azokat a látogató máshol nem láthatja.
+  screenshots?: Screenshot[];
+  // Rövid megjegyzés a galéria címe alatt (pl. hogy az admin képeken mintaadatok vannak).
+  screenshotNote?: Record<Lang, string>;
   // Iskolai csapatprojekt: a kezdőlapon az „Iskolai projektek” szekcióba kerül (nem a Munkáim közé), és a projektoldalon
   // a decisions oszlop címe „az én részem” (mit csinált a fejlesztő a csapatban).
   school?: boolean;
@@ -48,3 +53,9 @@ export interface ComparisonShot {
 }
 
 export type Comparison = Record<ComparisonView, { before: ComparisonShot; after: ComparisonShot }>;
+
+// Egy galériakép: felirat nyelvenként (ez az alt szöveg is), és hogy az admin (nem nyilvános) felületről való-e.
+export interface Screenshot extends ComparisonShot {
+  caption: Record<Lang, string>;
+  admin?: boolean;
+}

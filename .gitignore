@@ -7,3 +7,5 @@ graphify-out/
 .astro/
 .wrangler/
 worker-configuration.d.ts
+test-results/
+playwright-report/

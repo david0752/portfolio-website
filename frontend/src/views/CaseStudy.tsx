@@ -2,8 +2,8 @@
  * Egy projekt saját oldala (munkak/<slug>, en/work/<slug>): vissza link, szerep · év, cím, alcím, leírás,
  * élő oldal gomb (vagy az állapota, ha még nincs élesben) és a forráskód gomb (ha van nyilvános repó), mellette a projekt
  * látványa. Felújított oldalnál (project.comparison) a cím alatt teljes szélességben az előtte / utána csúszka áll, és a
- * leírás meg a gombok alá kerülnek. Ezek alatt a kiemelt funkciók és a technikai döntések két oszlopban, a stack logós
- * címkékkel, végül a következő projekt és a kapcsolatfelvétel. Statikus HTML (Astro), a görgetési beúszás a data-reveal elemeken fut.
+ * leírás meg a gombok alá kerülnek. Ezek alatt a kiemelt funkciók és a technikai döntések két oszlopban, a képernyőképek
+ * galériája (ha van; admin képek elöl), a stack logós címkékkel, végül a következő projekt és a kapcsolatfelvétel. Statikus HTML (Astro), a görgetési beúszás a data-reveal elemeken fut.
  */
 
 import type { CSSProperties, ReactNode } from "react";
@@ -22,6 +22,8 @@ interface Props {
   next?: Project;
   // Felújított oldalnál az előtte / utána csúszka (ui/BeforeAfter.tsx); szigetként az Astro oldal adja be.
   children?: ReactNode;
+  // A képernyőképek galériája (ui/Gallery.tsx); az Astro oldal adja be szigetként, a „gallery” nevű slotban.
+  gallery?: ReactNode;
 }
 
 // Kis, kódkomment stílusú blokkcím (h2), mint a kezdőlap szekcióinak címkéje.
@@ -36,7 +38,7 @@ function Label({ children }: { children: string }) {
   );
 }
 
-export function CaseStudy({ project, lang, next, children }: Props) {
+export function CaseStudy({ project, lang, next, children, gallery }: Props) {
   const t = messages(lang);
   const home = paths(lang).home;
   // Az iskolai és a rendes munkák külön listák: a vissza link a projekt saját szekciójába visz a kezdőlapon.
@@ -144,6 +146,17 @@ export function CaseStudy({ project, lang, next, children }: Props) {
           </ul>
         </section>
       </div>
+
+      {gallery && (
+        <section className="mt-20">
+          {/* A beúszás csak a címen és a sziget csoportjain van, a nagyító ablak így nem kerül mozgó blokkba. */}
+          <div data-reveal>
+            <Label>{t.work.screenshots}</Label>
+            {project.screenshotNote && <p className="mt-2 text-sm text-slate">{project.screenshotNote[lang]}</p>}
+          </div>
+          <div className="mt-6 md:mt-8">{gallery}</div>
+        </section>
+      )}
 
       <section data-reveal className="mt-20">
         <Label>{t.work.stack}</Label>
