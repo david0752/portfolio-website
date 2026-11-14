@@ -61,6 +61,31 @@ test(`az üzenet legfeljebb ${LIMIT} karakter, a számláló mutatja`, async ({ 
   await expect(page.getByText(`${LIMIT} / ${LIMIT}`)).toBeVisible();
 });
 
+test("a script betöltése előtt (lassú kapcsolat) beírt szöveg megmarad, és el is megy", async ({ page }) => {
+  const sent = await fakeBackend(page, 200, "ok");
+  // Az űrlap scriptjét addig tartjuk vissza, amíg a látogató gépel (mintha lassú lenne a kapcsolat).
+  let release: () => void = () => {};
+  const held = new Promise<void>((resolve) => (release = resolve));
+  await page.route("**/_astro/ContactForm.*.js", async (route) => {
+    await held;
+    await route.continue();
+  });
+  await page.goto("/");
+  await page.locator("form").scrollIntoViewIfNeeded();
+  const early = "Korán írtam, még a script előtt.";
+  await page.getByLabel("Üzenet").fill(early);
+  release();
+  await hydrate(page, "ContactForm", "form");
+  await expect(page.getByText(`${early.length} / ${LIMIT}`)).toBeVisible();
+  await page.getByRole("combobox").click();
+  await page.getByRole("option", { name: "Egyéb" }).click();
+  await page.getByLabel("Név").fill("Teszt Elek");
+  await page.getByLabel("E-mail-cím").fill("teszt.elek@example.com");
+  await page.getByRole("button", { name: "Üzenet küldése" }).click();
+  await expect(page.getByText("Köszönöm, megkaptam az üzenetedet!")).toBeVisible();
+  expect(sent).toEqual([{ topic: "other", name: "Teszt Elek", email: "teszt.elek@example.com", message: early, website: "" }]);
+});
+
 test("sikeres küldés: a mezőket küldi, köszön, és kiüríti az űrlapot", async ({ page }) => {
   const sent = await fakeBackend(page, 200, "ok");
   await openForm(page);
