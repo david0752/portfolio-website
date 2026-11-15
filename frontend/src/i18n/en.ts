@@ -6,6 +6,7 @@ import type { Messages } from "./hu.ts";
 
 export const en: Messages = {
   nav: {
+    automation: "Automation",
     work: "My work",
     about: "About",
     experience: "Experience",
@@ -28,6 +29,30 @@ export const en: Messages = {
     available: "Available for new projects",
     primary: "See my work",
     secondary: "Contact",
+  },
+  automation: {
+    eyebrow: "automation",
+    title: "If you do it by hand every week, a system can do it for you.",
+    lead: "I find the repetitive steps in your work and build a system that handles them for you.",
+    benefitsTitle: "What you gain",
+    benefits: [
+      { title: "More free time", text: "The system takes over the routine tasks, so you can focus on what really needs you." },
+      { title: "Fewer mistakes", text: "No mistyped data, forgotten replies or skipped steps." },
+      { title: "Instant replies", text: "Your customers get an answer right away, even when you're busy." },
+    ],
+    examplesTitle: "What can be automated",
+    before: "before",
+    after: "automated",
+    examples: [
+      { title: "Bookings and sign-ups", before: "Arranging appointments by phone and e‑mail", after: "Online booking with automatic confirmation and reminders" },
+      { title: "Customer e-mails", before: "Writing the same reply again and again", after: "Template-based e-mails, always sent at the right moment" },
+      { title: "Data entry", before: "Copying forms and orders into a spreadsheet", after: "Data lands where it belongs, without typos" },
+      { title: "Quotes and documents", before: "Putting quotes and certificates together one by one", after: "A finished PDF in one click, from data you already have" },
+      { title: "Reports", before: "The weekly summary, added up by hand", after: "A ready report in your inbox every Monday morning" },
+      { title: "Connected systems", before: "The same data in several places, each updated separately", after: "Change it in one place, it updates everywhere" },
+    ],
+    ctaLead: "Got a task you'd gladly hand off?",
+    cta: "Tell me what you'd automate",
   },
   work: {
     eyebrow: "work",

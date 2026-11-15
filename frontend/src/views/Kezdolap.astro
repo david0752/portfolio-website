@@ -1,11 +1,12 @@
 ---
 /**
  * Kezdőlap mindkét nyelvre (pages/index.astro és pages/en/index.astro adja a nyelvet):
- * Hero, Munkák, Iskolai projektek, Rólam, Tapasztalat, Stack, Kapcsolat. Csak a kapcsolati űrlap React-sziget,
+ * Hero, Automatizálás, Munkák, Iskolai projektek, Rólam, Tapasztalat, Stack, Kapcsolat. Csak a kapcsolati űrlap React-sziget,
  * és az is csak akkor töltődik be, amikor a látogató odagörget (client:visible).
  * Itt készül a kezdőlap strukturált adata is (JSON-LD: személy, weboldal, profilok).
  */
 import Layout from "../layouts/Layout.astro";
+import { Automatizalas } from "../sections/Automatizalas.tsx";
 import { Hero } from "../sections/Hero.tsx";
 import { IskolaiProjektek } from "../sections/IskolaiProjektek.tsx";
 import { Kapcsolat } from "../sections/Kapcsolat.tsx";
@@ -39,6 +40,7 @@ const jsonLd = profileJsonLd(lang, site, new URL(Astro.url.pathname, site).href,
   jsonLd={jsonLd}
 >
   <Hero lang={lang} />
+  <Automatizalas lang={lang} />
   <Munkak lang={lang} projects={pickForHome(workProjects)} total={workProjects.length} />
   <IskolaiProjektek lang={lang} projects={pickForHome(schoolProjects)} total={schoolProjects.length} />
   <Rolam lang={lang} clientCount={workProjects.length} schoolCount={schoolProjects.length} />

@@ -5,6 +5,7 @@
 
 export const hu = {
   nav: {
+    automation: "Automatizálás",
     work: "Munkáim",
     about: "Rólam",
     experience: "Tapasztalat",
@@ -30,6 +31,35 @@ export const hu = {
     available: "Elérhető új projektekre",
     primary: "Munkáim",
     secondary: "Kapcsolat",
+  },
+  // Kezdőlap „Automatizálás” szekciója (sections/Automatizalas.tsx), a Munkáim előtt: amit a fejlesztő a legjobban szeret.
+  automation: {
+    eyebrow: "automatizálás",
+    title: "Amit minden héten kézzel csinálsz, azt rábízhatod a gépre.",
+    lead: "Megkeresem a munkádban az ismétlődő lépéseket, és olyan rendszert építek, amely elvégzi őket helyetted.",
+    benefitsTitle: "Mit nyersz vele",
+    // A sorrend egyezik az Automatizalas.tsx BENEFIT_ICONS-ával (óra, pipa, villám).
+    benefits: [
+      { title: "Több szabad idő", text: "A rutinfeladatokat a rendszer végzi, te arra figyelsz, ami tényleg rád tartozik." },
+      { title: "Kevesebb hiba", text: "Nincs elgépelt adat, elfelejtett válasz vagy kimaradt lépés." },
+      { title: "Azonnali válasz", text: "Az ügyfeled akkor is rögtön választ kap, amikor te éppen nem érsz rá." },
+    ],
+    examplesTitle: "Amit automatizálni lehet",
+    // A példakártyák két sorának címkéje (mi van most, és mi lesz belőle).
+    before: "eddig",
+    after: "automatizálva",
+    // Az „e‑mail” nem törő kötőjellel (U+2011), hogy a sor ne a kötőjelnél törjön.
+    // A sorrend egyezik az Automatizalas.tsx EXAMPLE_ICONS-ával (naptár, levél, adatbázis, dokumentum, grafikon, lánc).
+    examples: [
+      { title: "Foglalás és jelentkezés", before: "Időpontok egyeztetése telefonon és e‑mailben", after: "Online foglalás, automatikus visszaigazolással és emlékeztetővel" },
+      { title: "Ügyfélpostázás", before: "Ugyanazt a választ írod meg újra és újra", after: "Sablonból készülő levelek, mindig a megfelelő pillanatban" },
+      { title: "Adatrögzítés", before: "Űrlapok, rendelések kimásolása táblázatba", after: "Az adat magától a helyére kerül, elírás nélkül" },
+      { title: "Ajánlatok és dokumentumok", before: "Ajánlatok, igazolások összeállítása egyenként", after: "Kész PDF egy kattintással, a meglévő adatokból" },
+      { title: "Kimutatások", before: "Heti összesítő, kézzel összeadva", after: "Kész riport a postafiókodban minden hétfő reggel" },
+      { title: "Rendszerek összekötése", before: "Ugyanaz az adat több helyen, mindenhol külön frissítve", after: "Egy helyen módosítod, mindenhol frissül" },
+    ],
+    ctaLead: "Van egy feladatod, amit legszívesebben letennél?",
+    cta: "Írd meg, mit automatizálnál",
   },
   work: {
     eyebrow: "munkáim",
