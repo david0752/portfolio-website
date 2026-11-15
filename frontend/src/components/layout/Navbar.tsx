@@ -20,8 +20,10 @@ interface Props {
   alternates: Record<Lang, string>;
 }
 
-const SECTIONS = ["munkak", "rolam", "tapasztalat", "stack", "kapcsolat"] as const;
+const SECTIONS = ["automatizalas", "munkak", "rolam", "tapasztalat", "stack", "kapcsolat"] as const;
 type SectionId = (typeof SECTIONS)[number];
+// Blokkok, amelyeknek nincs saját menüpontjuk: egy másik pont alá tartoznak (az Iskolai projektek a Munkáim része).
+const PARENT: Record<string, SectionId> = { iskolai: "munkak" };
 
 export function Navbar({ lang, alternates }: Props) {
   const t = messages(lang);
@@ -44,15 +46,19 @@ export function Navbar({ lang, alternates }: Props) {
 
   // Melyik blokk van éppen a képernyő közepén: az kap kiemelést a menüben (csak a kezdőlapon vannak ilyen blokkok).
   useEffect(() => {
-    const sections = SECTIONS.map((id) => document.getElementById(id)).filter((el) => el !== null);
+    const sections = [...SECTIONS, ...Object.keys(PARENT)].map((id) => document.getElementById(id)).filter((el) => el !== null);
     if (sections.length === 0) return;
 
+    // A sávban lévő blokkok halmaza: így nem számít, milyen sorrendben jön a belépő és a kilépő blokk eseménye.
+    const visible = new Set<string>();
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id as SectionId);
-          else setActive((current) => (current === entry.target.id ? null : current));
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
         }
+        const [id] = visible;
+        setActive(id === undefined ? null : (PARENT[id] ?? (id as SectionId)));
       },
       // Egy vékony sáv a képernyő közepén: mindig legfeljebb egy blokk metszi.
       { rootMargin: "-45% 0px -55% 0px" },
@@ -63,6 +69,7 @@ export function Navbar({ lang, alternates }: Props) {
   }, []);
 
   const labels: Record<SectionId, string> = {
+    automatizalas: t.nav.automation,
     munkak: t.nav.work,
     rolam: t.nav.about,
     tapasztalat: t.nav.experience,
@@ -116,7 +123,9 @@ export function Navbar({ lang, alternates }: Props) {
           : "border-transparent bg-midnight/60 backdrop-blur-md lg:bg-transparent lg:backdrop-blur-none"
       }`}
     >
-      <nav className="mx-auto grid h-16 max-w-280 grid-cols-[1fr_auto] items-center px-5 md:px-8 lg:h-20 lg:grid-cols-[1fr_auto_1fr] xl:px-0">
+      {/* Nagy képernyőn három oszlop: a pirula középen, amíg elfér; a szélső oszlopok nem lehetnek keskenyebbek a
+          tartalmuknál (logó, nyelvváltó + gomb), így szűk helyen a pirula inkább kicsit elcsúszik, de sosem ér hozzájuk. */}
+      <nav className="mx-auto grid h-16 max-w-280 grid-cols-[1fr_auto] items-center px-5 md:px-8 lg:h-20 lg:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] lg:gap-x-6 xl:px-0">
         {/* A kezdőlapon a logó nem tölti újra az oldalt, hanem simán a tetejére görget (mint a menüpontok). */}
         <a
           href={home}
@@ -138,7 +147,7 @@ export function Navbar({ lang, alternates }: Props) {
               href={home}
               onClick={goHome}
               aria-current={onHomeTop ? "true" : undefined}
-              className={`block rounded-full px-3.5 py-2 transition-colors duration-200 xl:px-4 ${
+              className={`block rounded-full px-3 py-2 transition-colors duration-200 ${
                 onHomeTop ? "bg-card-navy-hi text-ice-white" : "text-mist hover:text-ice-white"
               }`}
             >
@@ -150,7 +159,7 @@ export function Navbar({ lang, alternates }: Props) {
               <a
                 href={`${home}#${id}`}
                 aria-current={active === id ? "true" : undefined}
-                className={`block rounded-full px-3.5 py-2 transition-colors duration-200 xl:px-4 ${
+                className={`block rounded-full px-3 py-2 transition-colors duration-200 ${
                   active === id ? "bg-card-navy-hi text-ice-white" : "text-mist hover:text-ice-white"
                 }`}
               >

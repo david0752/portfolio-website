@@ -24,8 +24,9 @@ export function SectionHeading({ eyebrow, title, lead, more }: Props) {
         {lead && <p className="mt-4 text-mist">{lead}</p>}
       </div>
       {more && (
-        <a href={more.href} className="group inline-flex items-center gap-2 text-[0.9375rem] font-medium text-signal-blue underline-offset-4 lg:hover:underline">
-          {more.label}
+        // Csak a szöveg kap aláhúzást (a nyíl nem), különben a köztük lévő rés aláhúzatlan foltként látszik.
+        <a href={more.href} className="group inline-flex items-center gap-2 text-[0.9375rem] font-medium text-signal-blue">
+          <span className="underline-offset-4 lg:group-hover:underline">{more.label}</span>
           <span aria-hidden="true" className="transition-transform lg:group-hover:translate-x-0.5">
             →
           </span>

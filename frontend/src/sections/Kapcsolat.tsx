@@ -26,7 +26,7 @@ export function Kapcsolat({ lang, children }: { lang: Lang; children: ReactNode 
                   href={CONTACT_GMAIL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-lg break-all text-signal-blue underline-offset-4 hover:underline"
+                  className="text-lg break-all text-signal-blue underline-offset-4 lg:hover:underline"
                 >
                   {CONTACT_EMAIL}
                 </a>
