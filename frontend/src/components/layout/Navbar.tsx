@@ -20,10 +20,16 @@ interface Props {
   alternates: Record<Lang, string>;
 }
 
-const SECTIONS = ["automatizalas", "munkak", "rolam", "tapasztalat", "stack", "kapcsolat"] as const;
+// Szándékosan kevés pont, hogy a sáv letisztult maradjon (a fejlesztő kérése, 2026-11-17).
+const SECTIONS = ["munkak", "rolam", "kapcsolat"] as const;
 type SectionId = (typeof SECTIONS)[number];
-// Blokkok, amelyeknek nincs saját menüpontjuk: egy másik pont alá tartoznak (az Iskolai projektek a Munkáim része).
-const PARENT: Record<string, SectionId> = { iskolai: "munkak" };
+// Blokkok, amelyeknek nincs saját menüpontjuk: egy másik pont alá tartoznak, ott az a pont kap kiemelést.
+const PARENT: Record<string, SectionId> = {
+  automatizalas: "munkak",
+  iskolai: "munkak",
+  tapasztalat: "rolam",
+  stack: "rolam",
+};
 
 export function Navbar({ lang, alternates }: Props) {
   const t = messages(lang);
@@ -69,11 +75,8 @@ export function Navbar({ lang, alternates }: Props) {
   }, []);
 
   const labels: Record<SectionId, string> = {
-    automatizalas: t.nav.automation,
     munkak: t.nav.work,
     rolam: t.nav.about,
-    tapasztalat: t.nav.experience,
-    stack: t.nav.stack,
     kapcsolat: t.nav.contact,
   };
 

@@ -5,11 +5,8 @@
 
 export const hu = {
   nav: {
-    automation: "Automatizálás",
     work: "Munkáim",
     about: "Rólam",
-    experience: "Tapasztalat",
-    stack: "Technológiák",
     contact: "Kapcsolat",
     cta: "Írj nekem",
     openMenu: "Menü megnyitása",

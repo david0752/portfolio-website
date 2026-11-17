@@ -6,11 +6,8 @@ import type { Messages } from "./hu.ts";
 
 export const en: Messages = {
   nav: {
-    automation: "Automation",
     work: "My work",
     about: "About",
-    experience: "Experience",
-    stack: "Stack",
     contact: "Contact",
     cta: "Get in touch",
     openMenu: "Open menu",
